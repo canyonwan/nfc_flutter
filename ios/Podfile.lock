@@ -1,0 +1,312 @@
+PODS:
+  - amap_core_fluttify (0.0.1):
+    - AMapFoundation-NO-IDFA (~> 1.6.9)
+    - Flutter
+    - foundation_fluttify
+  - amap_location_fluttify (0.0.1):
+    - AMapLocation-NO-IDFA (= 2.8.0)
+    - Flutter
+    - foundation_fluttify
+  - AMapFoundation-NO-IDFA (1.6.9)
+  - AMapLocation-NO-IDFA (2.8.0):
+    - AMapFoundation-NO-IDFA (~> 1.6.9)
+  - audio_session (0.0.1):
+    - Flutter
+  - auto_orientation (0.0.1):
+    - Flutter
+  - better_video_player (1.0.1):
+    - Flutter
+  - connectivity (0.0.1):
+    - Flutter
+    - Reachability
+  - core_location_fluttify (0.0.1):
+    - Flutter
+    - foundation_fluttify
+  - DKImagePickerController/Core (4.3.4):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.3.4)
+  - DKImagePickerController/PhotoGallery (4.3.4):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.3.4)
+  - DKPhotoGallery (0.0.17):
+    - DKPhotoGallery/Core (= 0.0.17)
+    - DKPhotoGallery/Model (= 0.0.17)
+    - DKPhotoGallery/Preview (= 0.0.17)
+    - DKPhotoGallery/Resource (= 0.0.17)
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Core (0.0.17):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Model (0.0.17):
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Preview (0.0.17):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Resource (0.0.17):
+    - SDWebImage
+    - SwiftyGif
+  - ffmpeg-kit-ios-https (6.0)
+  - ffmpeg_kit_flutter (6.0.2):
+    - ffmpeg_kit_flutter/https (= 6.0.2)
+    - Flutter
+  - ffmpeg_kit_flutter/https (6.0.2):
+    - ffmpeg-kit-ios-https (= 6.0)
+    - Flutter
+  - file_picker (0.0.1):
+    - DKImagePickerController/PhotoGallery
+    - Flutter
+  - Flutter (1.0.0)
+  - flutter_inappwebview (0.0.1):
+    - Flutter
+    - flutter_inappwebview/Core (= 0.0.1)
+    - OrderedSet (~> 5.0)
+  - flutter_inappwebview/Core (0.0.1):
+    - Flutter
+    - OrderedSet (~> 5.0)
+  - flutter_keyboard_visibility (0.0.1):
+    - Flutter
+  - fluwx (0.0.1):
+    - Flutter
+    - "OpenWeChatSDK (~> 1.9.2+1)"
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - foundation_fluttify (0.0.1):
+    - Flutter
+  - image_picker_ios (0.0.1):
+    - Flutter
+  - JCore (3.2.5)
+  - JPush (4.8.1):
+    - JCore (>= 2.0.0)
+  - jpush_flutter (0.0.2):
+    - Flutter
+    - JCore (= 3.2.5)
+    - JPush (= 4.8.1)
+  - just_audio (0.0.1):
+    - Flutter
+  - libwebp (1.3.2):
+    - libwebp/demux (= 1.3.2)
+    - libwebp/mux (= 1.3.2)
+    - libwebp/sharpyuv (= 1.3.2)
+    - libwebp/webp (= 1.3.2)
+  - libwebp/demux (1.3.2):
+    - libwebp/webp
+  - libwebp/mux (1.3.2):
+    - libwebp/demux
+  - libwebp/sharpyuv (1.3.2)
+  - libwebp/webp (1.3.2):
+    - libwebp/sharpyuv
+  - Meiqia (3.9.4):
+    - Meiqia/MeiqiaSDK (= 3.9.4)
+    - Meiqia/MQChatViewController (= 3.9.4)
+  - Meiqia/MeiqiaSDK (3.9.4)
+  - Meiqia/MQChatViewController (3.9.4):
+    - Meiqia/MeiqiaSDK
+  - meiqia_sdk_flutter (0.0.1):
+    - Flutter
+    - Meiqia (>= 3.8.4)
+  - motion_sensors (0.0.1):
+    - Flutter
+  - "OpenWeChatSDK (1.9.9+1)"
+  - OrderedSet (5.0.0)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - permission_handler_apple (9.1.1):
+    - Flutter
+  - Reachability (3.2)
+  - SDWebImage (5.18.1):
+    - SDWebImage/Core (= 5.18.1)
+  - SDWebImage/Core (5.18.1)
+  - shared_preferences_ios (0.0.1):
+    - Flutter
+  - sqflite (0.0.3):
+    - Flutter
+    - FMDB (>= 2.7.5)
+  - SwiftyGif (5.4.4)
+  - tobias (0.0.1):
+    - Flutter
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - video_compress (0.3.0):
+    - Flutter
+  - video_player_avfoundation (0.0.1):
+    - Flutter
+  - video_thumbnail (0.0.1):
+    - Flutter
+    - libwebp
+  - wakelock (0.0.1):
+    - Flutter
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - amap_core_fluttify (from `.symlinks/plugins/amap_core_fluttify/ios`)
+  - amap_location_fluttify (from `.symlinks/plugins/amap_location_fluttify/ios`)
+  - audio_session (from `.symlinks/plugins/audio_session/ios`)
+  - auto_orientation (from `.symlinks/plugins/auto_orientation/ios`)
+  - better_video_player (from `.symlinks/plugins/better_video_player/ios`)
+  - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - core_location_fluttify (from `.symlinks/plugins/core_location_fluttify/ios`)
+  - ffmpeg_kit_flutter (from `.symlinks/plugins/ffmpeg_kit_flutter/ios`)
+  - file_picker (from `.symlinks/plugins/file_picker/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
+  - fluwx (from `.symlinks/plugins/fluwx/ios`)
+  - foundation_fluttify (from `.symlinks/plugins/foundation_fluttify/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - jpush_flutter (from `.symlinks/plugins/jpush_flutter/ios`)
+  - just_audio (from `.symlinks/plugins/just_audio/ios`)
+  - meiqia_sdk_flutter (from `.symlinks/plugins/meiqia_sdk_flutter/ios`)
+  - motion_sensors (from `.symlinks/plugins/motion_sensors/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - tobias (from `.symlinks/plugins/tobias/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - video_compress (from `.symlinks/plugins/video_compress/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
+  - video_thumbnail (from `.symlinks/plugins/video_thumbnail/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
+
+SPEC REPOS:
+  trunk:
+    - AMapFoundation-NO-IDFA
+    - AMapLocation-NO-IDFA
+    - DKImagePickerController
+    - DKPhotoGallery
+    - ffmpeg-kit-ios-https
+    - FMDB
+    - JCore
+    - JPush
+    - libwebp
+    - Meiqia
+    - OpenWeChatSDK
+    - OrderedSet
+    - Reachability
+    - SDWebImage
+    - SwiftyGif
+
+EXTERNAL SOURCES:
+  amap_core_fluttify:
+    :path: ".symlinks/plugins/amap_core_fluttify/ios"
+  amap_location_fluttify:
+    :path: ".symlinks/plugins/amap_location_fluttify/ios"
+  audio_session:
+    :path: ".symlinks/plugins/audio_session/ios"
+  auto_orientation:
+    :path: ".symlinks/plugins/auto_orientation/ios"
+  better_video_player:
+    :path: ".symlinks/plugins/better_video_player/ios"
+  connectivity:
+    :path: ".symlinks/plugins/connectivity/ios"
+  core_location_fluttify:
+    :path: ".symlinks/plugins/core_location_fluttify/ios"
+  ffmpeg_kit_flutter:
+    :path: ".symlinks/plugins/ffmpeg_kit_flutter/ios"
+  file_picker:
+    :path: ".symlinks/plugins/file_picker/ios"
+  Flutter:
+    :path: Flutter
+  flutter_inappwebview:
+    :path: ".symlinks/plugins/flutter_inappwebview/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
+  fluwx:
+    :path: ".symlinks/plugins/fluwx/ios"
+  foundation_fluttify:
+    :path: ".symlinks/plugins/foundation_fluttify/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
+  jpush_flutter:
+    :path: ".symlinks/plugins/jpush_flutter/ios"
+  just_audio:
+    :path: ".symlinks/plugins/just_audio/ios"
+  meiqia_sdk_flutter:
+    :path: ".symlinks/plugins/meiqia_sdk_flutter/ios"
+  motion_sensors:
+    :path: ".symlinks/plugins/motion_sensors/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+  shared_preferences_ios:
+    :path: ".symlinks/plugins/shared_preferences_ios/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
+  tobias:
+    :path: ".symlinks/plugins/tobias/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  video_compress:
+    :path: ".symlinks/plugins/video_compress/ios"
+  video_player_avfoundation:
+    :path: ".symlinks/plugins/video_player_avfoundation/ios"
+  video_thumbnail:
+    :path: ".symlinks/plugins/video_thumbnail/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+
+SPEC CHECKSUMS:
+  amap_core_fluttify: b84657ba39ee287a4b96bbcc0a6e67612cc3808f
+  amap_location_fluttify: 7dc366b959d3ea9ce0b826e60c22a15cec54bbad
+  AMapFoundation-NO-IDFA: cc2ec7a2828ef292358ad594b7ee0ae21a7f097b
+  AMapLocation-NO-IDFA: 9d7ec9b052405356600b59fe0a9a65261bacc54e
+  audio_session: 4f3e461722055d21515cf3261b64c973c062f345
+  auto_orientation: 2941c44ebe5c3d41016001597ab03e81a92a26ce
+  better_video_player: a201d38370c115406e5387da62458991ad6787b5
+  connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
+  core_location_fluttify: 9466a411ea7d22c6349c7e6a767ae4623f01eb1d
+  DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
+  DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
+  ffmpeg-kit-ios-https: f9c838aa5400a6c5ba12324c6b798f52197ba354
+  ffmpeg_kit_flutter: 386b05b25c8130b5c4a1ca70c1bda89862537377
+  file_picker: 817ab1d8cd2da9d2da412a417162deee3500fc95
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
+  flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
+  fluwx: 79c66b6d795ab8208262ada215d9e60388cfe492
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
+  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  JCore: 4c9febdfdb1a5675ab361bc1f06c0905391d7b23
+  JPush: 2caabdb6d62d009bc07a9bd115d03c7c42512b5e
+  jpush_flutter: 3badd7fb60be478508730b46a701430be4d13c48
+  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
+  libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
+  Meiqia: 65823dbeba39deeb5e254fa5093dc4d826f913b6
+  meiqia_sdk_flutter: d68856e7cf66b0ca6873dfae1ee409870b8029e4
+  motion_sensors: 03f55b7c637a7e365a0b5f9697a449f9059d5d91
+  OpenWeChatSDK: ea48e9db20645f78128db9091893910280b8e4b1
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SDWebImage: ebdbcebc7933a45226d9313bd0118bc052ad458b
+  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
+  sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
+  SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
+  tobias: 2aded9b83e3663b907360a800d8e3c13284f25c5
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
+  video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
+  video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
+
+PODFILE CHECKSUM: d3d44dd8f85904f876a474551ba2cd729dcc2c08
+
+COCOAPODS: 1.12.1
