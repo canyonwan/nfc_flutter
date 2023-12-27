@@ -4,14 +4,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:mallxx_app/app/modules/video_upload/views/widgets/export_result.dart';
 import 'package:mallxx_app/const/colors.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:video_editor/video_editor.dart';
 
+import '../../root/providers/field_provider.dart';
 import 'export_service.dart';
 
 class VideoEditorView extends StatefulWidget {
-  const VideoEditorView({Key? key, required this.file});
+  const VideoEditorView({key, required this.file});
 
   final File file;
 
@@ -27,16 +31,20 @@ class _VideoEditorViewState extends State<VideoEditorView> {
   late final VideoEditorController _controller = VideoEditorController.file(
     widget.file,
     minDuration: const Duration(seconds: 1),
-    maxDuration: const Duration(seconds: 10),
+    maxDuration: const Duration(seconds: 100),
   );
 
   @override
   void initState() {
     super.initState();
-    _controller
-        .initialize(aspectRatio: 9 / 16)
-        .then((_) => setState(() {}))
-        .catchError((error) {
+    _controller.initialize(aspectRatio: 9 / 16).then((_) {
+      if (_controller.videoDuration.inSeconds > 120) {
+        showToast('视频时长不能超过2分钟');
+        Navigator.pop(context);
+        return;
+      }
+      setState(() {});
+    }).catchError((error) {
       // handle minumum duration bigger than video duration error
       Navigator.pop(context);
     }, test: (e) => e is VideoMinDurationError);
@@ -51,6 +59,8 @@ class _VideoEditorViewState extends State<VideoEditorView> {
     super.dispose();
   }
 
+  final FieldProvider fieldProvider = Get.find<FieldProvider>();
+
   void _showErrorSnackBar(String message) =>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -63,33 +73,30 @@ class _VideoEditorViewState extends State<VideoEditorView> {
     _exportingProgress.value = 0;
     _isExporting.value = true;
 
-    final config = VideoFFmpegVideoEditorConfig(
-      _controller,
-      // format: VideoExportFormat.gif,
-      // commandBuilder: (config, videoPath, outputPath) {
-      //   final List<String> filters = config.getExportFilters();
-      //   filters.add('hflip'); // add horizontal flip
-
-      //   return '-i $videoPath ${config.filtersCmd(filters)} -preset ultrafast $outputPath';
-      // },
-    );
+    final config = VideoFFmpegVideoEditorConfig(_controller);
 
     await ExportService.runFFmpegCommand(
       await config.getExecuteConfig(),
       onProgress: (stats) {
         _exportingProgress.value =
-            config.getFFmpegProgress(stats.getTime().toInt());
+            config.getFFmpegProgress(stats.getTime().ceil());
       },
-      onError: (e, s) => _showErrorSnackBar("Error on export video :("),
-      onCompleted: (file) {
+      onError: (e, s) => _showErrorSnackBar("视频导出错误${e} :("),
+      onCompleted: (file) async {
         _isExporting.value = false;
-        print('Exported video: ${file}');
         if (!mounted) return;
-
-        showDialog(
-          context: context,
-          builder: (_) => VideoResultPopup(video: file),
-        );
+        EasyLoading.show(status: '上传中');
+        debugPrint('file: $file');
+        var res = await fieldProvider.uploadVideo(file);
+        debugPrint('res: $res');
+        if (res.code == 200) {
+          Get.back(result: res.data);
+          // params.videoImage = res.data.imageUrl;
+          // params.videoFile = res.data.fileUrl;
+        } else {
+          showToast('上传失败:${res.msg}');
+          EasyLoading.dismiss();
+        }
       },
     );
   }
@@ -121,7 +128,7 @@ class _VideoEditorViewState extends State<VideoEditorView> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: _controller.initialized
             ? SafeArea(
                 child: Stack(
@@ -162,7 +169,7 @@ class _VideoEditorViewState extends State<VideoEditorView> {
                                                   ),
                                                   child: const Icon(
                                                     Icons.play_arrow,
-                                                    color: Colors.white,
+                                                    color: Colors.black,
                                                   ),
                                                 ),
                                               ),
@@ -180,6 +187,7 @@ class _VideoEditorViewState extends State<VideoEditorView> {
                                   child: Column(
                                     children: [
                                       TabBar(
+                                        indicatorColor: kAppColor,
                                         tabs: [
                                           Row(
                                               mainAxisAlignment:
@@ -188,14 +196,8 @@ class _VideoEditorViewState extends State<VideoEditorView> {
                                                 Padding(
                                                     padding: EdgeInsets.all(5),
                                                     child: Icon(
-                                                      Icons.content_cut,
-                                                      color: Colors.white,
-                                                    )),
-                                                Text(
-                                                  '裁剪',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                )
+                                                        Icons.content_cut)),
+                                                Text('裁剪')
                                               ]),
                                           // Row(
                                           //   mainAxisAlignment:
@@ -203,19 +205,12 @@ class _VideoEditorViewState extends State<VideoEditorView> {
                                           //   children: const [
                                           //     Padding(
                                           //         padding: EdgeInsets.all(5),
-                                          //         child: Icon(
-                                          //           Icons.video_label,
-                                          //           color: Colors.white,
-                                          //         )),
-                                          //     Text(
-                                          //       '封面',
-                                          //       style: TextStyle(
-                                          //           color: Colors.white),
-                                          //     )
+                                          //         child:
+                                          //             Icon(Icons.video_label)),
+                                          //     Text('封面')
                                           //   ],
                                           // ),
                                         ],
-                                        indicatorColor: kAppColor,
                                       ),
                                       Expanded(
                                         child: TabBarView(
@@ -245,7 +240,7 @@ class _VideoEditorViewState extends State<VideoEditorView> {
                                     title: ValueListenableBuilder(
                                       valueListenable: _exportingProgress,
                                       builder: (_, double value, __) => Text(
-                                        "Exporting video ${(value * 100).ceil()}%",
+                                        "正在导出视频 ${(value * 100).ceil()}%",
                                         style: const TextStyle(fontSize: 12),
                                       ),
                                     ),
@@ -270,30 +265,30 @@ class _VideoEditorViewState extends State<VideoEditorView> {
       child: SizedBox(
         height: height,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                tooltip: '返回',
+                icon: const Icon(Icons.arrow_back_ios),
+                tooltip: '退出',
               ),
             ),
-            // const VerticalDivider(
-            // endIndent: 22, indent: 22, color: Colors.white),
+            // const VerticalDivider(endIndent: 22, indent: 22),
             // Expanded(
             //   child: IconButton(
             //     onPressed: () =>
             //         _controller.rotate90Degrees(RotateDirection.left),
-            //     icon: const Icon(Icons.rotate_left, color: Colors.white),
-            //     tooltip: '逆时针旋转',
+            //     icon: const Icon(Icons.rotate_left),
+            //     tooltip: 'Rotate unclockwise',
             //   ),
             // ),
             // Expanded(
             //   child: IconButton(
             //     onPressed: () =>
             //         _controller.rotate90Degrees(RotateDirection.right),
-            //     icon: const Icon(Icons.rotate_right, color: Colors.white),
-            //     tooltip: '顺时针旋转',
+            //     icon: const Icon(Icons.rotate_right),
+            //     tooltip: 'Rotate clockwise',
             //   ),
             // ),
             // Expanded(
@@ -304,35 +299,32 @@ class _VideoEditorViewState extends State<VideoEditorView> {
             //         builder: (context) => CropPage(controller: _controller),
             //       ),
             //     ),
-            //     icon: const Icon(Icons.crop, color: Colors.white),
-            //     tooltip: '裁剪',
+            //     icon: const Icon(Icons.crop),
+            //     tooltip: 'Open crop screen',
             //   ),
             // ),
-            const VerticalDivider(
-                endIndent: 22, indent: 22, color: Colors.white),
+            // const VerticalDivider(endIndent: 22, indent: 22),
             Expanded(
               child: IconButton(
                 onPressed: _exportVideo,
-                icon: const Icon(Icons.exit_to_app, color: Colors.white),
-                tooltip: '导出视频',
+                icon: const Icon(Icons.drive_folder_upload_outlined),
+                tooltip: '导出',
               ),
+              // child: PopupMenuButton(
+              //   tooltip: '导出',
+              //   icon: const Icon(Icons.drive_folder_upload_outlined),
+              //   itemBuilder: (context) => [
+              //     // PopupMenuItem(
+              //     //   onTap: _exportCover,
+              //     //   child: const Text('Export cover'),
+              //     // ),
+              //     PopupMenuItem(
+              //       onTap: _exportVideo,
+              //       child: const Text('导出视频'),
+              //     ),
+              //   ],
+              // ),
             ),
-            // Expanded(
-            //   child: PopupMenuButton(
-            //     tooltip: '导出菜单',
-            //     icon: const Icon(Icons.save, color: Colors.white),
-            //     itemBuilder: (context) => [
-            //       PopupMenuItem(
-            //         onTap: _exportCover,
-            //         child: const Text('导出封面'),
-            //       ),
-            //       PopupMenuItem(
-            //         onTap: _exportVideo,
-            //         child: const Text('导出视频'),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -355,24 +347,21 @@ class _VideoEditorViewState extends State<VideoEditorView> {
           final int duration = _controller.videoDuration.inSeconds;
           final double pos = _controller.trimPosition * duration;
 
-          return DefaultTextStyle(
-            style: TextStyle(color: Colors.white),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: height / 4),
-              child: Row(children: [
-                Text(formatter(Duration(seconds: pos.toInt()))),
-                const Expanded(child: SizedBox()),
-                AnimatedOpacity(
-                  opacity: _controller.isTrimming ? 1 : 0,
-                  duration: kThemeAnimationDuration,
-                  child: Row(mainAxisSize: MainAxisSize.min, children: [
-                    Text(formatter(_controller.startTrim)),
-                    const SizedBox(width: 10),
-                    Text(formatter(_controller.endTrim)),
-                  ]),
-                ),
-              ]),
-            ),
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: height / 4),
+            child: Row(children: [
+              Text(formatter(Duration(seconds: pos.toInt()))),
+              const Expanded(child: SizedBox()),
+              AnimatedOpacity(
+                opacity: _controller.isTrimming ? 1 : 0,
+                duration: kThemeAnimationDuration,
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Text(formatter(_controller.startTrim)),
+                  const SizedBox(width: 10),
+                  Text(formatter(_controller.endTrim)),
+                ]),
+              ),
+            ]),
           );
         },
       ),
@@ -386,7 +375,6 @@ class _VideoEditorViewState extends State<VideoEditorView> {
           child: TrimTimeline(
             controller: _controller,
             padding: const EdgeInsets.only(top: 10),
-            textStyle: const TextStyle(color: Colors.white),
           ),
         ),
       )

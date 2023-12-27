@@ -22,6 +22,7 @@ class VideoUploadView extends GetView<VideoUploadController> {
                 children: [
                   Expanded(
                     child: BrnInputText(
+                      autoFocus: false,
                       maxHeight: 200,
                       minHeight: 20,
                       minLines: 1,
@@ -54,6 +55,8 @@ class VideoUploadView extends GetView<VideoUploadController> {
                               width: double.infinity,
                               height: 100.w,
                               fit: BoxFit.fill,
+                              errorBuilder: (ctx, err, stackTrace) =>
+                                  Center(child: Text('图片加载中..')),
                             ),
                           ),
                           Positioned(
@@ -102,6 +105,7 @@ class VideoUploadView extends GetView<VideoUploadController> {
               ),
               Divider(),
               BrnInputText(
+                  autoFocus: false,
                   maxHeight: 80,
                   minHeight: 10,
                   minLines: 1,

@@ -28,8 +28,8 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
 //    namespace 'com.nfc.shop'
 
-    compileSdkVersion flutter.compileSdkVersion
-//    compileSdkVersion 33
+    // compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -49,8 +49,8 @@ android {
     }
     defaultConfig {
         applicationId "com.nfc.shop"
-        minSdkVersion 21 //flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 24 //flutter.minSdkVersion
+        targetSdkVersion 33 //flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         ndk {

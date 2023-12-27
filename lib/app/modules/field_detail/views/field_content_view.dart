@@ -201,14 +201,14 @@ class FieldContentView extends GetView {
                   ),
                   GestureDetector(
                     onTap: () {
-                      c.onClipPhone(model.phone!);
+                      c.onCallPhone(model.phone!);
                     },
                     child: Image.asset('assets/images/yijianboda.png',
                         width: 80.w),
                   ),
                   GestureDetector(
                     onTap: () {
-                      c.onCallPhone(model.phone!);
+                      c.onClipPhone(model.phone!);
                     },
                     child: Image.asset('assets/images/fuzhidianhua.png',
                         width: 80.w),

@@ -33,7 +33,8 @@ dependencies:
   amap_location_fluttify: ^0.22.0
   permission_handler: 10.2.0
   #  easy_permission: ^1.0.0
-  better_video_player: ^1.2.8
+  better_video_player:
+    path: plugin/better_video_player
   bubble_box: ^0.5.2
   date_time_format: ^2.0.1
   expand_widget: ^2.1.0
@@ -53,17 +54,16 @@ dependencies:
   html_editor_enhanced: ^2.5.0
   video_editor: ^3.0.0
   video_compress: ^3.1.2
-#  ffmpeg_kit_flutter_min: ^5.1.0
+  #  ffmpeg_kit_flutter_min: ^5.1.0
   ffmpeg_kit_flutter: ^6.0.2
   fraction: ^4.1.4
 
   #  flutter_ys7:
   #    path: plugins/flutter_ys7
-#  flutter_localizations:
-#    sdk: flutter
+  #  flutter_localizations:
+  #    sdk: flutter
   flutter:
     sdk: flutter
-
 
 flutter:
   assets:
@@ -76,4 +76,3 @@ flutter:
     - assets/icons/market/
     - assets/icons/cart/
   uses-material-design: true
-

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:city_pickers/city_pickers.dart';
 import 'package:easy_refresh/easy_refresh.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
 import 'package:lpinyin/lpinyin.dart';
@@ -105,6 +106,7 @@ class FieldController extends GetxController {
     }
     if (await AppUtils.requestLocationPermission() == true) {
       location = await AmapLocation.instance.fetchLocation();
+      print('location: ${location}');
       searchModel.mergename =
           '${location.country ?? ''},${location.province ?? ''},${location.city ?? ''},${location.district}';
       update(['update_location']);

@@ -9,6 +9,7 @@ import 'package:mallxx_app/app/models/short_video_detail_model.dart';
 import 'package:mallxx_app/app/modules/root/providers/field_provider.dart';
 import 'package:mallxx_app/app/modules/video_upload/views/video_editor_view.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:video_compress/video_compress.dart';
 
 class VideoUploadController extends GetxController {
   File? fileTemp;
@@ -86,22 +87,51 @@ class VideoUploadController extends GetxController {
   // 上传视频
   Future<void> onUploadVideo() async {
     final XFile? result = await _picker.pickVideo(source: ImageSource.gallery);
-    if (result != null) {
-      var fileTemps = await result.path;
-      File file = File(fileTemps);
-      fileTemp = file;
-      if (fileTemp != null) {
-        // 去视频编辑
-        Get.to(() => VideoEditorView(file: file));
-        // EasyLoading.show(status: '上传中');
-        // var res = await fieldProvider.uploadVideo(fileTemp!);
-        // if (res.code == 200) {
-        //   params.videoImage = res.data.imageUrl;
-        //   params.videoFile = res.data.fileUrl;
-        // }
-      }
-      update();
+    if (result == null) {
+      return;
     }
+    File file = File(result.path);
+    // 获取XFile文件的大小和时长
+    final fileBytes = await file.readAsBytes();
+    final fileSize = fileBytes.lengthInBytes;
+    var fileMbSize = fileSize / (1024 * 1024);
+    if (fileMbSize > 100) {
+      showToast('视频大小不能超过100M');
+      return;
+    }
+
+    EasyLoading.show(status: '压缩中');
+    fileTemp = await _compressVideo(result.path);
+    EasyLoading.dismiss();
+    // fileTemp = File(result!.path);
+
+    // fileTemp = file;
+    if (fileTemp != null) {
+      // 去视频编辑
+      var res = await Get.to(() => VideoEditorView(file: fileTemp!));
+      print('res: $res');
+      params.videoImage = res.imageUrl;
+      params.videoFile = res.fileUrl;
+      print('结果结果params: $params');
+      // EasyLoading.show(status: '上传中');
+      // var res = await fieldProvider.uploadVideo(fileTemp!);
+      // if (res.code == 200) {
+      //   params.videoImage = res.data.imageUrl;
+      //   params.videoFile = res.data.fileUrl;
+      // }
+    }
+    update();
+  }
+
+  // 压缩视频
+  Future<File> _compressVideo(String path) async {
+    final MediaInfo? info = await VideoCompress.compressVideo(
+      path,
+      quality: VideoQuality.HighestQuality,
+      deleteOrigin: false,
+      includeAudio: true,
+    );
+    return File(info!.path!);
   }
 
   // 上传封面

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mallxx_app/app/models/city_data_model.dart';
 import 'package:mallxx_app/app/models/field_detail_button_status_model.dart';
@@ -210,6 +211,7 @@ class FieldProvider extends BaseProvider {
       'file': MultipartFile(video, filename: 'video'),
     });
     final response = await post(uploadVideoUrl, form);
+    debugPrint('response.body: ${response}');
     return RecordUploadVideoRootModel.fromJson(response.body);
   }
 
