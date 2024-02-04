@@ -312,6 +312,7 @@ class MemberProvider extends BaseProvider {
   // 我的二维码
   Future<MyQRCodeRootModel> queryMyQrCode() async {
     final resp = await post(queryMyQrCodeUrl, {});
+    print('queryMyQrCode resp: $resp');
     return MyQRCodeRootModel.fromJson(resp.body);
   }
 
