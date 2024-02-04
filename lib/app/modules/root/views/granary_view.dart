@@ -169,20 +169,43 @@ class GranaryView extends GetView<GranaryController> {
                                 if (data.ifExpire == 0) {
                                   controller
                                       .getCurrentPrice(data.recyclePrice!);
-                                  Get.defaultDialog(
-                                    titlePadding: EdgeInsets.only(
-                                        top: 50,
-                                        bottom: 15.h,
-                                        left: 17.5.w,
-                                        right: 17.5.w),
-                                    content:
+                                  // Get.defaultDialog(
+                                  //   titlePadding: EdgeInsets.only(
+                                  //       top: 50,
+                                  //       bottom: 15.h,
+                                  //       left: 17.5.w,
+                                  //       right: 17.5.w),
+                                  //   content:
+                                  //       recycleDialogContent(data, type: 2),
+                                  //   title: "你确定要将以下数量的库存交由农副仓，并无偿捐赠给需要的人吗？",
+                                  //   titleStyle: TextStyle(
+                                  //       color: Color(0xff666666),
+                                  //       fontSize: 15.sp),
+                                  //   radius: 10.w,
+                                  // );
+                                  // Get.dialog(
+                                  //     recycleDialogContent(data, type: 2));
+                                  Get.dialog(Container(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
                                         recycleDialogContent(data, type: 2),
-                                    title: "你确定要将以下数量的库存交由农副仓，并无偿捐赠给需要的人吗？",
-                                    titleStyle: TextStyle(
-                                        color: Color(0xff666666),
-                                        fontSize: 15.sp),
-                                    radius: 10.w,
-                                  );
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 14.h),
+                                          child: GestureDetector(
+                                            onTap: () => Get.back(),
+                                            child: Image.asset(
+                                              R.ASSETS_ICONS_MARKET_PRESALE_CLOSE_ICON_PNG,
+                                              width: 35.w,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ));
                                 }
                               },
                               child: Image.asset(
@@ -196,13 +219,21 @@ class GranaryView extends GetView<GranaryController> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => data.ifExpire == 0 && data.ifRecycle == 1
-                            ? controller.onProcess(data.id!)
+                        // onTap: () => data.ifExpire == 0 && data.ifRecycle == 1
+                        //     ? controller.onProcess(data.id!)
+                        //     : null,
+                        onTap: () => data.ifProcess == 0
+                            ? (data.ifExpire == 0
+                                ? controller.onProcess(data.id!)
+                                : null)
                             : null,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: data.ifExpire == 0 && data.ifRecycle == 1
-                                  ? Colors.orange
+                              // color: data.ifExpire == 0 && data.ifRecycle == 1
+                              color: data.ifProcess == 0
+                                  ? (data.ifExpire == 0
+                                      ? Colors.orange
+                                      : Colors.grey)
                                   : Colors.grey,
                               borderRadius: BorderRadius.circular(30)),
                           padding: EdgeInsets.symmetric(
@@ -254,121 +285,135 @@ class GranaryView extends GetView<GranaryController> {
 
   // type: 1 回收; 2 捐赠
   Widget recycleDialogContent(GranaryItemModel data, {int type = 1}) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(bottom: 30.h),
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 40.h),
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xff666666)),
-              borderRadius: BorderRadius.circular(16.w),
-            ),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => controller.onDecrement(data.recyclePrice!),
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.5),
-                    decoration: BoxDecoration(
-                      border: Border(right: BorderSide()),
-                    ),
-                    child: Text(
-                      '-',
-                      style:
-                          TextStyle(fontSize: 30.sp, color: Color(0xff999999)),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    child: TextField(
-                      controller: controller.textEditingController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        suffixText: '${type == 2 ? '斤' : ''}',
-                        isDense: true,
-                        hintText: '请输入数值',
-                        hintStyle: TextStyle(
-                          color: Color(0xffBBBBBB),
-                          fontSize: 16.sp,
-                          textBaseline: TextBaseline.alphabetic,
-                        ),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 17.5.w, vertical: 12.w),
+      decoration: BoxDecoration(
+        color: KWhiteColor,
+        borderRadius: BorderRadius.circular(10.w),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+            child: Text('你确定要将以下数量的库存交由农副仓，并无偿捐赠给需要的人吗？',
+                textAlign: TextAlign.center),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 30.h),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 40.h),
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xff666666)),
+                borderRadius: BorderRadius.circular(16.w),
+              ),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => controller.onDecrement(data.recyclePrice!),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.5),
+                      decoration: BoxDecoration(
+                        border: Border(right: BorderSide()),
+                      ),
+                      child: Text(
+                        '-',
+                        style: TextStyle(
+                            fontSize: 30.sp, color: Color(0xff999999)),
                       ),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () => controller.onIncrement(data.recyclePrice!),
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.5),
-                    decoration: BoxDecoration(
-                      border: Border(left: BorderSide()),
-                    ),
-                    child: Text(
-                      '+',
-                      style:
-                          TextStyle(fontSize: 30.sp, color: Color(0xff999999)),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (type == 1)
-          GetBuilder<GranaryController>(builder: (_) {
-            return Text.rich(TextSpan(
-                text: '本次回收您将获得：',
-                style: TextStyle(
-                  color: Color(0xff999999),
-                  fontSize: 13.sp,
-                ),
-                children: [
-                  TextSpan(
-                    text: '${_.totalPrice}',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      child: TextField(
+                        controller: controller.textEditingController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          suffixText: '${type == 2 ? '斤' : ''}',
+                          isDense: true,
+                          hintText: '请输入数值',
+                          hintStyle: TextStyle(
+                            color: Color(0xffBBBBBB),
+                            fontSize: 16.sp,
+                            textBaseline: TextBaseline.alphabetic,
+                          ),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                      ),
                     ),
                   ),
-                  TextSpan(
-                    text: '元',
-                    style: TextStyle(color: Color(0xff999999), fontSize: 13.sp),
+                  GestureDetector(
+                    onTap: () => controller.onIncrement(data.recyclePrice!),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.5),
+                      decoration: BoxDecoration(
+                        border: Border(left: BorderSide()),
+                      ),
+                      child: Text(
+                        '+',
+                        style: TextStyle(
+                            fontSize: 30.sp, color: Color(0xff999999)),
+                      ),
+                    ),
                   ),
-                ]));
-          }),
-        GestureDetector(
-          onTap: () {
-            if (type == 1) {
-              controller.onRecycle(data.id!);
-            } else if (type == 2) {
-              controller.onDonate(data.id!);
-            }
-          },
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 17.5.sp, vertical: 20.sp),
-            width: Get.width,
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            decoration: BoxDecoration(
-              color: Color(0xff8AC036),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(
-              child: Text(
-                '${type == 1 ? '确定回收' : '确定捐赠'}',
-                style: TextStyle(color: KWhiteColor, fontSize: 15.sp),
+                ],
               ),
             ),
           ),
-        ),
-      ],
+          if (type == 1)
+            GetBuilder<GranaryController>(builder: (_) {
+              return Text.rich(TextSpan(
+                  text: '本次回收您将获得：',
+                  style: TextStyle(
+                    color: Color(0xff999999),
+                    fontSize: 13.sp,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: '${_.totalPrice}',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '元',
+                      style:
+                          TextStyle(color: Color(0xff999999), fontSize: 13.sp),
+                    ),
+                  ]));
+            }),
+          GestureDetector(
+            onTap: () {
+              if (type == 1) {
+                controller.onRecycle(data.id!);
+              } else if (type == 2) {
+                controller.onDonate(data.id!);
+              }
+            },
+            child: Container(
+              margin:
+                  EdgeInsets.symmetric(horizontal: 17.5.sp, vertical: 20.sp),
+              width: Get.width,
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Color(0xff8AC036),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  '${type == 1 ? '确定回收' : '确定捐赠'}',
+                  style: TextStyle(color: KWhiteColor, fontSize: 15.sp),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

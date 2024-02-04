@@ -10,6 +10,7 @@ import 'package:mallxx_app/const/resource.dart';
 
 class FindListView extends GetView<FindController> {
   final List<FindItemModel> findList;
+
   const FindListView(this.findList, {Key? key}) : super(key: key);
 
   Widget _buildItem(FindItemModel item) {
@@ -79,19 +80,20 @@ class FindListView extends GetView<FindController> {
           ),
         ),
         child: Stack(
-        fit: StackFit.expand,
+          fit: StackFit.expand,
           children: [
             Image.network(
               item.image!,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               width: Get.width,
               height: 150.w,
-
-         ),
+            ),
             if (item.type == 1)
               CupertinoButton(
                 padding: EdgeInsets.zero,
-                onPressed: () { onJumpDetail(item.id!, item.type!); },
+                onPressed: () {
+                  onJumpDetail(item.id!, item.type!);
+                },
                 child: Container(
                   // constraints: BoxConstraints.tightFor(width: 60, height: 60),
                   decoration: BoxDecoration(
@@ -101,9 +103,8 @@ class FindListView extends GetView<FindController> {
                   child: const Icon(Icons.play_arrow,
                       color: KWhiteColor, size: 40),
                 ),
-
               ),
-        ],
+          ],
         ),
       ),
     );

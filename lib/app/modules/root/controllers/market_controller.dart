@@ -33,7 +33,7 @@ class MarketController extends GetxController {
   GoodsListSearchModel searchModel =
       GoodsListSearchModel(1, num: 6, type: 0, keyword: '');
   int totalPage = 0;
-  bool browserLayout = true; // true: 浏览 1: 双排
+  bool browserLayout = false; // true: 浏览 1: 双排
   int goodsCount = 0; // 商品数量
   int orderCount = 0; // 订单数量
 

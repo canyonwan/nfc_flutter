@@ -127,9 +127,7 @@ class GoodsDetailView extends GetView<GoodsDetailController> {
                             TextStyle(fontSize: 13.sp, color: kAppGrey66Color),
                       ),
                       Text(
-                        c.dataModel.inventory == '已售罄'
-                            ? '${c.dataModel.inventory}'
-                            : '仅剩${c.dataModel.inventory}份',
+                        c.getStockStatus(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 13.sp, color: Colors.red),
@@ -544,23 +542,32 @@ class GoodsDetailView extends GetView<GoodsDetailController> {
                         child: Image.network(c.dataModel.goodsImage!,
                             width: 120.w, fit: BoxFit.cover),
                       ),
-                      Text.rich(
-                        TextSpan(
-                          text: c.dataModel.goodsPrice,
-                          style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.bold),
-                          children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text.rich(
                             TextSpan(
-                              text: '  /箱',
+                              text: c.dataModel.goodsPrice,
                               style: TextStyle(
-                                color: kAppSubGrey99Color,
-                                fontSize: 10.sp,
-                              ),
+                                  color: Colors.red,
+                                  fontSize: 22.sp,
+                                  fontWeight: FontWeight.bold),
+                              children: [
+                                TextSpan(
+                                  text: '  /箱',
+                                  style: TextStyle(
+                                    color: kAppSubGrey99Color,
+                                    fontSize: 10.sp,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Text('库存：${c.dataModel.inventory}件',
+                              style: TextStyle(
+                                  fontSize: 11.sp, color: kAppGrey66Color)),
+
+                        ],
                       ),
                     ],
                   ),
@@ -665,15 +672,6 @@ class GoodsDetailView extends GetView<GoodsDetailController> {
                         fontSize: 13.sp,
                         color: kAppBlackColor,
                         fontWeight: FontWeight.bold),
-                    children: [
-                      TextSpan(
-                        text: c.dataModel.inventory == '已售罄'
-                            ? '（${c.dataModel.inventory}）'
-                            : '（仅剩${c.dataModel.inventory}份）',
-                        style:
-                            TextStyle(fontSize: 11.sp, color: kAppGrey66Color),
-                      )
-                    ],
                   ),
                 ),
                 NumberItem(

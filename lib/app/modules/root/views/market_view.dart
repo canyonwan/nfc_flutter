@@ -397,8 +397,8 @@ class MarketView extends GetView<MarketController> {
               onTap: c.switchLayout,
               child: Image.asset(
                       controller.browserLayout
-                          ? R.ASSETS_ICONS_MARKET_LAYOUT_GRID_PNG
-                          : R.ASSETS_ICONS_MARKET_LAYOUT_LIST_PNG,
+                          ? R.ASSETS_ICONS_MARKET_LAYOUT_LIST_PNG
+                          : R.ASSETS_ICONS_MARKET_LAYOUT_GRID_PNG,
                       width: 20.w)
                   .paddingOnly(right: 16.5.w),
             ),

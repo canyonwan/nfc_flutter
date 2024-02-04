@@ -166,9 +166,10 @@ class FieldProvider extends BaseProvider {
 
   // 生成田地认领订单
   Future<CreateFieldClaimRootModel> createFieldClaimOrder(
-      int claim_id, int count) async {
+      int claim_id, int count, String name, String phone, String address_id, String address) async {
     final response = await post(
-        createFieldClaimOrderUrl, {'claim_id': claim_id, 'num': count});
+        createFieldClaimOrderUrl, {'claim_id': claim_id, 'num': count, 'name': name, 'phone': phone, 'address_id': address_id, 'address': address});
+    print('提交订单：${response.body}');
     return CreateFieldClaimRootModel.fromJson(response.body);
   }
 

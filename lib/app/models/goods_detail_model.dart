@@ -207,7 +207,7 @@ class GoodsDetailDataModel {
       id: asT<int?>(json['id']),
       ifMessageShow: asT<int?>(json['if_message_show']),
       ifOriginArticle: asT<int?>(json['if_origin_article']),
-      inventory: asT<String?>(json['inventory']),
+      inventory: asT<int?>(json['inventory']),
       isHot: asT<int?>(json['is_hot']),
       isPresell: asT<int?>(json['is_presell']),
       lastTime: asT<int?>(json['last_time']),
@@ -266,7 +266,7 @@ class GoodsDetailDataModel {
   int? id;
   int? ifMessageShow;
   int? ifOriginArticle;
-  String? inventory;
+  int? inventory;
   int? isHot;
   int? isPresell;
   int? lastTime;

@@ -51,6 +51,21 @@ class GoodsDetailController extends GetxController
   int nowUnixTime = 86400;
   RxString timeRemaining = ''.obs;
 
+  // 如果库存是0，显示“已售罄”；如果库存数量在1~10，显示“仅剩（库存数量）件”；如果库存数量在11~19，显示“库存：（库存数量）件”；如果库存数量大于等于20，显示“库存充足”；
+  String getStockStatus() {
+    var text = '';
+    if (dataModel.inventory == 0) {
+      text = '已售罄';
+    } else if (dataModel.inventory! > 0 && dataModel.inventory! < 10) {
+      text = '仅剩${dataModel.inventory}件';
+    } else if (dataModel.inventory! >= 10 && dataModel.inventory! < 20) {
+      text = '库存：${dataModel.inventory}件';
+    } else {
+      text = '库存充足';
+    }
+    return text;
+  }
+
   void launchTimer() {
     int days = DateTime.now()
         .difference(DateTime.fromMillisecondsSinceEpoch(dataModel.lastTime!))
