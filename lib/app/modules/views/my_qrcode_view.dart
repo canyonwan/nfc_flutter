@@ -10,18 +10,15 @@ class MyQrcodeView extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    print('${data}');
     return Scaffold(
-      appBar: AppBar(title: const Text('我的二维码'), centerTitle: true),
-      body: Column(
-        children: [
-          Center(
-            child: Image.network('${data.yiImg}'),
-          ),
-          Center(
-            child: Image.network('${data.erImg}', width: 220.w),
-          ),
-        ],
+      appBar: AppBar(title: const Text('识别码'), centerTitle: true),
+      body: Center(
+        child: Column(
+          children: [
+            Image.network('${data.yiImg}',width: 220.w),
+            Image.network('${data.erImg}', width: 220.w),
+          ],
+        ),
       ),
     );
   }

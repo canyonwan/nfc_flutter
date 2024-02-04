@@ -257,7 +257,7 @@ class MyActivityForecastView extends GetView<MyActivityForecastController> {
         child: Column(
           children: [
             Container(
-              // height: 154.w,
+              height: 154.w,
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -267,7 +267,7 @@ class MyActivityForecastView extends GetView<MyActivityForecastController> {
               ),
               child: Image(
                 image: NetworkImage(model.goodsImage!),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
                 width: Get.width,
               ),
             ),
