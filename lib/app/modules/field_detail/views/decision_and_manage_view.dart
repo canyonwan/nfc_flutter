@@ -1,4 +1,5 @@
 import 'package:bruno/bruno.dart';
+import 'package:bubble_box/bubble_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -6,11 +7,16 @@ import 'package:get/get.dart';
 import 'package:mallxx_app/app/models/field_detail_model.dart';
 import 'package:mallxx_app/app/modules/field_detail/controllers/field_detail_controller.dart';
 import 'package:mallxx_app/app/modules/field_detail/views/components/build_option_item.dart';
+import 'package:mallxx_app/app/modules/root/controllers/root_controller.dart';
 import 'package:mallxx_app/const/colors.dart';
+
+import '../../../../const/resource.dart';
 
 class DecisionAndManageView extends GetView {
   final List<DecisionItemModel> decisionList;
+
   const DecisionAndManageView(this.decisionList, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +63,41 @@ class DecisionAndManageView extends GetView {
               //       fontWeight: FontWeight.bold),
               // ),
             ),
+            if (m.decesionGoods!.isNotEmpty)
+              GridView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.only(bottom: 10.h),
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.51,
+                  mainAxisSpacing: 10.5.w,
+                  crossAxisSpacing: 6.w,
+                ),
+                itemCount: m.decesionGoods!.length,
+                itemBuilder: (_, int index) =>
+                    _buildGoodsItem(m.decesionGoods![index]),
+              ),
+            if (m.decesionGoods!.isNotEmpty)
+              GetBuilder<RootController>(builder: (_) {
+                return GestureDetector(
+                  onTap: () => {
+                    Get.back(),
+                    _.setCurrentIndex(1),
+                    _.jumpPage(1),
+                  },
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        R.ASSETS_ICONS_TABS_GRANARY_ED_PNG,
+                        width: 25.w,
+                        height: 25.w,
+                      ),
+                      Text('粮仓')
+                    ],
+                  ).paddingOnly(left: 10.w, bottom: 10.h),
+                );
+              }),
             ...m.optionList!
                 .map((e) => BuildOptionItem(
                       onValueChange: (item) => c.onSelectOption(item, m),
@@ -134,13 +175,147 @@ class DecisionAndManageView extends GetView {
                   ],
                 ),
               ).paddingSymmetric(horizontal: 13.w, vertical: 20.w),
-            if (m.ifContent == 1) _buildUserInputContent(_border, m),
-            if (m.ifImage == 1 && m.status == 1)
-              _buildUploadImage(_border, c, m),
+            // if (m.ifContent == 1) _buildUserInputContent(_border, m),
+            // if (m.ifImage == 1 && m.status == 1)
+            //   _buildUploadImage(_border, c, m),
             if (m.status == 1) _buildPayment(m, c),
           ],
         );
       }),
+    );
+  }
+
+  Widget _buildGoodsItem(DecesionGoodsItem model) {
+    return GetBuilder<FieldDetailController>(builder: (controller) {
+      return GestureDetector(
+        onTap: () => controller.onJumpToGoodsDetail(model.id),
+        child: Container(
+          decoration: BoxDecoration(
+            color: KWhiteColor,
+            border: Border.all(width: 1, color: Color(0xffF2F2F2)),
+          ),
+          child: Column(
+            children: [
+              Image.network(model.goodsImage!,
+                  width: 174.w, height: 174.w, fit: BoxFit.fill),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      bottom: 13.5.w, top: 9.5.w, left: 5.5.w, right: 5.5.w),
+                  child: Text(
+                    '${model.goodsName}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 14.sp,
+                        height: 1.2.h,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 5.5.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text.rich(
+                            TextSpan(
+                              text: model.goodsPrice,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 22.sp,
+                                  fontWeight: FontWeight.bold),
+                              children: [
+                                TextSpan(
+                                  text: '  /箱',
+                                  style: TextStyle(
+                                    color: kAppSubGrey99Color,
+                                    fontSize: 10.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 8.5.w),
+                          _buildSpecialPrice(model.exclusivePrice!)
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => controller.addGoods(model.id!),
+                    child: Image.asset(R.ASSETS_IMAGES_FIELD_DETAIL_CART_PNG,
+                        width: 46.w),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: 9.5.w, top: 17.5.w, left: 5.5.w, right: 5.5.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '销量: ${model.salesVolume}',
+                      style:
+                          TextStyle(fontSize: 10.sp, color: kAppSubGrey99Color),
+                    ),
+                    Text(
+                      '评价: ${model.evaluationNumber}',
+                      style:
+                          TextStyle(fontSize: 10.sp, color: kAppSubGrey99Color),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  // 优源专享
+  Widget _buildSpecialPrice(String price) {
+    return Row(
+      children: [
+        Text('优源专享', style: TextStyle(fontSize: 11.sp)),
+        BubbleBox(
+          shape: BubbleShapeBorder(
+            border: BubbleBoxBorder(
+              color: Color(0xffF8B041),
+              width: 3,
+            ),
+            position: const BubblePosition.center(0),
+            direction: BubbleDirection.left,
+          ),
+          padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 3.w),
+          backgroundColor: Color(0xffF8B041),
+          child: Text.rich(
+            TextSpan(
+              text: '¥',
+              style: TextStyle(
+                color: KWhiteColor,
+                fontSize: 9.sp,
+                fontWeight: FontWeight.bold,
+              ),
+              children: [
+                TextSpan(
+                  text: price,
+                  style: TextStyle(
+                    color: KWhiteColor,
+                    fontSize: 12.sp,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -209,7 +384,7 @@ class DecisionAndManageView extends GetView {
                       fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
-                  text: m.optionPrice ?? '0.00',
+                  text: m.totalPrice ?? '0.00',
                   style: TextStyle(
                       fontSize: 13.sp,
                       color: Colors.red,

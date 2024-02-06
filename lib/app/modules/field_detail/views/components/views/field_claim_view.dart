@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mallxx_app/app/components/number_item.dart';
 import 'package:mallxx_app/app/models/field_detail_model.dart';
 import 'package:mallxx_app/app/modules/field_detail/controllers/field_detail_controller.dart';
+import 'package:mallxx_app/app/modules/root/controllers/field_controller.dart';
 import 'package:mallxx_app/const/colors.dart';
 
 class FieldClaimView extends GetView<FieldDetailController> {
@@ -21,7 +22,7 @@ class FieldClaimView extends GetView<FieldDetailController> {
     );
     return Scaffold(
       backgroundColor: KWhiteColor,
-      appBar: AppBar(title: const Text('田地认领'), centerTitle: true),
+      appBar: AppBar(title: const Text('农场认领'), centerTitle: true),
       body: Column(
         children: [
           Expanded(
@@ -119,6 +120,136 @@ class FieldClaimView extends GetView<FieldDetailController> {
                         child: HtmlWidget(model.content!),
                       ),
                       SizedBox(height: 10.w),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  decoration: _border,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 26.w, vertical: 5.w),
+                        margin: EdgeInsets.only(bottom: 10.h),
+                        color: kAppLightColor,
+                        child: Text('默认联系人信息',
+                            style:
+                                TextStyle(color: kAppColor, fontSize: 14.sp)),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 6.6.w, left: 11.5.w),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  '姓名：',
+                                  style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Expanded(
+                                  child: TextField(
+                                    // controller: controller.nameController,
+                                    decoration: InputDecoration(
+                                      hintText: '请输入姓名',
+                                      hintStyle: TextStyle(
+                                          fontSize: 13.sp,
+                                          color: kAppSubGrey99Color),
+                                      border: InputBorder.none,
+                                    ),
+                                    onChanged: (value) {
+                                      controller.claimName = value;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  '电话：',
+                                  style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Expanded(
+                                  child: TextField(
+                                    // controller: controller.nameController,
+                                    decoration: InputDecoration(
+                                      hintText: '请输入电话',
+                                      hintStyle: TextStyle(
+                                          fontSize: 13.sp,
+                                          color: kAppSubGrey99Color),
+                                      border: InputBorder.none,
+                                    ),
+                                    onChanged: (value) {
+                                      controller.claimPhone = value;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  '所在地区：',
+                                  style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Expanded(
+                                  child: GetBuilder<FieldController>(
+                                    id: 'update_location',
+                                    builder: (_) {
+                                      return GestureDetector(
+                                        onTap: () => _.onSelectAddress(false),
+                                        child: SizedBox(
+                                          child: Text(
+                                            _.searchModel.mergename!.isNotEmpty
+                                                ? _.searchModel.mergename!
+                                                : '',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(fontSize: 14.sp),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  '详细地址：',
+                                  style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Expanded(
+                                  child: TextField(
+                                    // controller: controller.nameController,
+                                    decoration: InputDecoration(
+                                      hintText: '街道/小区',
+                                      hintStyle: TextStyle(
+                                          fontSize: 13.sp,
+                                          color: kAppSubGrey99Color),
+                                      border: InputBorder.none,
+                                    ),
+                                    onChanged: (value) {
+                                      controller.claimAddress = value;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

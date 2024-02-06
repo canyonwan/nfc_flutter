@@ -289,6 +289,16 @@ class AccountView extends GetView<AccountController> {
             Row(
               children: [
                 GestureDetector(
+                  // onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
+                  onTap: controller.onLaunchInBrowser,
+                  child: Image.asset(
+                    R.ASSETS_ICONS_MINE_HELP_AND_KEFU_PNG,
+                    width: 44.h,
+                    height: 44.h,
+                  ),
+                ),
+                SizedBox(width: 10.w),
+                GestureDetector(
                   onTap: () => Get.toNamed(Routes.HEALTH_BUTLER),
                   child: Image.asset(
                     R.ASSETS_ICONS_MINE_JIANKANGGUANJIA_ICON_PNG,
@@ -296,15 +306,7 @@ class AccountView extends GetView<AccountController> {
                     height: 40.h,
                   ),
                 ),
-                SizedBox(width: 10.w),
-                GestureDetector(
-                  onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
-                  child: Image.asset(
-                    R.ASSETS_ICONS_MINE_HELP_AND_KEFU_PNG,
-                    width: 44.h,
-                    height: 44.h,
-                  ),
-                ),
+
               ],
             ),
           ],

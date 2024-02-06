@@ -88,6 +88,12 @@ class FieldDetailController extends GetxController
 
   String shareSettingExplain = '';
 
+  // 认领提交订单的入参
+  String claimName = '';
+  String claimPhone = '';
+  String claimAddressId = '';
+  String claimAddress = '';
+
   @override
   void onInit() {
     fieldId = Get.arguments['id'];
@@ -214,6 +220,7 @@ class FieldDetailController extends GetxController
         recordList = res.data!.recordList!;
         totalPage = res.data!.totalPage!;
         dataModel = res.data!;
+        print('dataModel:${res.data!.decisionList}');
       }
       change(dataModel, status: RxStatus.success());
       update(['updateFieldDetail']);
@@ -293,8 +300,13 @@ class FieldDetailController extends GetxController
       showToast('请先同意认领协议');
       return;
     }
-    final res =
-        await fieldProvider.createFieldClaimOrder(claimId!, count.value);
+    print('name: ${fieldController.searchModel.mergename}');
+    // fieldController.searchModel.mergename转为数组 不要第一个
+    var arr = fieldController.searchModel.mergename!.split(',');
+    arr.removeAt(0);
+    var mergename = arr.join(',');
+    final res = await fieldProvider.createFieldClaimOrder(
+        claimId!, count.value, claimName, claimPhone, mergename, claimAddress);
     if (res.code == 200) {
       Get.toNamed(Routes.ORDER_PAYMENT, arguments: {
         'payPrice': res.data!.totalPrice.toString(),
@@ -306,6 +318,10 @@ class FieldDetailController extends GetxController
         Get.toNamed(Routes.BINDTEL);
       }
     }
+  }
+
+  Future<void> onChangeAddress() async {
+    await fieldController.onSelectAddress(false);
   }
 
   // 决策管理 选项选中
@@ -367,7 +383,7 @@ class FieldDetailController extends GetxController
     // 提交成功
     if (orderRes.code == 200) {
       m.image = image;
-      m.totalPrice = orderRes.data!.totalPrice;
+      m.totalPrice = orderRes.data!.totalPrice!;
       m.status = 0;
       EasyLoading.dismiss();
       if (orderRes.data!.ifPay == 1) {

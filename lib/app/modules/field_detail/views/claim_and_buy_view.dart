@@ -361,8 +361,47 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
         ),
         child: Column(
           children: [
-            Image.network(model.goodsImage!,
-                width: 174.w, height: 174.w, fit: BoxFit.fill),
+            // Image.network(model.goodsImage!,
+            //     width: 174.w, height: 174.w, fit: BoxFit.fill),
+            model.ifSellOut == 1
+                ? Stack(
+                    children: [
+                      ShaderMask(
+                        shaderCallback: (Rect bounds) {
+                          return LinearGradient(
+                            colors: [
+                              Colors.black.withOpacity(.6),
+                              Colors.white
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ).createShader(bounds);
+                        },
+                        child: Image(
+                          image: NetworkImage(model.goodsImage!),
+                          fit: BoxFit.fill,
+                          width: Get.width,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        left: 0,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 4.w),
+                          color: Colors.black.withOpacity(.5),
+                          alignment: Alignment.center,
+                          child: Text('已卖完',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ],
+                  )
+                : Image(
+                    image: NetworkImage(model.goodsImage!),
+                    fit: BoxFit.fill,
+                    width: Get.width,
+                  ),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(

@@ -32,6 +32,7 @@ class BaseProvider extends GetConnect {
 
       request.headers["Accept-Language"] = language;
       request.headers["token"] = loginProvider.getToken() ?? "";
+      print('header:  ${request.headers}');
 
       return request;
     });

@@ -8,6 +8,8 @@ import 'package:mallxx_app/app/models/qr_code_model.dart';
 import 'package:mallxx_app/app/modules/root/providers/member_provider.dart';
 import 'package:mallxx_app/app/modules/views/my_qrcode_view.dart';
 import 'package:mallxx_app/app/routes/app_pages.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '/app/models/product_model.dart';
 import '/app/providers/login_provider.dart';
@@ -36,7 +38,6 @@ class AccountController extends GetxController
   void onInit() {
     // setMember();
     getAccountInfo();
-    getMyQrCode();
     super.onInit();
   }
 
@@ -49,6 +50,18 @@ class AccountController extends GetxController
       update();
     } else {
       change(null, status: RxStatus.error(res.msg));
+    }
+  }
+
+
+  Future<void> onLaunchInBrowser() async {
+    var url = 'https://work.weixin.qq.com/kfid/kfc293acb0f76407da6';
+    if (!await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalNonBrowserApplication,
+    )) {
+      showToast('Could not launch $url');
+      throw Exception('Could not launch $url');
     }
   }
 
@@ -142,13 +155,15 @@ class AccountController extends GetxController
 
   Future<void> getMyQrCode() async {
     final res = await memberProvider.queryMyQrCode();
+    print('getMyQrCode: $res');
     if (res.code == 200) {
       qrCodeDataModel = res.data!;
       update();
     }
   }
 
-  void onViewQRCode() {
+  Future<void> onViewQRCode() async {
+    await getMyQrCode();
     Get.to(() => MyQrcodeView(qrCodeDataModel));
   }
 

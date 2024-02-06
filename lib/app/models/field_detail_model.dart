@@ -642,9 +642,20 @@ class DecisionItemModel {
     this.ifImage,
     this.ifCheck,
     this.optionPrice,
+    this.decesionGoods,
   });
 
   factory DecisionItemModel.fromJson(Map<String, dynamic> jsonRes) {
+    final List<DecesionGoodsItem>? decesionGoods =
+        jsonRes['decesion_goods'] is List ? <DecesionGoodsItem>[] : null;
+    if (decesionGoods != null) {
+      for (final dynamic item in jsonRes['decesion_goods']!) {
+        if (item != null) {
+          decesionGoods.add(
+              DecesionGoodsItem.fromJson(asT<Map<String, dynamic>>(item)!));
+        }
+      }
+    }
     final List<OptionItemModel>? optionList =
         jsonRes['option_list'] is List ? <OptionItemModel>[] : null;
     if (optionList != null) {
@@ -666,6 +677,7 @@ class DecisionItemModel {
       ifImage: asT<int?>(jsonRes['ifImage']),
       ifCheck: asT<int?>(jsonRes['ifCheck']),
       optionList: optionList,
+      decesionGoods: decesionGoods!,
       memberChoose: asT<int?>(jsonRes['member_choose']),
       item: asT<String?>(jsonRes['item']),
       image: asT<String?>(jsonRes['image']),
@@ -681,6 +693,7 @@ class DecisionItemModel {
   String? statusName;
   int? status;
   List<OptionItemModel>? optionList;
+  List<DecesionGoodsItem>? decesionGoods;
   int? memberChoose;
   String? item;
   String? image;
@@ -709,6 +722,52 @@ class DecisionItemModel {
         'id': id,
         'countdown': countdown,
         'content': content,
+      };
+}
+
+class DecesionGoodsItem {
+  DecesionGoodsItem({
+    required this.evaluationNumber,
+    required this.exclusivePrice,
+    required this.goodsImage,
+    required this.goodsName,
+    required this.goodsPrice,
+    required this.id,
+    required this.salesVolume,
+  });
+
+  factory DecesionGoodsItem.fromJson(Map<String, dynamic> json) =>
+      DecesionGoodsItem(
+        evaluationNumber: asT<int>(json['evaluation_number'])!,
+        exclusivePrice: asT<String>(json['exclusive_price'])!,
+        goodsImage: asT<String>(json['goods_image'])!,
+        goodsName: asT<String>(json['goods_name'])!,
+        goodsPrice: asT<String>(json['goods_price'])!,
+        id: asT<int>(json['id'])!,
+        salesVolume: asT<int>(json['sales_volume'])!,
+      );
+
+  int evaluationNumber;
+  String exclusivePrice;
+  String goodsImage;
+  String goodsName;
+  String goodsPrice;
+  int id;
+  int salesVolume;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'evaluation_number': evaluationNumber,
+        'exclusive_price': exclusivePrice,
+        'goods_image': goodsImage,
+        'goods_name': goodsName,
+        'goods_price': goodsPrice,
+        'id': id,
+        'sales_volume': salesVolume,
       };
 }
 

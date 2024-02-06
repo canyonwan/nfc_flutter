@@ -9,7 +9,6 @@ import 'package:mallxx_app/app/modules/field_detail/views/claim_and_buy_view.dar
 import 'package:mallxx_app/app/modules/field_detail/views/decision_and_manage_view.dart';
 import 'package:mallxx_app/app/modules/field_detail/views/field_content_view.dart';
 import 'package:mallxx_app/app/modules/field_detail/views/live_action_records_view.dart';
-import 'package:mallxx_app/app/modules/field_detail/views/vr_upload_view.dart';
 import 'package:mallxx_app/app/routes/app_pages.dart';
 import 'package:mallxx_app/const/colors.dart';
 import 'package:mallxx_app/const/resource.dart';
@@ -372,10 +371,10 @@ class FieldDetailView extends GetView<FieldDetailController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          colText('${c.dataModel.weather!.feelsLike}℃', '体感温度'),
+                          colText('${c.dataModel.weather?.feelsLike}℃', '体感温度'),
                           colText(
-                              '${c.dataModel.weather!.windSpeed}km/h', '风速'),
-                          colText('${c.dataModel.weather!.windDir}', '风向'),
+                              '${c.dataModel.weather?.windSpeed}km/h', '风速'),
+                          colText('${c.dataModel.weather?.windDir}', '风向'),
                         ],
                       ),
                       Padding(
@@ -386,7 +385,7 @@ class FieldDetailView extends GetView<FieldDetailController> {
                             colText('${c.dataModel.weather!.humidity}%', '湿度'),
                             colText('${c.dataModel.weather!.precip}mm', '降水量'),
                             colText(
-                                '${c.dataModel.weather!.windScale}级', '风力等级'),
+                                '${c.dataModel.weather?.windScale}级', '风力等级'),
                           ],
                         ),
                       ),
@@ -421,7 +420,7 @@ class FieldDetailView extends GetView<FieldDetailController> {
                       'type': 1
                     }),
                 child: Image.asset(R.ASSETS_ICONS_FIELD_ZHUCHIZHIBO_PNG,
-                    width: 50.w)),
+                    width: 40.w)),
           if (c.buttonStatusDataModel.ifMonitor2 == 2)
             GestureDetector(
               onTap: () => Get.toNamed(
@@ -432,7 +431,7 @@ class FieldDetailView extends GetView<FieldDetailController> {
                 },
               ),
               child: Image.asset(R.ASSETS_ICONS_FIELD_SHISHIHUAMIAN_PNG,
-                      width: 50.w)
+                      width: 30.w)
                   .paddingSymmetric(vertical: 10.h),
             ),
           if (c.buttonStatusDataModel.ifVr == 2)
@@ -441,18 +440,30 @@ class FieldDetailView extends GetView<FieldDetailController> {
                       Routes.VR360,
                       arguments: {'list': c.buttonStatusDataModel.vrList},
                     ),
-                child: Image.asset(R.ASSETS_ICONS_FIELD_VR_PNG, width: 50.w)),
+                child: Image.asset(R.ASSETS_ICONS_FIELD_VR_PNG, width: 30.w)),
           // Image.asset(R.ASSETS_ICONS_FIELD_YUANCHENGJIANKONG_PNG, width: 50.w),
           if (c.buttonStatusDataModel.ifUpload == 2)
             GestureDetector(
               onTap: () {
-                Get.to(() => VrUploadView(),
-                    arguments: {'articleId': c.fieldId});
+                // Get.to(() => VrUploadView(),
+                //     arguments: {'articleId': c.fieldId});
+                Get.toNamed(Routes.VIDEO_UPLOAD, arguments: {
+                  'articleId': c.fieldId,
+                });
               },
-              child: Image.asset('assets/images/image_upload_icon.png',
-                      width: 50.w)
+              child: Image.asset('assets/images/fatuwen.png', width: 30.w)
                   .paddingOnly(top: 10.h),
-            )
+            ),
+          if (c.buttonStatusDataModel.ifUpload == 2)
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(Routes.IMAGE_TEXT_UPLOAD, arguments: {
+                  'articleId': c.fieldId,
+                });
+              },
+              child: Image.asset('assets/images/fashipin.png', width: 30.w)
+                  .paddingOnly(top: 10.h),
+            ),
         ],
       );
     });
