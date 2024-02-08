@@ -78,26 +78,25 @@ class DecisionAndManageView extends GetView {
                 itemBuilder: (_, int index) =>
                     _buildGoodsItem(m.decesionGoods![index]),
               ),
-            if (m.decesionGoods!.isNotEmpty)
-              GetBuilder<RootController>(builder: (_) {
-                return GestureDetector(
-                  onTap: () => {
-                    Get.back(),
-                    _.setCurrentIndex(1),
-                    _.jumpPage(1),
-                  },
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        R.ASSETS_ICONS_TABS_GRANARY_ED_PNG,
-                        width: 25.w,
-                        height: 25.w,
-                      ),
-                      Text('粮仓')
-                    ],
-                  ).paddingOnly(left: 10.w, bottom: 10.h),
-                );
-              }),
+            GetBuilder<RootController>(builder: (_) {
+              return GestureDetector(
+                onTap: () => {
+                  Get.back(),
+                  _.setCurrentIndex(1),
+                  _.jumpPage(1),
+                },
+                child: Column(
+                  children: [
+                    Image.asset(
+                      R.ASSETS_ICONS_TABS_GRANARY_ED_PNG,
+                      width: 25.w,
+                      height: 25.w,
+                    ),
+                    Text('粮仓')
+                  ],
+                ).paddingOnly(left: 10.w, bottom: 10.h),
+              );
+            }),
             ...m.optionList!
                 .map((e) => BuildOptionItem(
                       onValueChange: (item) => c.onSelectOption(item, m),
@@ -136,6 +135,7 @@ class DecisionAndManageView extends GetView {
             ),
             //  用户选项说明
             buildOptionExplain(_border, m),
+            // 如果m.memberChoose是2，说明用户选择了第二个选项，那么就显示用户输入的内容
             if (m.content != '')
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 11.5.w),
@@ -175,9 +175,9 @@ class DecisionAndManageView extends GetView {
                   ],
                 ),
               ).paddingSymmetric(horizontal: 13.w, vertical: 20.w),
-            // if (m.ifContent == 1) _buildUserInputContent(_border, m),
-            // if (m.ifImage == 1 && m.status == 1)
-            //   _buildUploadImage(_border, c, m),
+            if (m.ifContent == 1) _buildUserInputContent(_border, m),
+            if (m.ifImage == 1 && m.status == 1)
+              _buildUploadImage(_border, c, m),
             if (m.status == 1) _buildPayment(m, c),
           ],
         );

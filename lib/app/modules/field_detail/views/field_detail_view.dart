@@ -431,7 +431,7 @@ class FieldDetailView extends GetView<FieldDetailController> {
                 },
               ),
               child: Image.asset(R.ASSETS_ICONS_FIELD_SHISHIHUAMIAN_PNG,
-                      width: 30.w)
+                      width: 50.w)
                   .paddingSymmetric(vertical: 10.h),
             ),
           if (c.buttonStatusDataModel.ifVr == 2)
@@ -440,7 +440,7 @@ class FieldDetailView extends GetView<FieldDetailController> {
                       Routes.VR360,
                       arguments: {'list': c.buttonStatusDataModel.vrList},
                     ),
-                child: Image.asset(R.ASSETS_ICONS_FIELD_VR_PNG, width: 30.w)),
+                child: Image.asset(R.ASSETS_ICONS_FIELD_VR_PNG, width: 50.w)),
           // Image.asset(R.ASSETS_ICONS_FIELD_YUANCHENGJIANKONG_PNG, width: 50.w),
           if (c.buttonStatusDataModel.ifUpload == 2)
             GestureDetector(
@@ -451,7 +451,7 @@ class FieldDetailView extends GetView<FieldDetailController> {
                   'articleId': c.fieldId,
                 });
               },
-              child: Image.asset('assets/images/fatuwen.png', width: 30.w)
+              child: Image.asset('assets/images/fatuwen.png', width: 50.w)
                   .paddingOnly(top: 10.h),
             ),
           if (c.buttonStatusDataModel.ifUpload == 2)
@@ -461,7 +461,7 @@ class FieldDetailView extends GetView<FieldDetailController> {
                   'articleId': c.fieldId,
                 });
               },
-              child: Image.asset('assets/images/fashipin.png', width: 30.w)
+              child: Image.asset('assets/images/fashipin.png', width: 50.w)
                   .paddingOnly(top: 10.h),
             ),
         ],
