@@ -81,7 +81,8 @@ class ImageTextUploadController extends GetxController {
 
   // 获取标签列表
   Future<void> getLabelList() async {
-    var res = await fieldProvider.queryLiveRecordLabelList();
+    var res = await fieldProvider
+        .queryLiveRecordLabelList(Get.arguments['articleId']);
     if (res.code == 200) {
       labelList = res.data;
     }

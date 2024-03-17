@@ -24,8 +24,10 @@ class VideoUploadController extends GetxController {
     title: '',
     vlabelIds: '',
     ifPrivate: 1,
-    videoImage: '', // 视频封面图链接
-    videoFile: '', // 视频链接
+    videoImage: '',
+    // 视频封面图链接
+    videoFile: '',
+    // 视频链接
     weigh: '',
   );
   List<int> tagList = [];
@@ -72,7 +74,9 @@ class VideoUploadController extends GetxController {
 
   // 获取标签列表
   Future<void> getLabelList() async {
-    var res = await fieldProvider.queryLiveRecordLabelList();
+    print('articleId: ${Get.arguments['articleId']}');
+    var res = await fieldProvider
+        .queryLiveRecordLabelList(Get.arguments['articleId']);
     if (res.code == 200) {
       labelList = res.data;
     }

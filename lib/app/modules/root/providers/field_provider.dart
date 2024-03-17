@@ -186,8 +186,8 @@ class FieldProvider extends BaseProvider {
   }
 
   // 视频/图文标签列表
-  Future<LabelListRootModel> queryLiveRecordLabelList() async {
-    final response = await post(labelListUrl, {});
+  Future<LabelListRootModel> queryLiveRecordLabelList(int articleId) async {
+    final response = await post(labelListUrl, {'article_id': articleId});
     return LabelListRootModel.fromJson(response.body);
   }
 
