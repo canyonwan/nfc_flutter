@@ -148,7 +148,7 @@ class FieldContentView extends GetView {
           children: [
             Padding(
               padding: EdgeInsets.only(bottom: 19.5.h),
-              child: _buildTitle('技术顾问'),
+              child: _buildTitle('专属客服'),
             ),
             Row(
               children: [
