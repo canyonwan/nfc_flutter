@@ -45,6 +45,7 @@ class FieldProvider extends BaseProvider {
   static const String uploadVideoUrl = "api/upload_video"; // 用户上传视频
   static const String pictureArticleDetailUrl = "api/notice_detail"; // 图文详情
   static const String shortVideoDetailUrl = "api/video_detail"; // 视频详情
+  static const String farmTransferUrl = "api/farm_transfer"; // 农场转移
   static const String savePictureArticleUrl =
       "api/member_alter_notice"; // 用户新建/编辑图文
   static const String saveShortVideoUrl =
@@ -166,9 +167,20 @@ class FieldProvider extends BaseProvider {
 
   // 生成田地认领订单
   Future<CreateFieldClaimRootModel> createFieldClaimOrder(
-      int claim_id, int count, String name, String phone, String address_id, String address) async {
-    final response = await post(
-        createFieldClaimOrderUrl, {'claim_id': claim_id, 'num': count, 'name': name, 'phone': phone, 'address_id': address_id, 'address': address});
+      int claim_id,
+      int count,
+      String name,
+      String phone,
+      String address_id,
+      String address) async {
+    final response = await post(createFieldClaimOrderUrl, {
+      'claim_id': claim_id,
+      'num': count,
+      'name': name,
+      'phone': phone,
+      'address_id': address_id,
+      'address': address
+    });
     print('提交订单：${response.body}');
     return CreateFieldClaimRootModel.fromJson(response.body);
   }
@@ -231,6 +243,14 @@ class FieldProvider extends BaseProvider {
   // 用户新建/编辑图文
   Future<ResponseData> savePictureArticle(SaveArticleRootModel params) async {
     final response = await post(savePictureArticleUrl, params.toJson());
+    return ResponseData.fromJson(response.body);
+  }
+
+  // 农场转移
+  Future<ResponseData> submitFarmTransfer(
+      String serialNumber, String transferCode) async {
+    final response = await post(farmTransferUrl,
+        {'serial_number': serialNumber, 'transfer': transferCode});
     return ResponseData.fromJson(response.body);
   }
 

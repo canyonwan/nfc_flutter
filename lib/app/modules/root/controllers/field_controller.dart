@@ -23,12 +23,16 @@ class FieldController extends GetxController {
   final EasyRefreshController easyRefreshController = EasyRefreshController(
       controlFinishRefresh: true, controlFinishLoad: true);
   final FieldProvider fieldProvider = Get.find<FieldProvider>();
+
   // final _findController = Get.find<FindController>();
 
   final categoryList = RxList<FieldCategoryItemModel>(); // 分类集合
   final fieldList = RxList<FieldItemModel>(); // 田地列表
   final isLoading = true.obs;
   final initLoading = true.obs;
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController transferController = TextEditingController();
 
   late FieldListDataModel dataModel;
   int totalPage = 0;
@@ -67,6 +71,24 @@ class FieldController extends GetxController {
       fieldList.value = res.data!.articleList!;
       update(['updateMenuId', 'updateFieldItem']);
       isLoading.value = false;
+    }
+  }
+
+  // 确认转移
+  Future<void> onConfirmTransfer() async {
+    if (codeController.text.isEmpty) {
+      showToast('请输入编码');
+      return;
+    }
+    if (transferController.text.isEmpty) {
+      showToast('请输入转移码');
+      return;
+    }
+    final res = await fieldProvider.submitFarmTransfer(
+        codeController.text, transferController.text);
+    if (res.code == 200) {
+      showToast('转移成功');
+      update(['updateFieldItem']);
     }
   }
 
@@ -186,6 +208,7 @@ class FieldController extends GetxController {
   }
 
   String areaId = '';
+
   // FindController _findController = Get.find<FindController>();
   Future<void> onSelectAddress(bool changeField,
       {VoidCallback? changeCarts}) async {

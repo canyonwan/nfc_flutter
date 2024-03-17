@@ -12,6 +12,7 @@ void tryCatch(Function? f) {
 
 class FFConvert {
   FFConvert._();
+
   static T? Function<T extends Object?>(dynamic value) convert =
       <T>(dynamic value) {
     if (value == null) {
@@ -180,6 +181,7 @@ class FieldCategoryItemModel {
   FieldCategoryItemModel({
     this.name,
     this.ifShow,
+    this.ifIncrease,
     this.id,
     this.count,
   });
@@ -188,12 +190,14 @@ class FieldCategoryItemModel {
       FieldCategoryItemModel(
         name: asT<String?>(jsonRes['name']),
         ifShow: asT<int?>(jsonRes['if_show']),
+        ifIncrease: asT<int?>(jsonRes['if_increase']),
         id: asT<int?>(jsonRes['id']),
         count: asT<int?>(jsonRes['count']),
       );
 
   String? name;
   int? ifShow;
+  int? ifIncrease;
   int? id;
   int? count;
 
@@ -205,6 +209,7 @@ class FieldCategoryItemModel {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'name': name,
         'if_show': ifShow,
+        'if_increase': ifIncrease,
         'id': id,
         'count': count,
       };

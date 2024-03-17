@@ -101,13 +101,150 @@ class FieldView extends GetView<FieldController> {
               color: KWhiteColor,
               child: Column(
                 children: [
-                  //if (controller.dataModel.labelIds!.isNotEmpty) _buildLabels(),
+                  // 需求先去掉
+                  // if (controller.dataModel.labelIds!.isNotEmpty) _buildLabels(),
+                  if (controller.dataModel.areaList![0].ifIncrease == 1)
+                    Container(
+                      height: 40.w,
+                      width: double.infinity,
+                      margin: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.w),
+                        gradient: LinearGradient(colors: [
+                          Color(0xffFFCA6E),
+                          Color(0xffF9DA90),
+                        ]),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(13, 13, 13, 0.2),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '凭编码和转移码手动添加',
+                            style:
+                                TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5)),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.dialog(Container(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 17.5.w, vertical: 18.w),
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 17.5.w, vertical: 12.w),
+                                      decoration: BoxDecoration(
+                                        color: KWhiteColor,
+                                        borderRadius:
+                                            BorderRadius.circular(10.w),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          TextField(
+                                            controller:
+                                                controller.codeController,
+                                            decoration: InputDecoration(
+                                              hintText: '请输入编码',
+                                              hintStyle: TextStyle(
+                                                  color: kAppSubGrey99Color),
+                                              border: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 1.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 6.w),
+                                          TextField(
+                                            controller:
+                                                controller.transferController,
+                                            decoration: InputDecoration(
+                                              hintText: '请输入转移码',
+                                              hintStyle: TextStyle(
+                                                  color: kAppSubGrey99Color),
+                                              border: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 1.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 6.w),
+                                          GestureDetector(
+                                            onTap: controller.onConfirmTransfer,
+                                            child: Container(
+                                              margin: EdgeInsets.all(10.w),
+                                              width: double.infinity,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 12.w,
+                                                vertical: 12.w,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: kAppColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(30.w),
+                                              ),
+                                              child: Text('确认添加',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14.sp,
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 14.h),
+                                      child: GestureDetector(
+                                        onTap: () => Get.back(),
+                                        child: Image.asset(
+                                          R.ASSETS_ICONS_MARKET_PRESALE_CLOSE_ICON_PNG,
+                                          width: 35.w,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w, vertical: 2.w),
+                              decoration: BoxDecoration(
+                                color: Color(0xffF4990E),
+                                borderRadius: BorderRadius.circular(10.w),
+                              ),
+                              child: Text('添加',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12.sp,
+                                  )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   _buildFieldListBox(fields)
                 ],
               ),
             );
         }),
-        Align(child: _buildAllLabels())
+        Align(child: _buildAllLabels()),
       ],
     );
   }
