@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:better_video_player/better_video_player.dart';
-import 'package:bruno/bruno.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,12 +70,19 @@ class FieldDetailController extends GetxController
   int goodsCount = 0; // 商品数量
   int orderCount = 0; // 订单数量
 
-  final tabs = <BadgeTab>[
-    BadgeTab(text: '实景记录'),
-    BadgeTab(text: '决策管理'),
-    BadgeTab(text: '田地资料'),
-    BadgeTab(text: '认领购买'),
-  ];
+  // List<BadgeTab> tabs = <BadgeTab>[
+  //   BadgeTab(text: '实景记录'),
+  //   BadgeTab(text: '决策管理'),
+  //   BadgeTab(text: '田地资料'),
+  //   BadgeTab(text: '认领购买'),
+  // ];
+  List tabs = <String>[];
+  String part1 = '';
+  String part2 = '';
+  String part3 = '';
+  String part4 = '';
+  int part1Badge = 0;
+  int part2Badge = 0;
 
   late TabController tabController;
   FieldDetailButtonStatusDataModel buttonStatusDataModel =
@@ -97,7 +103,7 @@ class FieldDetailController extends GetxController
   @override
   void onInit() {
     fieldId = Get.arguments['id'];
-    tabController = TabController(length: tabs.length, vsync: this);
+
     getFieldDetail(onlyChangeLive: false);
     getDetailButtonStatusUrl();
     getGoodsCount();
@@ -109,6 +115,17 @@ class FieldDetailController extends GetxController
   @override
   void onReady() {
     // onIncrement(count.value);
+    tabController.addListener(() {
+      //   如果tabController.index == 1并且tabs[index].text == '决策管理'，则调用getDetailButtonStatusUrl
+      if (tabController.index == 1 && tabs[tabController.index].text == part2) {
+        onMarkReadForVRAndDecision(2);
+        return;
+      } else if (tabController.index == 0 &&
+          tabs[tabController.index].text == part1) {
+        onMarkReadForVRAndDecision(1);
+        return;
+      }
+    });
     super.onReady();
   }
 
@@ -146,6 +163,16 @@ class FieldDetailController extends GetxController
         print('labels:$labels');
       }
       update(['updateFieldDetail']);
+    }
+  }
+
+  // 标为已读
+  // 1=实景，2=决策
+  Future<void> onMarkReadForVRAndDecision(int part) async {
+    var res = await fieldProvider.markReadForVRAndDecision(fieldId, part);
+    print('mark read:${res}');
+    if (res.code == 200) {
+      getFieldDetail();
     }
   }
 
@@ -220,10 +247,47 @@ class FieldDetailController extends GetxController
         recordList = res.data!.recordList!;
         totalPage = res.data!.totalPage!;
         dataModel = res.data!;
-        print('dataModel:${res.data!.decisionList}');
+        if (dataModel.ifRecord == 1) {
+          tabs.add(dataModel.part1);
+          part1 = dataModel.part1!;
+          part1Badge = dataModel.part1Num ?? 0;
+          // tabs.add(
+          //   BadgeTab(
+          //     text: dataModel.part1,
+          //     badgeNum: dataModel.part1Num,
+          //     showRedBadge: dataModel.part1Num! > 0,
+          //   ),
+          // );
+        }
+        if (dataModel.ifDecision == 1) {
+          tabs.add(dataModel.part2);
+          part2 = dataModel.part2!;
+          part2Badge = dataModel.part2Num ?? 0;
+          // tabs.add(BadgeTab(
+          //   text: dataModel.part2,
+          //   badgeNum: dataModel.part2Num,
+          //   showRedBadge: dataModel.part2Num! > 0,
+          // ));
+        }
+        if (dataModel.ifContent == 1) {
+          // tabs.add(BadgeTab(text: dataModel.part3));
+          tabs.add(dataModel.part3);
+          part3 = dataModel.part3!;
+        }
+        if (dataModel.ifProduct == 1) {
+          // tabs.add(BadgeTab(text: dataModel.part4));
+          tabs.add(dataModel.part4);
+          part4 = dataModel.part4!;
+        }
       }
       change(dataModel, status: RxStatus.success());
       update(['updateFieldDetail']);
+      tabController = TabController(length: tabs.length, vsync: this);
+      if (tabs[0].text == part1) {
+        onMarkReadForVRAndDecision(1);
+      } else if (tabs[0].text == part2) {
+        onMarkReadForVRAndDecision(2);
+      }
     } else {
       change(dataModel, status: RxStatus.error());
     }

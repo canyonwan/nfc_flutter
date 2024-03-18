@@ -5,6 +5,7 @@ import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:city_pickers/city_pickers.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
 import 'package:lpinyin/lpinyin.dart';
@@ -84,10 +85,14 @@ class FieldController extends GetxController {
       showToast('请输入转移码');
       return;
     }
+    EasyLoading.show(status: '转移中..');
     final res = await fieldProvider.submitFarmTransfer(
         codeController.text, transferController.text);
     if (res.code == 200) {
+      getCategory(changeMenu: false);
+      EasyLoading.dismiss();
       showToast('转移成功');
+      Get.back();
       update(['updateFieldItem']);
     }
   }

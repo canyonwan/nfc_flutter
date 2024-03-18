@@ -103,7 +103,7 @@ class FieldView extends GetView<FieldController> {
                 children: [
                   // 需求先去掉
                   // if (controller.dataModel.labelIds!.isNotEmpty) _buildLabels(),
-                  if (controller.dataModel.areaList![0].ifIncrease == 1)
+                  if (controller.dataModel.ifIncrease == 1)
                     Container(
                       height: 40.w,
                       width: double.infinity,

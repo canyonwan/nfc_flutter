@@ -248,6 +248,9 @@ class FieldDetailView extends GetView<FieldDetailController> {
     return GetBuilder<FieldDetailController>(
         id: 'updateFieldDetail',
         builder: (c) {
+          if (c.tabs.length == 0) {
+            return BrnPageLoading();
+          }
           return TabBar(
             isScrollable: true,
             controller: c.tabController,
@@ -264,24 +267,39 @@ class FieldDetailView extends GetView<FieldDetailController> {
             tabs: [
               if (c.dataModel.ifRecord == 1)
                 Tab(
-                  child: Row(
-                    children: [
-                      Text('实景记录'),
-                      GestureDetector(
-                        onTap: () => c.onSortRecord(c.sort),
-                        child: Image.asset(
-                          c.sort == 1
-                              ? R.ASSETS_ICONS_MARKET_SORT_DOWN_PNG
-                              : R.ASSETS_ICONS_MARKET_SORT_UP_PNG,
-                          width: 9.w,
-                        ).paddingOnly(left: 5.w),
-                      ),
-                    ],
+                  child: Badge(
+                    position: BadgePosition(top: -8.w, end: -20.w),
+                    showBadge: c.part1Badge > 0,
+                    badgeContent: Text('${c.part1Badge}',
+                        style: TextStyle(color: Colors.white)),
+                    child: Row(
+                      children: [
+                        Text('${c.part1}'),
+                        GestureDetector(
+                          onTap: () => c.onSortRecord(c.sort),
+                          child: Image.asset(
+                            c.sort == 1
+                                ? R.ASSETS_ICONS_MARKET_SORT_DOWN_PNG
+                                : R.ASSETS_ICONS_MARKET_SORT_UP_PNG,
+                            width: 9.w,
+                          ).paddingOnly(left: 5.w),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              if (c.dataModel.ifDecision == 1) Tab(text: '决策管理'),
-              if (c.dataModel.ifContent == 1) Tab(text: '详情资料'),
-              if (c.dataModel.ifProduct == 1) Tab(text: '认领购买'),
+              if (c.dataModel.ifDecision == 1)
+                Tab(
+                  child: Badge(
+                    showBadge: c.part2Badge > 0,
+                    badgeContent: Text('${c.part2Badge}',
+                        style: TextStyle(color: Colors.white)),
+                    // position: BadgePosition(top: -6.w, end: -1.w),
+                    child: Text('${c.part2}'),
+                  ),
+                ),
+              if (c.dataModel.ifContent == 1) Tab(text: '${c.part3}'),
+              if (c.dataModel.ifProduct == 1) Tab(text: '${c.part4}'),
             ],
           );
         });
@@ -409,8 +427,9 @@ class FieldDetailView extends GetView<FieldDetailController> {
 
   Widget _buildMediaButtons() {
     return GetBuilder<FieldDetailController>(builder: (c) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      return Wrap(
+        direction: Axis.vertical,
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           if (c.buttonStatusDataModel.status == 2)
             GestureDetector(

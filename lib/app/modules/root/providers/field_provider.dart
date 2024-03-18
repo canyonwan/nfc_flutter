@@ -61,7 +61,7 @@ class FieldProvider extends BaseProvider {
 
   Future<FieldListRootModel> getCategory(
       FieldListSearchModel searchModel) async {
-    // searchModel.mergename = "中国,陕西省,西安市,雁塔区";
+    searchModel.mergename = "中国,陕西省,西安市,雁塔区";
     final response = await post(categoryWithChildren, searchModel.toJson());
     return FieldListRootModel.fromJson(response.body);
   }
@@ -259,6 +259,18 @@ class FieldProvider extends BaseProvider {
     final response = await post(
       saveShortVideoUrl,
       model.toJson(),
+    );
+    return ResponseData.fromJson(response.body);
+  }
+
+  // 实景和决策标记为已读
+  Future<ResponseData> markReadForVRAndDecision(int articleId, int part) async {
+    final response = await post(
+      "api/farm_mark",
+      {
+        "article_id": articleId,
+        "part": part,
+      },
     );
     return ResponseData.fromJson(response.body);
   }

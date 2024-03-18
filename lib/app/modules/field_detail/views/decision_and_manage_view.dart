@@ -78,25 +78,26 @@ class DecisionAndManageView extends GetView {
                 itemBuilder: (_, int index) =>
                     _buildGoodsItem(m.decesionGoods![index]),
               ),
-            GetBuilder<RootController>(builder: (_) {
-              return GestureDetector(
-                onTap: () => {
-                  Get.back(),
-                  _.setCurrentIndex(1),
-                  _.jumpPage(1),
-                },
-                child: Column(
-                  children: [
-                    Image.asset(
-                      R.ASSETS_ICONS_TABS_GRANARY_ED_PNG,
-                      width: 25.w,
-                      height: 25.w,
-                    ),
-                    Text('粮仓')
-                  ],
-                ).paddingOnly(left: 10.w, bottom: 10.h),
-              );
-            }),
+            if (m.ifGranary == 1)
+              GetBuilder<RootController>(builder: (_) {
+                return GestureDetector(
+                  onTap: () => {
+                    Get.back(),
+                    _.setCurrentIndex(1),
+                    _.jumpPage(1),
+                  },
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        R.ASSETS_ICONS_TABS_GRANARY_ED_PNG,
+                        width: 25.w,
+                        height: 25.w,
+                      ),
+                      Text('粮仓')
+                    ],
+                  ).paddingOnly(left: 10.w, bottom: 10.h),
+                );
+              }),
             ...m.optionList!
                 .map((e) => BuildOptionItem(
                       onValueChange: (item) => c.onSelectOption(item, m),

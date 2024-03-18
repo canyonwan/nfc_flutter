@@ -113,6 +113,12 @@ class FieldDetailDataModel {
     this.content,
     this.claimList,
     this.chippedList,
+    this.part1,
+    this.part2,
+    this.part3,
+    this.part4,
+    this.part1Num,
+    this.part2Num,
   });
 
   factory FieldDetailDataModel.fromJson(Map<String, dynamic> jsonRes) {
@@ -228,6 +234,12 @@ class FieldDetailDataModel {
       content: asT<String?>(jsonRes['content']),
       claimList: claimList,
       chippedList: chippedList,
+      part1: asT<String?>(jsonRes['part1']),
+      part2: asT<String?>(jsonRes['part2']),
+      part3: asT<String?>(jsonRes['part3']),
+      part4: asT<String?>(jsonRes['part4']),
+      part1Num: asT<int?>(jsonRes['part1_num']),
+      part2Num: asT<int?>(jsonRes['part2_num']),
     );
   }
 
@@ -257,6 +269,13 @@ class FieldDetailDataModel {
   String? content;
   List<ClaimItemModel>? claimList;
   List<ChippedItemModel>? chippedList;
+
+  String? part1;
+  String? part2;
+  String? part3;
+  String? part4;
+  int? part1Num;
+  int? part2Num;
 
   @override
   String toString() {
@@ -290,6 +309,12 @@ class FieldDetailDataModel {
         'content': content,
         'claim_list': claimList,
         'chipped_list': chippedList,
+        'part1': part1,
+        'part2': part2,
+        'part3': part3,
+        'part4': part4,
+        'part1_num': part1Num,
+        'part2_num': part2Num,
       };
 }
 
@@ -629,6 +654,7 @@ class DecisionItemModel {
   DecisionItemModel({
     this.totalPrice,
     this.time,
+    this.ifGranary,
     this.statusName,
     this.status,
     this.optionList,
@@ -679,6 +705,7 @@ class DecisionItemModel {
       optionList: optionList,
       decesionGoods: decesionGoods!,
       memberChoose: asT<int?>(jsonRes['member_choose']),
+      ifGranary: asT<int?>(jsonRes['if_granary']),
       item: asT<String?>(jsonRes['item']),
       image: asT<String?>(jsonRes['image']),
       optionPrice: asT<String?>(jsonRes['optionPrice']),
@@ -704,6 +731,7 @@ class DecisionItemModel {
   int? ifImage;
   int? ifCheck;
   String? optionPrice;
+  int? ifGranary;
 
   @override
   String toString() {
@@ -722,6 +750,7 @@ class DecisionItemModel {
         'id': id,
         'countdown': countdown,
         'content': content,
+        'if_granary': ifGranary,
       };
 }
 

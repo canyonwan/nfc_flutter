@@ -92,6 +92,7 @@ class FieldListDataModel {
     required this.messageCount,
     this.labelIds,
     this.ifMessageShow,
+    this.ifIncrease,
     this.enjoy,
     this.articleList,
     this.areaList,
@@ -140,6 +141,7 @@ class FieldListDataModel {
       totalPage: asT<int>(jsonRes['total_page'])!,
       totalCount: asT<int>(jsonRes['total_count'])!,
       messageCount: asT<int>(jsonRes['message_count'])!,
+      ifIncrease: asT<int>(jsonRes['if_increase'])!,
       labelIds: labelIds,
       ifMessageShow: asT<int?>(jsonRes['if_message_show']),
       enjoy: jsonRes['enjoy'] == null
@@ -156,6 +158,7 @@ class FieldListDataModel {
   int messageCount;
   List<LabelItemModel>? labelIds;
   int? ifMessageShow;
+  int? ifIncrease;
   ShareItemModel? enjoy;
   List<FieldItemModel>? articleList;
   List<FieldCategoryItemModel>? areaList;
@@ -172,6 +175,7 @@ class FieldListDataModel {
         'label_ids': labelIds,
         'if_message_show': ifMessageShow,
         'enjoy': enjoy,
+        'if_increase': ifIncrease,
         'article_list': articleList,
         'area_list': areaList,
       };
