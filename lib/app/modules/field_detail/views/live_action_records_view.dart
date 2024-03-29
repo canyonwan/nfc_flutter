@@ -93,9 +93,13 @@ class _LiveActionRecordsViewState extends State<LiveActionRecordsView> {
               physics: physic,
               slivers: [
                 SliverToBoxAdapter(
-                  child: _buildTagItem(c)
+                  child: _buildSelectTagBox(c)
                       .paddingOnly(top: 14.w, left: 12.w, right: 12.w),
                 ),
+                // SliverToBoxAdapter(
+                //   child: _buildTagItem(c)
+                //       .paddingOnly(top: 14.w, left: 12.w, right: 12.w),
+                // ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) => _buildItem(index, c),
@@ -116,25 +120,74 @@ class _LiveActionRecordsViewState extends State<LiveActionRecordsView> {
         rowItemSpace * (rowCount - 1) / rowCount;
   }
 
-  Widget _buildTagItem(FieldDetailController c) {
-    return c.labelList.isNotEmpty
-        ? BrnSelectTag(
-            tags: c.labelList.map((e) => e.name).toList(),
-            spacing: 10,
-            softWrap: false,
-            fixWidthMode: false,
-            isSingleSelect: true,
-            tagWidth: _getTagWidth(context),
-            initTagState: [
-              c.labelList
-                  .map((e) => e.id.toString())
-                  .toList()
-                  .contains(c.labels),
-            ],
-            onSelect: (selectedIndexes) {
-              c.onFilterRecordList(selectedIndexes);
-            }).paddingOnly(bottom: 20.h)
-        : SizedBox();
+  // Widget _buildTagItem(FieldDetailController c) {
+  //   return c.labelList.isNotEmpty
+  //       ? BrnSelectTag(
+  //           themeData: BrnTagConfig(
+  //             tagRadius: 20.w,
+  //             tagBackgroundColor: Colors.white,
+  //           ),
+  //           tags: c.labelList.map((e) => e.name).toList(),
+  //           spacing: 10,
+  //           softWrap: false,
+  //           fixWidthMode: false,
+  //           isSingleSelect: true,
+  //           tagWidth: _getTagWidth(context),
+  //           initTagState: [
+  //             c.labelList
+  //                 .map((e) => e.id.toString())
+  //                 .toList()
+  //                 .contains(c.labelId),
+  //           ],
+  //           onSelect: (selectedIndexes) {
+  //             c.onFilterRecordList(selectedIndexes);
+  //           }).paddingOnly(bottom: 20.h)
+  //       : SizedBox();
+  // }
+
+  // 单选按钮组 类似BrnSelectTag
+  Widget _buildSelectTagBox(FieldDetailController c) {
+    return GetBuilder<FieldDetailController>(
+        id: 'updateFieldDetail',
+        builder: (context) {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                for (var item in c.labelList)
+                  GestureDetector(
+                    onTap: () {
+                      c.onFilterRecordList(item.id);
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h),
+                      margin: EdgeInsets.only(right: 10.w, bottom: 10.h),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 1.5,
+                            color: c.labelId == item.id.toString()
+                                ? kAppColor
+                                : Color(0xff999999)),
+                        borderRadius: BorderRadius.circular(20.w),
+                      ),
+                      child: Text(
+                        item.name,
+                        style: TextStyle(
+                          color: c.labelId == item.id.toString()
+                              ? kAppColor
+                              : Color(0xff999999),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  )
+              ],
+            ),
+          );
+        });
   }
 
   Container _buildItem(int idx, FieldDetailController c) {

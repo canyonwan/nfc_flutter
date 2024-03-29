@@ -58,7 +58,7 @@ class OrderConfirmController extends GetxController
         await Get.toNamed(Routes.ADDRESS_BOOK, arguments: {"isReturn": true});
     defaultAddress = address;
     shippingAddressId = address.id!;
-    await onCreateCartOrder();
+    // await onCreateCartOrder();
     update();
   }
 
@@ -93,7 +93,7 @@ class OrderConfirmController extends GetxController
           'orderCode': res.data!.orderSn!,
           'payType': PayTypeEnum.cart
         });
-      }else {
+      } else {
         if (res.msg == '请先绑定手机号') {
           Get.toNamed(Routes.BINDTEL);
         }
@@ -136,7 +136,7 @@ class OrderConfirmController extends GetxController
           'orderCode': res.data!.orderSn!,
           'payType': PayTypeEnum.goods
         });
-      }else{
+      } else {
         if (res.msg == '请先绑定手机号') {
           Get.toNamed(Routes.BINDTEL);
         }

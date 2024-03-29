@@ -537,7 +537,7 @@ class FieldView extends GetView<FieldController> {
                       SizedBox(
                         width: 150.w,
                         child: Text(
-                          _.searchModel.mergename != ''
+                          _.searchModel.mergename != ',,,null'
                               ? _.searchModel.mergename!.split(',').last == ''
                                   ? _.searchModel.mergename!.split(',')[_
                                           .searchModel.mergename!

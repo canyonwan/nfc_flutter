@@ -53,6 +53,7 @@ class FieldController extends GetxController {
 
   Future<void> getCategory(
       {bool changeMenu = false, bool removeListId = false}) async {
+    print('123: ${searchModel.mergename}');
     isLoading.value = true;
     // if (removeListId) searchModel.listId = null;
     if (changeMenu) initLoading.value = true;
@@ -223,17 +224,21 @@ class FieldController extends GetxController {
       provincesData: provincesData,
       citiesData: citiesData,
     );
+    print(': ${result}');
     if (result != null) {
       searchModel.mergename =
           '${'中国'},${result.provinceName},${result.cityName},${result.areaName}';
       areaId = result.areaId!;
-      update(['update_location']);
       // _findController.getFindList();
       if (changeField) {
         getCategory(changeMenu: true);
       } else if (!changeField && changeCarts != null) {
         changeCarts();
       }
+
+      print('searchMOdal: ${searchModel.mergename}');
+
+      update(['update_location']);
     }
   }
 
@@ -265,7 +270,7 @@ class FieldController extends GetxController {
     Get.toNamed(Routes.FIELD_DETAIL,
         arguments: {"id": item.id, "mergename": searchModel.mergename});
     // getCategory(changeMenu: true);
-    item.ifShow = 0;
+    // item.ifShow = 0;
     update(['updateFieldItem']);
   }
 }

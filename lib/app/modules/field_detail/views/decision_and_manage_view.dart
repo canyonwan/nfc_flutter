@@ -93,7 +93,7 @@ class DecisionAndManageView extends GetView {
                         width: 25.w,
                         height: 25.w,
                       ),
-                      Text('粮仓')
+                      Text('粮仓', style: TextStyle(color: kAppColor)),
                     ],
                   ).paddingOnly(left: 10.w, bottom: 10.h),
                 );

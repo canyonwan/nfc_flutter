@@ -107,7 +107,7 @@ class LoginController extends GetxController {
         .distinct((a, b) => a == b)
         .listen((res) async {
       if (res is fluwx.WeChatAuthResponse) {
-        int errCode = res.errCode!;
+        int errCode = res.errCode;
         //MyLogUtil.d('微信登录返回值：ErrCode :$errCode  code:${res.code}');
         if (errCode == 0) {
           String? code = res.code;
@@ -126,7 +126,6 @@ class LoginController extends GetxController {
 
                 Get.toNamed(Routes.BINDTEL);
               } else {
-                print('dd1:$dd');
                 Get.back(result: "OK");
               }
               accountController.getAccountInfo();
@@ -222,5 +221,6 @@ class LoginController extends GetxController {
   void toFarm() {
     Get.back();
     _rootController.jumpPage(0);
+    _fieldController.getCategory(changeMenu: true);
   }
 }

@@ -61,7 +61,6 @@ class FieldProvider extends BaseProvider {
 
   Future<FieldListRootModel> getCategory(
       FieldListSearchModel searchModel) async {
-    searchModel.mergename = "中国,陕西省,西安市,雁塔区";
     final response = await post(categoryWithChildren, searchModel.toJson());
     return FieldListRootModel.fromJson(response.body);
   }

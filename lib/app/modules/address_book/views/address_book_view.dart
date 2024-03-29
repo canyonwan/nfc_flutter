@@ -110,7 +110,7 @@ class AddressBookView extends GetView<AddressBookController> {
                           style: TextStyle(color: KWhiteColor, fontSize: 8.sp)),
                     ),
                   Text(
-                    address.address!,
+                    '${address.province!} ${address.city} ${address.county} ${address.address}',
                     style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                     overflow: TextOverflow.ellipsis,
                   ),

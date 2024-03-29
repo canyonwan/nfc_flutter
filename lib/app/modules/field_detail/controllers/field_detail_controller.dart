@@ -43,7 +43,7 @@ class FieldDetailController extends GetxController
     controlFinishLoad: true,
   );
 
-  String labels = '';
+  String labelId = '';
 
   FieldDetailDataModel dataModel = FieldDetailDataModel(
     claimList: [],
@@ -159,8 +159,7 @@ class FieldDetailController extends GetxController
     if (res.code == 200) {
       labelList = res.data;
       if (labelList.isNotEmpty) {
-        labels = labelList.first.id.toString();
-        print('labels:$labels');
+        labelId = labelList.first.id.toString();
       }
       update(['updateFieldDetail']);
     }
@@ -204,12 +203,9 @@ class FieldDetailController extends GetxController
   }
 
   // 筛选实景记录列表
-  void onFilterRecordList(List<int> indexList) {
-    // void onFilterRecordList(int index) {
+  void onFilterRecordList(int id) {
     EasyLoading.show();
-    // 通过index找到labelList里对应的id集合
-    labels = indexList.map((e) => labelList[e].id).toList().join(',');
-    print('indexList:$labels');
+    labelId = id.toString();
     getFieldDetail();
     update(['updateFieldDetail']);
   }
@@ -237,7 +233,7 @@ class FieldDetailController extends GetxController
         mergename: Get.arguments['mergename'],
         page: page,
         sort: sort,
-        vlabel_ids: labels);
+        vlabel_ids: labelId);
     if (res.code == 200) {
       EasyLoading.dismiss();
       // 如果加载更多 就只走这里
