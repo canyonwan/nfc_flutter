@@ -264,6 +264,9 @@ class FieldDetailView extends GetView<FieldDetailController> {
               color: kAppSubGrey99Color,
               fontSize: 14.sp,
             ),
+            onTap: (value) {
+              c.onTabChange(value);
+            },
             tabs: [
               if (c.dataModel.ifRecord == 1)
                 Tab(

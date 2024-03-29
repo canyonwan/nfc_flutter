@@ -111,23 +111,21 @@ class FieldDetailController extends GetxController
     getGoodsCount();
     getLabelList();
     videoController = BetterVideoPlayerController();
+
     super.onInit();
   }
 
   @override
   void onReady() {
     // onIncrement(count.value);
-    tabController.addListener(() {
-      //   如果tabController.index == 1并且tabs[index].text == '决策管理'，则调用getDetailButtonStatusUrl
-      if (tabController.index == 1 && tabs[tabController.index].text == part2) {
-        onMarkReadForVRAndDecision(2);
-        return;
-      } else if (tabController.index == 0 &&
-          tabs[tabController.index].text == part1) {
-        onMarkReadForVRAndDecision(1);
-        return;
-      }
-    });
+    // tabController.addListener(() {
+    //   if (tabController.index == 1 && tabs[tabController.index] == part2) {
+    //     onMarkReadForVRAndDecision(2);
+    //   } else if (tabController.index == 0 &&
+    //       tabs[tabController.index] == part1) {
+    //     onMarkReadForVRAndDecision(1);
+    //   }
+    // });
     super.onReady();
   }
 
@@ -136,6 +134,15 @@ class FieldDetailController extends GetxController
     super.dispose();
     videoController.dispose();
     cancelTimer();
+  }
+
+  //   如果tabController.index == 1并且tabs[index].text == '决策管理'，则调用getDetailButtonStatusUrl
+  void onTabChange(int index) {
+    if (tabController.index == 1 && tabs[tabController.index] == part2) {
+      onMarkReadForVRAndDecision(2);
+    } else if (tabController.index == 0 && tabs[tabController.index] == part1) {
+      onMarkReadForVRAndDecision(1);
+    }
   }
 
   void onSortRecord(int value) {
@@ -171,7 +178,6 @@ class FieldDetailController extends GetxController
   // 1=实景，2=决策
   Future<void> onMarkReadForVRAndDecision(int part) async {
     var res = await fieldProvider.markReadForVRAndDecision(fieldId, part);
-    print('mark read:${res}');
     if (res.code == 200) {
       getFieldDetail();
     }
@@ -281,9 +287,9 @@ class FieldDetailController extends GetxController
       change(dataModel, status: RxStatus.success());
       update(['updateFieldDetail']);
       tabController = TabController(length: tabs.length, vsync: this);
-      if (tabs[0].text == part1) {
+      if (tabs[0] == part1) {
         onMarkReadForVRAndDecision(1);
-      } else if (tabs[0].text == part2) {
+      } else if (tabs[0] == part2) {
         onMarkReadForVRAndDecision(2);
       }
     } else {

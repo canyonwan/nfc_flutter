@@ -27,7 +27,7 @@ class _BuildOptionItemState extends State<BuildOptionItem> {
     return Padding(
       padding: EdgeInsets.only(left: 10.w, bottom: 6.h),
       child: BrnRadioButton(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         radioIndex: widget.item.id!,
         disable: widget.disabled != 1,
         isSelected: widget.item.ifCheck == 1,
