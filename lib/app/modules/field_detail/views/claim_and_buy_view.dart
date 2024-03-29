@@ -187,7 +187,18 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
       ),
       child: Row(
         children: [
-          Image.network(model.goodsImage!, width: 160.w, height: 160.w),
+          Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7.5.w),
+            ),
+            child: Image.network(
+              model.goodsImage!,
+              width: 160.w,
+              height: 160.w,
+              fit: BoxFit.fill,
+            ),
+          ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -357,7 +368,11 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
       child: Container(
         decoration: BoxDecoration(
           color: KWhiteColor,
-          border: Border.all(width: 1, color: Color(0xffF2F2F2)),
+          // border: Border.all(width: 1, color: Color(0xffF2F2F2)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(7.5.w),
+            topRight: Radius.circular(7.5.w),
+          ),
         ),
         child: Column(
           children: [
@@ -397,10 +412,19 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
                       ),
                     ],
                   )
-                : Image(
-                    image: NetworkImage(model.goodsImage!),
-                    fit: BoxFit.fill,
-                    width: Get.width,
+                : Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(7.5.w),
+                        topRight: Radius.circular(7.5.w),
+                      ),
+                    ),
+                    child: Image(
+                        image: NetworkImage(model.goodsImage!),
+                        width: 174.w,
+                        height: 174.w,
+                        fit: BoxFit.fill),
                   ),
             Expanded(
               child: Padding(

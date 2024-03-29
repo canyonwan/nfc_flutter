@@ -193,12 +193,21 @@ class DecisionAndManageView extends GetView {
         child: Container(
           decoration: BoxDecoration(
             color: KWhiteColor,
-            border: Border.all(width: 1, color: Color(0xffF2F2F2)),
+            // border: Border.all(width: 1, color: Color(0xffF2F2F2)),
           ),
           child: Column(
             children: [
-              Image.network(model.goodsImage!,
-                  width: 174.w, height: 174.w, fit: BoxFit.fill),
+              Container(
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(7.5.w),
+                    topRight: Radius.circular(7.5.w),
+                  ),
+                ),
+                child: Image.network(model.goodsImage,
+                    width: 174.w, height: 174.w, fit: BoxFit.fill),
+              ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(

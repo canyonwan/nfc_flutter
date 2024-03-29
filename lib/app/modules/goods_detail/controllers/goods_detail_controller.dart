@@ -17,6 +17,8 @@ import 'package:mallxx_app/const/resource.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../field_detail/controllers/timer.dart';
+
 class GoodsDetailController extends GetxController
     with GetTickerProviderStateMixin, StateMixin<GoodsDetailDataModel> {
   final provider = Get.find<MarketProvider>();
@@ -47,7 +49,6 @@ class GoodsDetailController extends GetxController
     super.onInit();
   }
 
-  late final Timer timer;
   int nowUnixTime = 86400;
   RxString timeRemaining = ''.obs;
 
@@ -74,25 +75,21 @@ class GoodsDetailController extends GetxController
       List res = days.toString().split('-');
       days = int.parse(res.last);
     }
-    timer = Timer.periodic(Duration(seconds: 1), (value) {
-      nowUnixTime--;
-      if (nowUnixTime == 0) {
-        timer.cancel();
-      }
-      timeRemaining.value = '${days}天   ${constructTime(nowUnixTime)}';
+    Countdown(days, (time) {
+      timeRemaining.value = time;
     });
-  }
-
-  void cancelTimer() {
-    if (timer != null) {
-      timer.cancel();
-    }
+    // timer = Timer.periodic(Duration(seconds: 1), (value) {
+    //   nowUnixTime--;
+    //   if (nowUnixTime == 0) {
+    //     timer.cancel();
+    //   }
+    //   timeRemaining.value = '${days}天   ${constructTime(nowUnixTime)}';
+    // });
   }
 
   @override
   void dispose() {
     super.dispose();
-    cancelTimer();
   }
 
   void showPreSellDialogStatus() {

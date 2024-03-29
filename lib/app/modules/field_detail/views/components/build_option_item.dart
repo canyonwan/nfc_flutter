@@ -34,7 +34,7 @@ class _BuildOptionItemState extends State<BuildOptionItem> {
         mainAxisSize: MainAxisSize.max,
         child: Expanded(
           child: Text(
-            '${widget.item.id}. ${widget.item.name} ${double.parse(widget.item.price!) > 0 ? '（费用${widget.item.price}元)' : ''} ',
+            '${widget.item.id}. ${widget.item.name}',
             style: TextStyle(color: kAppGrey66Color, fontSize: 15.sp),
           ),
         ),

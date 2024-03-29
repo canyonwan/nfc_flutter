@@ -26,6 +26,8 @@ import 'package:mallxx_app/utils/enums.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'timer.dart';
+
 class FieldDetailController extends GetxController
     with GetSingleTickerProviderStateMixin, StateMixin {
   final FieldProvider fieldProvider = Get.find<FieldProvider>();
@@ -502,13 +504,17 @@ class FieldDetailController extends GetxController
     int days = DateTime.fromMillisecondsSinceEpoch(time.value)
         .difference(DateTime.now())
         .inDays;
-    timer = Timer.periodic(Duration(seconds: 1), (value) {
-      nowUnixTime--;
-      if (nowUnixTime == 0) {
-        timer.cancel();
-      }
-      timeRemaining.value = '${days}天   ${constructTime(nowUnixTime)}';
+    Countdown(days, (time) {
+      timeRemaining.value = time;
+      print(time);
     });
+    // timer = Timer.periodic(Duration(seconds: 1), (value) {
+    //   nowUnixTime--;
+    //   if (nowUnixTime == 0) {
+    //     timer.cancel();
+    //   }
+    //   timeRemaining.value = '${days}天   ${constructTime(nowUnixTime)}';
+    // });
   }
 
   Future<void> onCallPhone(String phoneNumber) async {
