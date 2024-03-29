@@ -47,12 +47,6 @@ class AccountInfoView extends GetView<AccountInfoController> {
               onTap: controller.changePwd,
             ),
             _buildItem(
-              label: '帐号登录密码',
-              hasDivider: false,
-              info: '',
-              onTap: controller.changePwd,
-            ),
-            _buildItem(
               label: '注销帐号',
               hasDivider: false,
               info: '',

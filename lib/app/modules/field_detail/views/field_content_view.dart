@@ -84,7 +84,7 @@ class FieldContentView extends GetView {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildTitle('订单信息'),
+                _buildTitle('订单信息(仅你可见)'),
                 Container(
                   padding:
                       EdgeInsets.symmetric(horizontal: 7.5.w, vertical: 3.h),
@@ -148,7 +148,7 @@ class FieldContentView extends GetView {
           children: [
             Padding(
               padding: EdgeInsets.only(bottom: 19.5.h),
-              child: _buildTitle('专属客服'),
+              child: _buildTitle('专属客服(仅你可见)'),
             ),
             Row(
               children: [
@@ -237,7 +237,7 @@ class FieldContentView extends GetView {
         children: [
           Padding(
             padding: EdgeInsets.only(bottom: 19.5.h),
-            child: _buildTitle('分享设置'),
+            child: _buildTitle('分享设置(仅你可见)'),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
