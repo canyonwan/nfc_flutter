@@ -501,8 +501,8 @@ class FieldView extends GetView<FieldController> {
                   ),
                 ),
                 Positioned(
-                  top: 8.h,
-                  right: 12.w,
+                  top: 4.h,
+                  right: 8.w,
                   child: item.ifShow == 1
                       ? GFBadge(
                           child: Text("${item.count}"),
