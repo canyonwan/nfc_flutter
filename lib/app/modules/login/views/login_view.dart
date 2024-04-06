@@ -61,14 +61,14 @@ class LoginView extends GetView<LoginController> {
                         _buildLoginBtn,
                         // LoginWithView(),
                         _buildThirdParty,
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: GestureDetector(
-                            child: Text('随便看看 >',
-                                style: TextStyle(color: KWhiteColor)),
-                            onTap: controller.toFarm,
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: Alignment.bottomRight,
+                        //   child: GestureDetector(
+                        //     child: Text('随便看看 >',
+                        //         style: TextStyle(color: KWhiteColor)),
+                        //     onTap: controller.toFarm,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

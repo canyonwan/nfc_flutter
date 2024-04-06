@@ -111,6 +111,9 @@ class RootController extends GetxController {
     if (currentIndex == 4) {
       _accountController.getAccountInfo();
     }
+    if (currentIndex == 0) {
+      _fieldController.getCategory(changeMenu: true);
+    }
     pageController.jumpToPage(currentIndex);
     update();
   }

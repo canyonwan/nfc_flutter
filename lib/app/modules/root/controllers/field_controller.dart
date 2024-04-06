@@ -53,7 +53,6 @@ class FieldController extends GetxController {
 
   Future<void> getCategory(
       {bool changeMenu = false, bool removeListId = false}) async {
-    print('123: ${searchModel.mergename}');
     isLoading.value = true;
     // if (removeListId) searchModel.listId = null;
     if (changeMenu) initLoading.value = true;
@@ -270,7 +269,7 @@ class FieldController extends GetxController {
   Future<void> onFieldDetail(FieldItemModel item) async {
     await Get.toNamed(Routes.FIELD_DETAIL,
         arguments: {"id": item.id, "mergename": searchModel.mergename});
-    getCategory(changeMenu: true);
+    getCategory();
     // item.ifShow = 0;
     update(['updateFieldItem']);
   }

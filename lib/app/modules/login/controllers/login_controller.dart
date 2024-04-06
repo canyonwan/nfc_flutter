@@ -221,6 +221,6 @@ class LoginController extends GetxController {
   void toFarm() {
     Get.back();
     _rootController.jumpPage(0);
-    _fieldController.getCategory(changeMenu: true);
+    // _fieldController.getCategory(changeMenu: true);
   }
 }
