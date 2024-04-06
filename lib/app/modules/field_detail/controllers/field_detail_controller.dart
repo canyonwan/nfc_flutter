@@ -255,31 +255,17 @@ class FieldDetailController extends GetxController
           tabs.add(dataModel.part1);
           part1 = dataModel.part1!;
           part1Badge = dataModel.part1Num ?? 0;
-          // tabs.add(
-          //   BadgeTab(
-          //     text: dataModel.part1,
-          //     badgeNum: dataModel.part1Num,
-          //     showRedBadge: dataModel.part1Num! > 0,
-          //   ),
-          // );
         }
         if (dataModel.ifDecision == 1) {
           tabs.add(dataModel.part2);
           part2 = dataModel.part2!;
           part2Badge = dataModel.part2Num ?? 0;
-          // tabs.add(BadgeTab(
-          //   text: dataModel.part2,
-          //   badgeNum: dataModel.part2Num,
-          //   showRedBadge: dataModel.part2Num! > 0,
-          // ));
         }
         if (dataModel.ifContent == 1) {
-          // tabs.add(BadgeTab(text: dataModel.part3));
           tabs.add(dataModel.part3);
           part3 = dataModel.part3!;
         }
         if (dataModel.ifProduct == 1) {
-          // tabs.add(BadgeTab(text: dataModel.part4));
           tabs.add(dataModel.part4);
           part4 = dataModel.part4!;
         }
@@ -497,7 +483,6 @@ class FieldDetailController extends GetxController
   }
 
   late Timer timer;
-  int nowUnixTime = 86400;
   RxString timeRemaining = ''.obs;
   RxInt time = 0.obs;
 
@@ -507,19 +492,13 @@ class FieldDetailController extends GetxController
   }
 
   void launchTimer() {
-    int days = DateTime.fromMillisecondsSinceEpoch(time.value)
+    int totalSeconds = DateTime.fromMillisecondsSinceEpoch(time.value)
         .difference(DateTime.now())
-        .inDays;
-    Countdown(days, (time) {
+        .inSeconds;
+
+    Countdown(totalSeconds, (time) {
       timeRemaining.value = time;
     });
-    // timer = Timer.periodic(Duration(seconds: 1), (value) {
-    //   nowUnixTime--;
-    //   if (nowUnixTime == 0) {
-    //     timer.cancel();
-    //   }
-    //   timeRemaining.value = '${days}天   ${constructTime(nowUnixTime)}';
-    // });
   }
 
   Future<void> onCallPhone(String phoneNumber) async {

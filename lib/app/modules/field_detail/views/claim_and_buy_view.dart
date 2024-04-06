@@ -173,9 +173,6 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
 
 // 合买列表
   Widget _buildChippedItem(ChippedItemModel model) {
-    Duration differenceTime =
-        DateTime.fromMillisecondsSinceEpoch(model.lastTime!).difference(
-            DateTime.fromMillisecondsSinceEpoch(DateUtil.getNowDateMs()));
     controller.receiveTimeValue(model.lastTime!);
     return Container(
       constraints: BoxConstraints(maxWidth: Get.width - 20.w),
@@ -224,15 +221,10 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
                                     color: kAppSubGrey99Color, fontSize: 11.sp),
                                 children: [
                                   TextSpan(
-                                    text:
-                                        '${controller.timeRemaining.split('天').first}天',
+                                    text: '${controller.timeRemaining}',
                                     style: TextStyle(
-                                        color: kAppColor, fontSize: 11.sp),
+                                        color: kAppColor, fontSize: 12.sp),
                                   ),
-                                  TextSpan(
-                                      text:
-                                          '${controller.timeRemaining.split('天').last}',
-                                      style: TextStyle(color: kAppColor)),
                                 ]),
                           ),
                         ),

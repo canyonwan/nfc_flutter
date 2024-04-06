@@ -68,23 +68,13 @@ class GoodsDetailController extends GetxController
   }
 
   void launchTimer() {
-    int days = DateTime.now()
-        .difference(DateTime.fromMillisecondsSinceEpoch(dataModel.lastTime!))
-        .inDays;
-    if (days.toString().contains('-')) {
-      List res = days.toString().split('-');
-      days = int.parse(res.last);
-    }
-    Countdown(days, (time) {
+    int totalSeconds = DateTime.fromMillisecondsSinceEpoch(dataModel.lastTime!)
+        .difference(DateTime.now())
+        .inSeconds;
+
+    Countdown(totalSeconds, (time) {
       timeRemaining.value = time;
     });
-    // timer = Timer.periodic(Duration(seconds: 1), (value) {
-    //   nowUnixTime--;
-    //   if (nowUnixTime == 0) {
-    //     timer.cancel();
-    //   }
-    //   timeRemaining.value = '${days}天   ${constructTime(nowUnixTime)}';
-    // });
   }
 
   @override
