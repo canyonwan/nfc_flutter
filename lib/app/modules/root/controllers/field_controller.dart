@@ -268,9 +268,8 @@ class FieldController extends GetxController {
 
 //  查看田地详情
   Future<void> onFieldDetail(FieldItemModel item) async {
-    var res = await Get.toNamed(Routes.FIELD_DETAIL,
+    await Get.toNamed(Routes.FIELD_DETAIL,
         arguments: {"id": item.id, "mergename": searchModel.mergename});
-    print('回来了: $res');
     getCategory(changeMenu: true);
     // item.ifShow = 0;
     update(['updateFieldItem']);
