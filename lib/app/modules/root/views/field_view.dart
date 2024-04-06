@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:bruno/bruno.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -86,8 +87,14 @@ class FieldView extends GetView<FieldController> {
   Widget _buildFieldList() {
     List<FieldItemModel> fields = controller.fieldList;
     if (fields.isEmpty) {
-      return Center(
-          child: Text('您还没认领田地', style: TextStyle(color: kAppSubGrey99Color)));
+      return Stack(
+        children: [
+          if (controller.dataModel.ifIncrease == 1) _buildTransferBox(),
+          Center(
+              child: Text('该地区暂无相关农场',
+                  style: TextStyle(color: kAppGrey66Color, fontSize: 13.sp))),
+        ],
+      );
     }
 
     return Stack(
@@ -103,142 +110,6 @@ class FieldView extends GetView<FieldController> {
                 children: [
                   // 需求先去掉
                   // if (controller.dataModel.labelIds!.isNotEmpty) _buildLabels(),
-                  if (controller.dataModel.ifIncrease == 1)
-                    Container(
-                      height: 40.w,
-                      width: double.infinity,
-                      margin: EdgeInsets.all(8.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.w),
-                        gradient: LinearGradient(colors: [
-                          Color(0xffFFCA6E),
-                          Color(0xffF9DA90),
-                        ]),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(13, 13, 13, 0.2),
-                            spreadRadius: 1,
-                            blurRadius: 4,
-                          ),
-                        ],
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '凭编码和转移码手动添加',
-                            style:
-                                TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5)),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.dialog(Container(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 17.5.w, vertical: 18.w),
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 17.5.w, vertical: 12.w),
-                                      decoration: BoxDecoration(
-                                        color: KWhiteColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10.w),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          TextField(
-                                            controller:
-                                                controller.codeController,
-                                            decoration: InputDecoration(
-                                              hintText: '请输入编码',
-                                              hintStyle: TextStyle(
-                                                  color: kAppSubGrey99Color),
-                                              border: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 6.w),
-                                          TextField(
-                                            controller:
-                                                controller.transferController,
-                                            decoration: InputDecoration(
-                                              hintText: '请输入转移码',
-                                              hintStyle: TextStyle(
-                                                  color: kAppSubGrey99Color),
-                                              border: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 6.w),
-                                          GestureDetector(
-                                            onTap: controller.onConfirmTransfer,
-                                            child: Container(
-                                              margin: EdgeInsets.all(10.w),
-                                              width: double.infinity,
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 12.w,
-                                                vertical: 12.w,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: kAppColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(30.w),
-                                              ),
-                                              child: Text('确认添加',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14.sp,
-                                                  )),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 14.h),
-                                      child: GestureDetector(
-                                        onTap: () => Get.back(),
-                                        child: Image.asset(
-                                          R.ASSETS_ICONS_MARKET_PRESALE_CLOSE_ICON_PNG,
-                                          width: 35.w,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ));
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12.w, vertical: 2.w),
-                              decoration: BoxDecoration(
-                                color: Color(0xffF4990E),
-                                borderRadius: BorderRadius.circular(10.w),
-                              ),
-                              child: Text('添加',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12.sp,
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   _buildFieldListBox(fields)
                 ],
               ),
@@ -246,6 +117,136 @@ class FieldView extends GetView<FieldController> {
         }),
         Align(child: _buildAllLabels()),
       ],
+    );
+  }
+
+  Container _buildTransferBox() {
+    return Container(
+      height: 40.w,
+      width: double.infinity,
+      margin: EdgeInsets.all(8.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.w),
+        gradient: LinearGradient(colors: [
+          Color(0xffFFCA6E),
+          Color(0xffF9DA90),
+        ]),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(13, 13, 13, 0.2),
+            spreadRadius: 1,
+            blurRadius: 4,
+          ),
+        ],
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '凭编码和转移码手动添加',
+            style: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5)),
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.dialog(Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 17.5.w, vertical: 18.w),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 17.5.w, vertical: 12.w),
+                      decoration: BoxDecoration(
+                        color: KWhiteColor,
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: controller.codeController,
+                            decoration: InputDecoration(
+                              hintText: '请输入编码',
+                              hintStyle: TextStyle(color: kAppSubGrey99Color),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 6.w),
+                          TextField(
+                            controller: controller.transferController,
+                            decoration: InputDecoration(
+                              hintText: '请输入转移码',
+                              hintStyle: TextStyle(color: kAppSubGrey99Color),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 6.w),
+                          GestureDetector(
+                            onTap: controller.onConfirmTransfer,
+                            child: Container(
+                              margin: EdgeInsets.all(10.w),
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                                vertical: 12.w,
+                              ),
+                              decoration: BoxDecoration(
+                                color: kAppColor,
+                                borderRadius: BorderRadius.circular(30.w),
+                              ),
+                              child: Text('确认添加',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.sp,
+                                  )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 14.h),
+                      child: GestureDetector(
+                        onTap: () => Get.back(),
+                        child: Image.asset(
+                          R.ASSETS_ICONS_MARKET_PRESALE_CLOSE_ICON_PNG,
+                          width: 35.w,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ));
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.w),
+              decoration: BoxDecoration(
+                color: Color(0xffF4990E),
+                borderRadius: BorderRadius.circular(10.w),
+              ),
+              child: Text('添加',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                  )),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -481,8 +482,8 @@ class FieldView extends GetView<FieldController> {
                   ),
                 ),
                 Positioned(
-                  top: 8.h,
-                  left: 12.w,
+                  top: 4.w,
+                  left: 8.w,
                   child: Container(
                     padding: EdgeInsets.symmetric(
                         vertical: 6.5.h, horizontal: 13.5.w),
@@ -560,11 +561,24 @@ class FieldView extends GetView<FieldController> {
               }),
           _buildSearch,
           GestureDetector(
-                  onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
-                  child: Image.asset(
-                      R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
-                      width: 25.w))
-              .paddingSymmetric(horizontal: 6.w),
+            onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
+            child: Badge(
+              position: BadgePosition(top: -6, start: 14.w),
+              showBadge: controller.dataModel.messageCount > 0,
+              badgeContent: Text(
+                '${controller.dataModel.messageCount}',
+                style: TextStyle(color: KWhiteColor, fontSize: 10.sp),
+              ),
+              child: Image.asset(R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
+                  width: 25.w),
+            ),
+          ).paddingSymmetric(horizontal: 6.w),
+          // GestureDetector(
+          //         onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
+          //         child: Image.asset(
+          //             R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
+          //             width: 25.w))
+          //     .paddingSymmetric(horizontal: 6.w),
           GestureDetector(
             onTap: controller.shareToSession,
             child:

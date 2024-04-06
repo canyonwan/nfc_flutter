@@ -512,7 +512,6 @@ class FieldDetailController extends GetxController
         .inDays;
     Countdown(days, (time) {
       timeRemaining.value = time;
-      print(time);
     });
     // timer = Timer.periodic(Duration(seconds: 1), (value) {
     //   nowUnixTime--;

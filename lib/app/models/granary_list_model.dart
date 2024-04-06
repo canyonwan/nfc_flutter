@@ -1,77 +1,32 @@
 import 'dart:convert';
-import 'dart:developer';
 
-void tryCatch(Function? f) {
-  try {
-    f?.call();
-  } catch (e, stack) {
-    log('$e');
-    log('$stack');
-  }
-}
-
-class FFConvert {
-  FFConvert._();
-
-  static T? Function<T extends Object?>(dynamic value) convert =
-      <T>(dynamic value) {
-    if (value == null) {
-      return null;
-    }
-    return json.decode(value.toString()) as T?;
-  };
-}
-
-T? asT<T extends Object?>(dynamic value, [T? defaultValue]) {
+T? asT<T>(dynamic value) {
   if (value is T) {
     return value;
   }
-  try {
-    if (value != null) {
-      final String valueS = value.toString();
-      if ('' is T) {
-        return valueS as T;
-      } else if (0 is T) {
-        return int.parse(valueS) as T;
-      } else if (0.0 is T) {
-        return double.parse(valueS) as T;
-      } else if (false is T) {
-        if (valueS == '0' || valueS == '1') {
-          return (valueS == '1') as T;
-        }
-        return (valueS == 'true') as T;
-      } else {
-        return FFConvert.convert<T>(value);
-      }
-    }
-  } catch (e, stackTrace) {
-    log('asT<$T>', error: e, stackTrace: stackTrace);
-    return defaultValue;
-  }
-
-  return defaultValue;
+  return null;
 }
 
 class GranaryListRootModel {
   GranaryListRootModel({
-    this.msg,
+    required this.code,
+    required this.msg,
     this.data,
-    this.code,
   });
 
-  factory GranaryListRootModel.fromJson(Map<String, dynamic> jsonRes) =>
+  factory GranaryListRootModel.fromJson(Map<String, dynamic> json) =>
       GranaryListRootModel(
-        msg: asT<String?>(jsonRes['msg']),
-        data: jsonRes['data'] == null
+        code: asT<int>(json['code'])!,
+        msg: asT<String>(json['msg'])!,
+        data: json['data'] == null
             ? null
             : GranaryListDataModel.fromJson(
-                asT<Map<String, dynamic>>(jsonRes['data'])!),
-        code: asT<int?>(jsonRes['code']),
+                asT<Map<String, dynamic>>(json['data'])!),
       );
 
-  String? msg;
+  int code;
+  String msg;
   GranaryListDataModel? data;
-  int? code;
 
   @override
   String toString() {
@@ -79,64 +34,66 @@ class GranaryListRootModel {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
+        'code': code,
         'msg': msg,
         'data': data,
-        'code': code,
       };
 }
 
 class GranaryListDataModel {
   GranaryListDataModel({
-    this.totalPage,
-    this.image,
-    this.granaryList,
-    this.articleTitle,
-    this.articleList,
+    this.ifMessageShow,
+    this.messageCount,
     this.articleId,
+    this.articleTitle,
+    this.image,
+    this.totalPage,
+    this.articleList,
+    this.granaryList,
   });
 
-  factory GranaryListDataModel.fromJson(Map<String, dynamic> jsonRes) {
-    final List<GranaryItemModel>? granaryList =
-        jsonRes['granary_list'] is List ? <GranaryItemModel>[] : null;
-    if (granaryList != null) {
-      for (final dynamic item in jsonRes['granary_list']!) {
+  factory GranaryListDataModel.fromJson(Map<String, dynamic> json) {
+    final List<ArticleList>? articleList =
+        json['article_list'] is List ? <ArticleList>[] : null;
+    if (articleList != null) {
+      for (final dynamic item in json['article_list']!) {
         if (item != null) {
-          tryCatch(() {
-            granaryList.add(
-                GranaryItemModel.fromJson(asT<Map<String, dynamic>>(item)!));
-          });
+          articleList
+              .add(ArticleList.fromJson(asT<Map<String, dynamic>>(item)!));
         }
       }
     }
 
-    final List<ArticleList>? articleList =
-        jsonRes['article_list'] is List ? <ArticleList>[] : null;
-    if (articleList != null) {
-      for (final dynamic item in jsonRes['article_list']!) {
+    final List<GranaryItemModel>? granaryList =
+        json['granary_list'] is List ? <GranaryItemModel>[] : null;
+    if (granaryList != null) {
+      for (final dynamic item in json['granary_list']!) {
         if (item != null) {
-          tryCatch(() {
-            articleList
-                .add(ArticleList.fromJson(asT<Map<String, dynamic>>(item)!));
-          });
+          granaryList
+              .add(GranaryItemModel.fromJson(asT<Map<String, dynamic>>(item)!));
         }
       }
     }
     return GranaryListDataModel(
-      totalPage: asT<int?>(jsonRes['total_page']),
-      image: asT<String?>(jsonRes['image']),
-      granaryList: granaryList,
-      articleTitle: asT<String?>(jsonRes['article_title']),
+      ifMessageShow: asT<int?>(json['if_message_show']),
+      messageCount: asT<int?>(json['message_count']),
+      articleId: asT<String?>(json['article_id']),
+      articleTitle: asT<String?>(json['article_title']),
+      image: asT<String?>(json['image']),
+      totalPage: asT<int?>(json['total_page']),
       articleList: articleList,
-      articleId: asT<String?>(jsonRes['article_id']),
+      granaryList: granaryList,
     );
   }
 
-  int? totalPage;
-  String? image;
-  List<GranaryItemModel>? granaryList;
-  String? articleTitle;
-  List<ArticleList>? articleList;
+  int? ifMessageShow;
+  int? messageCount;
   String? articleId;
+  String? articleTitle;
+  String? image;
+  int? totalPage;
+  List<ArticleList>? articleList;
+  List<GranaryItemModel>? granaryList;
 
   @override
   String toString() {
@@ -144,30 +101,32 @@ class GranaryListDataModel {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'total_page': totalPage,
-        'image': image,
-        'granary_list': granaryList,
-        'article_title': articleTitle,
-        'article_list': articleList,
+        'if_message_show': ifMessageShow,
+        'message_count': messageCount,
         'article_id': articleId,
+        'article_title': articleTitle,
+        'image': image,
+        'total_page': totalPage,
+        'article_list': articleList,
+        'granary_list': granaryList,
       };
 }
 
 class ArticleList {
   ArticleList({
-    this.articleTitle,
     this.articleId,
+    this.articleTitle,
     this.ifShow,
   });
 
-  factory ArticleList.fromJson(Map<String, dynamic> jsonRes) => ArticleList(
-        articleTitle: asT<String?>(jsonRes['article_title']),
-        articleId: asT<int?>(jsonRes['article_id']),
-        ifShow: asT<int?>(jsonRes['if_show']),
+  factory ArticleList.fromJson(Map<String, dynamic> json) => ArticleList(
+        articleId: asT<int?>(json['article_id']),
+        articleTitle: asT<String?>(json['article_title']),
+        ifShow: asT<int?>(json['if_show']),
       );
 
-  String? articleTitle;
   int? articleId;
+  String? articleTitle;
   int? ifShow;
 
   @override
@@ -176,56 +135,56 @@ class ArticleList {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'article_title': articleTitle,
         'article_id': articleId,
+        'article_title': articleTitle,
         'if_show': ifShow,
       };
 }
 
 class GranaryItemModel {
   GranaryItemModel({
-    this.units,
-    this.totalNum,
-    this.residueNum,
-    this.recyclePrice,
-    this.name,
-    this.image,
-    this.ifRecycle,
-    this.ifProcess,
-    this.ifExpire,
     this.id,
-    this.expireTime,
     this.createtime,
+    this.totalNum,
+    this.name,
+    this.residueNum,
+    this.units,
+    this.ifExpire,
+    this.expireTime,
+    this.ifRecycle,
+    this.recyclePrice,
+    this.ifProcess,
+    this.image,
   });
 
-  factory GranaryItemModel.fromJson(Map<String, dynamic> jsonRes) =>
+  factory GranaryItemModel.fromJson(Map<String, dynamic> json) =>
       GranaryItemModel(
-        units: asT<String?>(jsonRes['units']),
-        totalNum: asT<String?>(jsonRes['total_num']),
-        residueNum: asT<String?>(jsonRes['residue_num']),
-        recyclePrice: asT<String?>(jsonRes['recycle_price']),
-        name: asT<String?>(jsonRes['name']),
-        image: asT<String?>(jsonRes['image']),
-        ifRecycle: asT<int?>(jsonRes['if_recycle']),
-        ifProcess: asT<int?>(jsonRes['if_process']),
-        ifExpire: asT<int?>(jsonRes['if_expire']),
-        id: asT<int?>(jsonRes['id']),
-        expireTime: asT<String?>(jsonRes['expire_time']),
-        createtime: asT<String?>(jsonRes['createtime']),
+        id: asT<int?>(json['id']),
+        createtime: asT<String?>(json['createtime']),
+        totalNum: asT<String?>(json['total_num']),
+        name: asT<String?>(json['name']),
+        residueNum: asT<String?>(json['residue_num']),
+        units: asT<String?>(json['units']),
+        ifExpire: asT<int?>(json['if_expire']),
+        expireTime: asT<String?>(json['expire_time']),
+        ifRecycle: asT<int?>(json['if_recycle']),
+        recyclePrice: asT<String?>(json['recycle_price']),
+        ifProcess: asT<int?>(json['if_process']),
+        image: asT<String?>(json['image']),
       );
 
-  String? units;
-  String? totalNum;
-  String? residueNum;
-  String? recyclePrice;
-  String? name;
-  String? image;
-  int? ifRecycle;
-  int? ifProcess;
-  int? ifExpire;
   int? id;
-  String? expireTime;
   String? createtime;
+  String? totalNum;
+  String? name;
+  String? residueNum;
+  String? units;
+  int? ifExpire;
+  String? expireTime;
+  int? ifRecycle;
+  String? recyclePrice;
+  int? ifProcess;
+  String? image;
 
   @override
   String toString() {
@@ -233,17 +192,17 @@ class GranaryItemModel {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'units': units,
-        'total_num': totalNum,
-        'residue_num': residueNum,
-        'recycle_price': recyclePrice,
-        'name': name,
-        'image': image,
-        'if_recycle': ifRecycle,
-        'if_process': ifProcess,
-        'if_expire': ifExpire,
         'id': id,
-        'expire_time': expireTime,
         'createtime': createtime,
+        'total_num': totalNum,
+        'name': name,
+        'residue_num': residueNum,
+        'units': units,
+        'if_expire': ifExpire,
+        'expire_time': expireTime,
+        'if_recycle': ifRecycle,
+        'recycle_price': recyclePrice,
+        'if_process': ifProcess,
+        'image': image,
       };
 }

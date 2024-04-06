@@ -392,10 +392,21 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
                             end: Alignment.bottomCenter,
                           ).createShader(bounds);
                         },
-                        child: Image(
-                          image: NetworkImage(model.goodsImage!),
-                          fit: BoxFit.fill,
-                          width: Get.width,
+                        // child: Image(
+                        //   image: NetworkImage(model.goodsImage!),
+                        //   fit: BoxFit.fill,
+                        //   width: Get.width,
+                        // ),
+                        child: Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(7.5.w),
+                              topRight: Radius.circular(7.5.w),
+                            ),
+                          ),
+                          child: Image.network(model.goodsImage!,
+                              width: 174.w, height: 174.w, fit: BoxFit.fill),
                         ),
                       ),
                       Positioned(

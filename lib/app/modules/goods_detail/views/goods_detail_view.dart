@@ -737,15 +737,17 @@ class GoodsDetailView extends GetView<GoodsDetailController> {
                 GestureDetector(
                   onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
                   child: Badge(
-                    position: BadgePosition(top: 2.h, start: 14.w),
-                    showBadge: c.dataModel.messageCount! > 0,
+                    position: BadgePosition(top: -6, start: 14.w),
+                    showBadge: c.dataModel.ifMessageShow == 1 &&
+                        c.dataModel.messageCount! > 0,
                     badgeContent: Text(
                       '${c.dataModel.messageCount}',
                       style: TextStyle(color: KWhiteColor, fontSize: 10.sp),
                     ),
                     child: Image.asset(
-                        R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
-                        width: 25.w),
+                            R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
+                            width: 22.w)
+                        .paddingOnly(right: 8.w),
                   ),
                 ),
                 // Image.asset(R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,

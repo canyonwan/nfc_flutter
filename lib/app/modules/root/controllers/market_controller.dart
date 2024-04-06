@@ -48,6 +48,7 @@ class MarketController extends GetxController {
     final res = await _provider.queryGoodsList(searchModel);
     if (res.code == 200) {
       goodsListDataModel = res.data!;
+      print('goodsListDataModel: ${goodsListDataModel.toJson()}');
       totalPage = res.data!.maxpage!;
       if (res.data!.list!.isNotEmpty) {
         goodsList.addAll(res.data!.list!);
@@ -116,6 +117,7 @@ class MarketController extends GetxController {
     scrollController.animateTo(0.0,
         duration: Duration(milliseconds: 500), curve: Curves.linearToEaseOut);
   }
+
   Future<void> getGoodsCount() async {
     final res = await cartProvider.queryGoodsCountInCart();
     if (res.data != null) {
@@ -124,6 +126,7 @@ class MarketController extends GetxController {
       update(['update_goods_count']);
     }
   }
+
   Future<void> onRefresh() async {
     if (goodsList.isNotEmpty) goodsList.clear();
     searchModel.page = 1;
@@ -137,6 +140,7 @@ class MarketController extends GetxController {
     searchModel.keyword = res ?? '';
     await onRefresh();
   }
+
   Future<void> shareToSession() async {
     await shareToWeChat(WeChatShareWebPageModel(
       goodsListDataModel.enjoy!.enjoyUrl!,
@@ -163,6 +167,7 @@ class MarketController extends GetxController {
           : IndicatorResult.success,
     );
   }
+
   Future<void> onChangeAddress() async {
     await fieldController.onSelectAddress(false, changeCarts: getGoodsList);
   }

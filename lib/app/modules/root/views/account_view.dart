@@ -306,7 +306,6 @@ class AccountView extends GetView<AccountController> {
                     height: 40.h,
                   ),
                 ),
-
               ],
             ),
           ],
@@ -406,19 +405,19 @@ class AccountView extends GetView<AccountController> {
       ),
       actions: Row(
         children: [
-           GestureDetector(
-             onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
-             child: Badge(
-               showBadge: controller.info.ifMessageShow == 0 &&
-                   controller.info.messageCount! > 0,
+          GestureDetector(
+            onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
+            child: Badge(
+              showBadge: controller.info.ifMessageShow == 1 &&
+                  controller.info.messageCount! > 0,
               badgeContent: Text(
                 '${controller.info.messageCount}',
-                 style: TextStyle(color: KWhiteColor, fontSize: 10.sp),
-               ),
-               child: Image.asset(R.ASSETS_ICONS_MINE_MINE_MESSAGE_ICON_PNG,
+                style: TextStyle(color: KWhiteColor, fontSize: 10.sp),
+              ),
+              child: Image.asset(R.ASSETS_ICONS_MINE_MINE_MESSAGE_ICON_PNG,
                   width: 20.w),
-             ),
-           ),
+            ),
+          ),
           GestureDetector(
             onTap: controller.onViewQRCode,
             child: Image.asset(R.ASSETS_ICONS_MINE_QRCODE_ICON_PNG, width: 20.w)
@@ -480,7 +479,7 @@ class AccountView extends GetView<AccountController> {
           },
           child: const Icon(
             Icons.settings,
-             size: 30,
+            size: 30,
           ),
         ),
         GestureDetector(

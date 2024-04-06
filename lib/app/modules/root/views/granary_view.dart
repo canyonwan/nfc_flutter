@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:bruno/bruno.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -663,9 +664,22 @@ class GranaryView extends GetView<GranaryController> {
           _buildSearch,
           GestureDetector(
             onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
-            child: Image.asset(R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
-                width: 25.w),
+            child: Badge(
+              position: BadgePosition(top: -6, start: 14.w),
+              showBadge: controller.granary.messageCount! > 0,
+              badgeContent: Text(
+                '${controller.granary.messageCount}',
+                style: TextStyle(color: KWhiteColor, fontSize: 10.sp),
+              ),
+              child: Image.asset(R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
+                  width: 25.w),
+            ),
           ).paddingSymmetric(horizontal: 6.w),
+          // GestureDetector(
+          //   onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
+          //   child: Image.asset(R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
+          //       width: 25.w),
+          // ).paddingSymmetric(horizontal: 6.w),
           SizedBox(width: 8.w),
         ],
       ),

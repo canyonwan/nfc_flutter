@@ -70,6 +70,7 @@ class FieldController extends GetxController {
           searchModel.labelId = dataModel.labelIds!.first.id;
         }
       }
+      categoryList.value = res.data!.areaList!;
       fieldList.value = res.data!.articleList!;
       update(['updateMenuId', 'updateFieldItem']);
       isLoading.value = false;

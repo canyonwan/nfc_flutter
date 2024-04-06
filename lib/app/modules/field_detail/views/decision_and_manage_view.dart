@@ -251,13 +251,13 @@ class DecisionAndManageView extends GetView {
                             ),
                           ),
                           SizedBox(height: 8.5.w),
-                          _buildSpecialPrice(model.exclusivePrice!)
+                          _buildSpecialPrice(model.exclusivePrice)
                         ],
                       ),
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => controller.addGoods(model.id!),
+                    onTap: () => controller.addGoods(model.id),
                     child: Image.asset(R.ASSETS_IMAGES_FIELD_DETAIL_CART_PNG,
                         width: 46.w),
                   )

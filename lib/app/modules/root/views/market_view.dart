@@ -252,8 +252,8 @@ class MarketView extends GetView<MarketController> {
   Widget buildGridView(List<GoodsItemModel> goodsList) {
     return SliverGrid.count(
       crossAxisCount: 2,
-      mainAxisSpacing: 30.w,
-      crossAxisSpacing: 10.w,
+      mainAxisSpacing: 20.w,
+      // crossAxisSpacing: 10.w,
       childAspectRatio: .68,
       children: goodsList.map((item) => buildGridItem(item)).toList(),
     );
@@ -289,10 +289,9 @@ class MarketView extends GetView<MarketController> {
                           ).createShader(bounds);
                         },
                         child: Image(
-                          image: NetworkImage(model.goodsImage!),
-                          fit: BoxFit.fill,
-                          width: Get.width,
-                        ),
+                            image: NetworkImage(model.goodsImage!),
+                            fit: BoxFit.fill,
+                            width: Get.width),
                       ),
                       Positioned(
                         bottom: 0,
@@ -324,7 +323,7 @@ class MarketView extends GetView<MarketController> {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(fontSize: 14.sp),
-                  ),
+                  ).paddingOnly(right: 10.w),
                 ),
                 Text.rich(
                   TextSpan(
@@ -367,7 +366,7 @@ class MarketView extends GetView<MarketController> {
                           TextStyle(fontSize: 10.sp, color: kAppSubGrey99Color),
                     ),
                   ],
-                )
+                ).paddingOnly(right: 10.w)
               ],
             ),
           ),
@@ -449,12 +448,26 @@ class MarketView extends GetView<MarketController> {
               }),
           _buildSearch,
           GestureDetector(
-                  onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
-                  child: Image.asset(
-                      R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
-                      width: 25.w))
-              .paddingSymmetric(horizontal: 5.w)
-              .paddingOnly(left: 8.w),
+            onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
+            child: Badge(
+              position: BadgePosition(top: -6, start: 14.w),
+              showBadge: controller.goodsListDataModel.ifMessageShow == 1 &&
+                  controller.goodsListDataModel.messageCount! > 0,
+              badgeContent: Text(
+                '${controller.goodsListDataModel.messageCount}',
+                style: TextStyle(color: KWhiteColor, fontSize: 10.sp),
+              ),
+              child: Image.asset(R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
+                  width: 25.w),
+            ),
+          ).paddingSymmetric(horizontal: 6.w),
+          // GestureDetector(
+          //         onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
+          //         child: Image.asset(
+          //             R.ASSETS_ICONS_FIELD_MESSAGE_ICON_AT_2X_PNG,
+          //             width: 25.w))
+          //     .paddingSymmetric(horizontal: 5.w)
+          // .paddingOnly(left: 8.w),
           GestureDetector(
             onTap: controller.shareToSession,
             child:
