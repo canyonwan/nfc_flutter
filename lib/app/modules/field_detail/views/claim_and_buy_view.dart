@@ -8,12 +8,16 @@ import 'package:mallxx_app/app/modules/field_detail/controllers/field_detail_con
 import 'package:mallxx_app/const/colors.dart';
 import 'package:mallxx_app/const/resource.dart';
 
+import '../../../models/granary_list_model.dart';
+import '../../root/controllers/granary_controller.dart';
+
 class ClaimAndBuyView extends GetView<FieldDetailController> {
   final List<GoodsItemModel> goodsList;
   final List<ClaimItemModel> claimList;
   final List<ChippedItemModel> chippedList;
-
-  const ClaimAndBuyView(this.goodsList, this.claimList, this.chippedList,
+  final List<GranaryItemModel> granaryList;
+  const ClaimAndBuyView(
+      this.goodsList, this.claimList, this.chippedList, this.granaryList,
       {Key? key})
       : super(key: key);
 
@@ -24,6 +28,7 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         children: [
+          ...granaryList.map((e) => granaryItem(e)).toList(),
           ...claimList.map((e) => _buildClaimItem(e)).toList(),
           ...chippedList.map((e) => _buildChippedItem(e)).toList(),
           _buildGoodsGrid(),
@@ -519,6 +524,413 @@ class ClaimAndBuyView extends GetView<FieldDetailController> {
       child: Text(
         time,
         style: TextStyle(color: KWhiteColor, fontSize: 10.sp),
+      ),
+    );
+  }
+
+  // 仓库item
+  Widget granaryItem(GranaryItemModel data) {
+    return GetBuilder<FieldDetailController>(builder: (controller) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.w),
+        child: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                color: KWhiteColor,
+                borderRadius: BorderRadius.circular(10.w),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(13, 13, 13, 0.2),
+                    spreadRadius: 1,
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 21.w),
+                    padding: EdgeInsets.only(top: 42.w),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(data.image!),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 25.5.w),
+                          child: Text(
+                            data.name ?? '暂无名称',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: KWhiteColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              DefaultTextStyle(
+                                style: TextStyle(
+                                    color: KWhiteColor, fontSize: 12.sp),
+                                child: Column(
+                                  children: [
+                                    Text('剩余库存'),
+                                    Text('${data.residueNum ?? '0'}'),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 15),
+                                height: 20.h,
+                                width: 0.5.w,
+                                decoration: BoxDecoration(color: KWhiteColor),
+                              ),
+                              DefaultTextStyle(
+                                style: TextStyle(
+                                    color: KWhiteColor, fontSize: 12.sp),
+                                child: Column(
+                                  children: [
+                                    Text('剩余保质期'),
+                                    Text(
+                                      data.ifExpire == 0
+                                          ? '${data.expireTime}'
+                                          : '已过期',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: data.ifExpire == 0
+                                            ? KWhiteColor
+                                            : Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // 捐赠/回收/去加工
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  if (data.ifExpire == 0 &&
+                                      data.ifRecycle == 1) {
+                                    controller
+                                        .getCurrentPrice(data.recyclePrice!);
+                                    Get.dialog(Container(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          recycleDialogContent(data, type: 1),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 14.h),
+                                            child: GestureDetector(
+                                              onTap: () => Get.back(),
+                                              child: Image.asset(
+                                                R.ASSETS_ICONS_MARKET_PRESALE_CLOSE_ICON_PNG,
+                                                width: 35.w,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ));
+                                  }
+                                },
+                                child: Image.asset(
+                                    data.ifExpire == 0 && data.ifRecycle == 1
+                                        ? R.ASSETS_ICONS_GRANARY_HUISHOU_PNG
+                                        : R.ASSETS_ICONS_GRANARY_BUHUISHOU_PNG,
+                                    width: 50.w),
+                              ),
+                              SizedBox(width: 13.5),
+                              GestureDetector(
+                                onTap: () {
+                                  if (data.ifExpire == 0) {
+                                    controller
+                                        .getCurrentPrice(data.recyclePrice!);
+                                    Get.dialog(Container(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          recycleDialogContent(data, type: 2),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 14.h),
+                                            child: GestureDetector(
+                                              onTap: () => Get.back(),
+                                              child: Image.asset(
+                                                R.ASSETS_ICONS_MARKET_PRESALE_CLOSE_ICON_PNG,
+                                                width: 35.w,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ));
+                                  }
+                                },
+                                child: Image.asset(
+                                  data.ifExpire == 0
+                                      ? R.ASSETS_ICONS_GRANARY_JUANZENG_PNG
+                                      : R.ASSETS_ICONS_GRANARY_UN_JUANZENG_PNG,
+                                  width: 50.w,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          // onTap: () => data.ifExpire == 0 && data.ifRecycle == 1
+                          //     ? controller.onProcess(data.id!)
+                          //     : null,
+                          onTap: () => data.ifProcess == 0
+                              ? (data.ifExpire == 0
+                                  ? controller.onProcess(data.id!)
+                                  : null)
+                              : null,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                // color: data.ifExpire == 0 && data.ifRecycle == 1
+                                color: data.ifProcess == 0
+                                    ? (data.ifExpire == 0
+                                        ? Colors.orange
+                                        : Colors.grey)
+                                    : Colors.grey,
+                                borderRadius: BorderRadius.circular(30)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            child: Text('加工/兑换',
+                                style: TextStyle(
+                                    fontSize: 16, color: KWhiteColor)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => controller.forwardOperationRecords(data.id!),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      child: Text(
+                        '操作记录 >',
+                        style:
+                            TextStyle(fontSize: 13.sp, color: kAppGrey66Color),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 80.w,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(R.ASSETS_ICONS_GRANARY_GRANARY_BG_PNG),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: DefaultTextStyle(
+                style: TextStyle(color: KWhiteColor),
+                child: Column(
+                  children: [
+                    Text('${data.createtime}',
+                        style: TextStyle(fontSize: 13.sp)),
+                    Text('${data.totalNum}', style: TextStyle(fontSize: 11.sp)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  // type: 1 回收; 2 捐赠
+  Widget recycleDialogContent(GranaryItemModel data, {int type = 1}) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 17.5.w, vertical: 12.w),
+      decoration: BoxDecoration(
+        color: KWhiteColor,
+        borderRadius: BorderRadius.circular(10.w),
+      ),
+      child: Column(
+        children: [
+          if (type == 2)
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+              child: Text('你确定要将以下数量的库存交由农副仓，并无偿捐赠给需要的人吗？',
+                  textAlign: TextAlign.center),
+            ),
+          if (type == 1)
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+              child: Column(
+                children: [
+                  Text(
+                    '目前的回收价格为${data.recyclePrice}/${data.units}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                  Text(
+                    '请选择你要回收的数量',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 10.h),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 80.w),
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xff666666)),
+                borderRadius: BorderRadius.circular(16.w),
+              ),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => controller.onDecrement(data.recyclePrice!),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.5),
+                      decoration: BoxDecoration(
+                        border: Border(right: BorderSide()),
+                      ),
+                      child: Text(
+                        '-',
+                        style: TextStyle(
+                            fontSize: 30.sp, color: Color(0xff999999)),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      child: TextField(
+                        controller: controller.granrayTextEditingController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          // suffixText: '${data.units}',
+                          isDense: true,
+                          hintText: '请输入数值',
+                          hintStyle: TextStyle(
+                            color: Color(0xffBBBBBB),
+                            fontSize: 16.sp,
+                            textBaseline: TextBaseline.alphabetic,
+                          ),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () =>
+                        controller.onIncrementCount(data.recyclePrice!),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.5),
+                      decoration: BoxDecoration(
+                        border: Border(left: BorderSide()),
+                      ),
+                      child: Text(
+                        '+',
+                        style: TextStyle(
+                            fontSize: 30.sp, color: Color(0xff999999)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Text(
+            '剩余库存${data.residueNum}${data.units}',
+            style: TextStyle(color: kAppGrey66Color),
+          ).paddingOnly(bottom: 20.h),
+          if (type == 1)
+            GetBuilder<GranaryController>(builder: (_) {
+              return Text.rich(TextSpan(
+                  text: '本次回收您将获得：',
+                  style: TextStyle(
+                    color: Color(0xff999999),
+                    fontSize: 13.sp,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: '${_.totalPrice}',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '元',
+                      style:
+                          TextStyle(color: Color(0xff999999), fontSize: 13.sp),
+                    ),
+                  ]));
+            }),
+          GestureDetector(
+            onTap: () {
+              if (type == 1) {
+                controller.onRecycle(data.id!);
+              } else if (type == 2) {
+                controller.onDonate(data.id!);
+              }
+            },
+            child: Container(
+              margin:
+                  EdgeInsets.symmetric(horizontal: 17.5.sp, vertical: 20.sp),
+              width: Get.width,
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Color(0xff8AC036),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  '${type == 1 ? '确定回收' : '确定捐赠'}',
+                  style: TextStyle(color: KWhiteColor, fontSize: 15.sp),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

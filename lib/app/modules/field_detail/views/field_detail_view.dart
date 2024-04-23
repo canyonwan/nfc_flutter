@@ -213,6 +213,7 @@ class FieldDetailView extends GetView<FieldDetailController> {
                   c.dataModel.goodsList!,
                   c.dataModel.claimList!,
                   c.dataModel.chippedList!,
+                  c.granaryList,
                 ), // 认领购买
             ],
           ),

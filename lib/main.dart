@@ -30,16 +30,10 @@ Future<void> main() async {
   await AmapLocation.instance.updatePrivacyShow(true);
   await AmapLocation.instance.updatePrivacyAgree(true);
   await AmapLocation.instance.init(iosKey: 'ff69dc69063804b94a28ebb5e03d405a');
-  // AMapFlutterLocation.updatePrivacyShow(true, true);
-  // AMapFlutterLocation.updatePrivacyAgree(true);
-  // AMapFlutterLocation.setApiKey(
-  //     "87596967ecfff9885019384f67c2949c", "ff69dc69063804b94a28ebb5e03d405a");
   await AppUtils.requestPermission();
   await Application.init();
   await initWXLogin();
   await initMeiqia();
-  // await setupLicense();
-  // await initYsCloud();
   await tobias.isAliPayInstalled();
   if (Platform.isAndroid) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -70,7 +64,7 @@ Future<void> initPlatformState() async {
 
   jpush.setAuth(enable: true);
   jpush.setup(
-    appKey: "6621ace68dffa504fc41e86a", //你自己应用的 AppKey
+    appKey: "7fd64fb12bd57e049bf35d32", //你自己应用的 AppKey
     channel: "theChannel",
     production: true,
     debug: true,
@@ -86,10 +80,11 @@ Future<void> initPlatformState() async {
 
 Future<void> initWXLogin() async {
   await registerWxApi(
-      appId: 'wx8e0fdf7fe83b6ecf', //查看微信开放平台
+      appId: 'wx852cd7bb8fb491c3', //查看微信开放平台
       doOnAndroid: true,
       doOnIOS: true,
-      universalLink: 'https://com.nongfucang.shopper' //查看微信开放平台
+      // universalLink: 'https://com.nongfucang.shopper' //查看微信开放平台
+      universalLink: 'https://www.nongfucang.com/' //查看微信开放平台
       );
 }
 

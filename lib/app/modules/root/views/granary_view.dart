@@ -142,20 +142,41 @@ class GranaryView extends GetView<GranaryController> {
                                 if (data.ifExpire == 0 && data.ifRecycle == 1) {
                                   controller
                                       .getCurrentPrice(data.recyclePrice!);
-                                  Get.defaultDialog(
-                                    titlePadding: EdgeInsets.only(
-                                        top: 50,
-                                        bottom: 15.h,
-                                        left: 17.5.w,
-                                        right: 17.5.w),
-                                    content: recycleDialogContent(data),
-                                    title:
-                                        "目前的回收价格为${data.recyclePrice}元/${data.units} 请选择你要回收的数量（库存${data.residueNum ?? '0'}斤）",
-                                    titleStyle: TextStyle(
-                                        color: Color(0xff666666),
-                                        fontSize: 15.sp),
-                                    radius: 10.w,
-                                  );
+                                  Get.dialog(Container(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        recycleDialogContent(data, type: 1),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 14.h),
+                                          child: GestureDetector(
+                                            onTap: () => Get.back(),
+                                            child: Image.asset(
+                                              R.ASSETS_ICONS_MARKET_PRESALE_CLOSE_ICON_PNG,
+                                              width: 35.w,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ));
+                                  // Get.defaultDialog(
+                                  //   titlePadding: EdgeInsets.only(
+                                  //       top: 50,
+                                  //       bottom: 15.h,
+                                  //       left: 17.5.w,
+                                  //       right: 17.5.w),
+                                  //   content: recycleDialogContent(data),
+                                  //   title:
+                                  //       "目前的回收价格为${data.recyclePrice}元/${data.units} 请选择你要回收的数量",
+                                  //   titleStyle: TextStyle(
+                                  //       color: Color(0xff666666),
+                                  //       fontSize: 15.sp),
+                                  //   radius: 10.w,
+                                  // );
                                 }
                               },
                               child: Image.asset(
@@ -170,22 +191,6 @@ class GranaryView extends GetView<GranaryController> {
                                 if (data.ifExpire == 0) {
                                   controller
                                       .getCurrentPrice(data.recyclePrice!);
-                                  // Get.defaultDialog(
-                                  //   titlePadding: EdgeInsets.only(
-                                  //       top: 50,
-                                  //       bottom: 15.h,
-                                  //       left: 17.5.w,
-                                  //       right: 17.5.w),
-                                  //   content:
-                                  //       recycleDialogContent(data, type: 2),
-                                  //   title: "你确定要将以下数量的库存交由农副仓，并无偿捐赠给需要的人吗？",
-                                  //   titleStyle: TextStyle(
-                                  //       color: Color(0xff666666),
-                                  //       fontSize: 15.sp),
-                                  //   radius: 10.w,
-                                  // );
-                                  // Get.dialog(
-                                  //     recycleDialogContent(data, type: 2));
                                   Get.dialog(Container(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -294,15 +299,38 @@ class GranaryView extends GetView<GranaryController> {
       ),
       child: Column(
         children: [
+          if (type == 2)
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+              child: Text('你确定要将以下数量的库存交由农副仓，并无偿捐赠给需要的人吗？',
+                  textAlign: TextAlign.center),
+            ),
+          if (type == 1)
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+              child: Column(
+                children: [
+                  Text(
+                    '目前的回收价格为${data.recyclePrice}/${data.units}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                  Text(
+                    '请选择你要回收的数量',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-            child: Text('你确定要将以下数量的库存交由农副仓，并无偿捐赠给需要的人吗？',
-                textAlign: TextAlign.center),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 30.h),
+            padding: EdgeInsets.only(bottom: 10.h),
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 40.h),
+              margin: EdgeInsets.symmetric(horizontal: 80.w),
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xff666666)),
                 borderRadius: BorderRadius.circular(16.w),
@@ -331,7 +359,7 @@ class GranaryView extends GetView<GranaryController> {
                         controller: controller.textEditingController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          suffixText: '${type == 2 ? '斤' : ''}',
+                          // suffixText: '${data.units}',
                           isDense: true,
                           hintText: '请输入数值',
                           hintStyle: TextStyle(
@@ -364,6 +392,10 @@ class GranaryView extends GetView<GranaryController> {
               ),
             ),
           ),
+          Text(
+            '剩余库存${data.residueNum}${data.units}',
+            style: TextStyle(color: kAppGrey66Color),
+          ).paddingOnly(bottom: 20.h),
           if (type == 1)
             GetBuilder<GranaryController>(builder: (_) {
               return Text.rich(TextSpan(

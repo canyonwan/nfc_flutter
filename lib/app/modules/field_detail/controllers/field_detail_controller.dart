@@ -26,6 +26,8 @@ import 'package:mallxx_app/utils/enums.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../api/granary_api.dart';
+import '../../../models/granary_list_model.dart';
 import 'timer.dart';
 
 class FieldDetailController extends GetxController
@@ -38,7 +40,7 @@ class FieldDetailController extends GetxController
   final OrderConfirmProvider orderConfirmProvider =
       Get.put<OrderConfirmProvider>(OrderConfirmProvider());
   ScrollController scrollController = ScrollController();
-
+  final GranaryProvider pro = Get.find<GranaryProvider>();
   final EasyRefreshController liveActionEasyRefreshController =
       EasyRefreshController(
     controlFinishRefresh: true,
@@ -110,6 +112,7 @@ class FieldDetailController extends GetxController
     getDetailButtonStatusUrl();
     getGoodsCount();
     getLabelList();
+    getGranaryList();
     videoController = BetterVideoPlayerController();
 
     super.onInit();
@@ -134,6 +137,17 @@ class FieldDetailController extends GetxController
     super.dispose();
     videoController.dispose();
     cancelTimer();
+  }
+
+  List<GranaryItemModel> granaryList = [];
+
+  Future<void> getGranaryList({int? fieldId}) async {
+    var res = await pro.queryGranaryList(page: 1, article_id: fieldId);
+    if (res.code == 200 && res.data != null) {
+      granaryList = res.data!.granaryList!;
+    } else {
+      granaryList = [];
+    }
   }
 
   //   如果tabController.index == 1并且tabs[index].text == '决策管理'，则调用getDetailButtonStatusUrl
@@ -480,6 +494,67 @@ class FieldDetailController extends GetxController
 
   void onJumpToGoodsDetail(int goodsId) {
     Get.toNamed(Routes.GOODS_DETAIL, arguments: goodsId);
+  }
+
+  final granrayTextEditingController = TextEditingController();
+  String totalPrice = ''; // 粮仓-> 总价
+  // 增加计数
+  void onIncrementCount(String price) {
+    count.value++;
+    granrayTextEditingController.text = count.value.toString();
+    totalPrice = (double.parse(price) * count.value).toStringAsFixed(2);
+    update();
+  }
+
+  // 减少计数
+  void onDecrement(String price) {
+    if (count.value == 1) {
+      showToast('不能再减了');
+      return;
+    }
+    count.value--;
+    granrayTextEditingController.text = count.value.toString();
+    totalPrice = (double.parse(price) * count.value).toStringAsFixed(2);
+    update();
+  }
+
+  void forwardOperationRecords(int granaryId) {
+    Get.toNamed(Routes.OPERATION_RECORDS, arguments: granaryId);
+  }
+
+  // 确定回收
+  Future<void> onRecycle(int id) async {
+    var res = await pro.granaryRecycle(granary_id: id, num: count.toString());
+    if (res.code == 200) {
+      showToast('操作成功');
+      Get.back();
+    } else {
+      showToast('操作失败');
+    }
+  }
+
+  // 确定捐赠
+  Future<void> onDonate(int id) async {
+    var res = await pro.granaryDonate(granary_id: id, num: count.toString());
+    if (res.code == 200) {
+      showToast('${res.msg}');
+      Get.back();
+    } else {
+      showToast('${res.msg}');
+    }
+  }
+
+  // 去加工
+  void onProcess(int granaryId) {
+    Get.toNamed(Routes.PROCESS, arguments: granaryId);
+  }
+
+  // 粮仓获取当前价格
+  void getCurrentPrice(String price) {
+    count.value = 1;
+    granrayTextEditingController.text = count.value.toString();
+    totalPrice = (double.parse(price) * count.value).toStringAsFixed(2);
+    update();
   }
 
   late Timer timer;

@@ -529,7 +529,6 @@ class FieldView extends GetView<FieldController> {
                   child: Row(
                     children: [
                       SizedBox(width: 15.w),
-                      //Icon(Icons.location_on_rounded),
                       Image.asset(
                         R.ASSETS_ICONS_FIELD_LOCATION_ICON_AT_2X_PNG,
                         width: 16.w,
