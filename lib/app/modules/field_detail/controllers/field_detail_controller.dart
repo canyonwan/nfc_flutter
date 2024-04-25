@@ -120,15 +120,6 @@ class FieldDetailController extends GetxController
 
   @override
   void onReady() {
-    // onIncrement(count.value);
-    // tabController.addListener(() {
-    //   if (tabController.index == 1 && tabs[tabController.index] == part2) {
-    //     onMarkReadForVRAndDecision(2);
-    //   } else if (tabController.index == 0 &&
-    //       tabs[tabController.index] == part1) {
-    //     onMarkReadForVRAndDecision(1);
-    //   }
-    // });
     super.onReady();
   }
 
@@ -168,7 +159,7 @@ class FieldDetailController extends GetxController
   Future<void> onSaveShareSettingInput() async {
     showShareEditInput = false;
     update(['updateFieldDetail']);
-    var res = await fieldProvider.onEditFieldDetailAndExplain(fieldId,
+    await fieldProvider.onEditFieldDetailAndExplain(fieldId,
         shareExplain: shareSettingExplain);
     getFieldDetail();
     // showToast(res.msg);
@@ -250,7 +241,6 @@ class FieldDetailController extends GetxController
 
   Future<void> getFieldDetail(
       {int page = 1, bool onlyChangeLive = false}) async {
-    // change(null, status: RxStatus.loading());
     var res = await fieldProvider.queryFieldDetail(fieldId,
         mergename: Get.arguments['mergename'],
         page: page,
