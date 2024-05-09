@@ -17,6 +17,7 @@ class BuildOptionItem extends StatefulWidget {
     required this.onValueChange,
     required this.disabled,
   }) : super(key: key);
+
   @override
   _BuildOptionItemState createState() => _BuildOptionItemState();
 }
@@ -39,7 +40,7 @@ class _BuildOptionItemState extends State<BuildOptionItem> {
           ),
         ),
         onValueChangedAtIndex: (index, value) {
-          widget.item.ifCheck = 1;
+          // widget.item.ifCheck = 1;
           widget.onValueChange(widget.item);
         },
       ),

@@ -184,7 +184,7 @@ class FieldDetailController extends GetxController
   Future<void> onMarkReadForVRAndDecision(int part) async {
     var res = await fieldProvider.markReadForVRAndDecision(fieldId, part);
     if (res.code == 200) {
-      getFieldDetail();
+      // getFieldDetail();
     }
   }
 
