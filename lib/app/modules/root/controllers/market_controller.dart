@@ -31,7 +31,7 @@ class MarketController extends GetxController {
   ];
   GoodsListDataModel goodsListDataModel = GoodsListDataModel();
   GoodsListSearchModel searchModel =
-      GoodsListSearchModel(1, num: 6, type: 0, keyword: '');
+      GoodsListSearchModel(1, num: 6, type: 0, keyword: '', address: '');
   int totalPage = 0;
   bool browserLayout = false; // true: 浏览 1: 双排
   int goodsCount = 0; // 商品数量
@@ -46,9 +46,9 @@ class MarketController extends GetxController {
 
   Future<void> getGoodsList() async {
     final res = await _provider.queryGoodsList(searchModel);
+    print('调用了');
     if (res.code == 200) {
       goodsListDataModel = res.data!;
-      print('goodsListDataModel: ${goodsListDataModel.toJson()}');
       totalPage = res.data!.maxpage!;
       if (res.data!.list!.isNotEmpty) {
         goodsList.addAll(res.data!.list!);
@@ -169,7 +169,9 @@ class MarketController extends GetxController {
   }
 
   Future<void> onChangeAddress() async {
-    await fieldController.onSelectAddress(false, changeCarts: getGoodsList);
+    await fieldController.onSelectAddress(false);
+    searchModel.address = fieldController.searchModel.mergename;
+    await easyRefreshController.callRefresh();
   }
 }
 

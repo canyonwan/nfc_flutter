@@ -19,6 +19,7 @@ class MarketProvider extends BaseProvider {
   }
 
   Future<GoodsListRootModel> queryGoodsList(GoodsListSearchModel model) async {
+    print('model: ${model.toJson()}');
     final response = await post(productListUrl, model.toJson());
     return GoodsListRootModel.fromJson(response.body);
   }

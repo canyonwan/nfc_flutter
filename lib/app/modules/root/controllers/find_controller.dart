@@ -58,8 +58,8 @@ class FindController extends GetxController with StateMixin<FindDataModel> {
   }
 
   Future<void> onSelectAddress() async {
-    await _fieldController.onSelectAddress(true);
-    getFindList();
+    await _fieldController.onSelectAddress(false);
+    await findRefreshController.callRefresh();
   }
 
   Future<void> onCollect(FindItemModel item) async {

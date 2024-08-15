@@ -47,8 +47,9 @@ class FindView extends GetView<FindController> {
                       ),
                       SizedBox(width: 4.w),
                       SizedBox(
+                        width: 100.w,
                         child: Text(
-                          _.searchModel.mergename != ''
+                          _.searchModel.mergename != ',,,null'
                               ? _.searchModel.mergename!.split(',').last == ''
                                   ? _.searchModel.mergename!.split(',')[_
                                           .searchModel.mergename!

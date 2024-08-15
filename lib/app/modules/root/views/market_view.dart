@@ -307,11 +307,43 @@ class MarketView extends GetView<MarketController> {
                       ),
                     ],
                   )
-                : Image(
-                    image: NetworkImage(model.goodsImage!),
-                    fit: BoxFit.fill,
-                    width: Get.width,
-                  ),
+                : model.ifTimeSell == 1
+                    ? Stack(
+                        children: [
+                          ShaderMask(
+                            shaderCallback: (Rect bounds) {
+                              return LinearGradient(
+                                colors: [
+                                  Colors.black.withOpacity(.6),
+                                  Colors.white
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ).createShader(bounds);
+                            },
+                            child: Image(
+                                image: NetworkImage(model.goodsImage!),
+                                fit: BoxFit.fill,
+                                width: Get.width),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            left: 0,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 4.w),
+                              color: Colors.black.withOpacity(.5),
+                              alignment: Alignment.center,
+                              child: Text('本时段不可售',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Image(
+                        image: NetworkImage(model.goodsImage!),
+                        fit: BoxFit.fill,
+                        width: Get.width),
           ),
           Expanded(
             child: Column(
@@ -428,18 +460,22 @@ class MarketView extends GetView<MarketController> {
                           R.ASSETS_ICONS_FIELD_LOCATION_ICON_AT_2X_PNG,
                           width: 16.w,
                         ),
-                        SizedBox(width: 4.w),
                         SizedBox(
-                          width: 70.w,
+                          width: 80.w,
                           child: Text(
-                            _.searchModel.mergename!.split(",").last,
+                            _.searchModel.mergename != ',,,null'
+                                ? _.searchModel.mergename!.split(',').last == ''
+                                    ? _.searchModel.mergename!.split(',')[_
+                                            .searchModel.mergename!
+                                            .split(',')
+                                            .length -
+                                        2]
+                                    : _.searchModel.mergename!.split(',').last
+                                : '定位失败',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              //fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                            style: TextStyle(fontSize: 16.sp),
+                          ).paddingOnly(left: 5.w, right: 10.w),
                         ),
                       ],
                     ),
@@ -493,14 +529,14 @@ class MarketView extends GetView<MarketController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(children: [
-              Image.asset(R.ASSETS_ICONS_FIELD_SEARCH_ICON_PNG, width: 14.w),
+              Image.asset(R.ASSETS_ICONS_FIELD_SEARCH_ICON_PNG, width: 12.w),
               GetBuilder<MarketController>(
                   id: 'updateSearch',
                   builder: (c) {
                     return Text(
                             '${c.searchModel.keyword == '' ? '搜索' : c.searchModel.keyword}',
                             style: TextStyle(
-                                fontSize: 14.sp, color: kAppSubGrey99Color))
+                                fontSize: 12.sp, color: kAppSubGrey99Color))
                         .paddingOnly(left: 10.w);
                   }),
             ]),

@@ -533,9 +533,8 @@ class FieldView extends GetView<FieldController> {
                         R.ASSETS_ICONS_FIELD_LOCATION_ICON_AT_2X_PNG,
                         width: 16.w,
                       ),
-                      SizedBox(width: 4.w),
                       SizedBox(
-                        width: 150.w,
+                        width: 100.w,
                         child: Text(
                           _.searchModel.mergename != ',,,null'
                               ? _.searchModel.mergename!.split(',').last == ''
@@ -552,7 +551,7 @@ class FieldView extends GetView<FieldController> {
                             fontSize: 16.sp,
                             //fontWeight: FontWeight.bold,
                           ),
-                        ),
+                        ).paddingOnly(left: 5.w, right: 20.w),
                       ),
                     ],
                   ),

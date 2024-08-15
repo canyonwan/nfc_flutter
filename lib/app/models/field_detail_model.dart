@@ -661,6 +661,7 @@ class DecisionItemModel {
     this.memberChoose,
     this.item,
     this.image,
+    this.voucher,
     this.id,
     this.countdown,
     this.content,
@@ -712,6 +713,10 @@ class DecisionItemModel {
       id: asT<int?>(jsonRes['id']),
       countdown: asT<String?>(jsonRes['countdown']),
       content: asT<String?>(jsonRes['content']),
+      voucher: jsonRes['voucher'] == null
+          ? null
+          : VoucherItem.fromJson(
+              asT<Map<String, dynamic>>(jsonRes['voucher'])!),
     );
   }
 
@@ -732,6 +737,7 @@ class DecisionItemModel {
   int? ifCheck;
   String? optionPrice;
   int? ifGranary;
+  VoucherItem? voucher;
 
   @override
   String toString() {
@@ -751,6 +757,68 @@ class DecisionItemModel {
         'countdown': countdown,
         'content': content,
         'if_granary': ifGranary,
+        'voucher': voucher,
+      };
+}
+
+class VoucherItem {
+  VoucherItem({
+    this.id,
+    this.name,
+    this.explain,
+    this.full,
+    this.price,
+    this.amount,
+    this.residueNum,
+    this.getNum,
+    this.startTime,
+    this.endTime,
+    this.createtime,
+  });
+
+  factory VoucherItem.fromJson(Map<String, dynamic> json) => VoucherItem(
+        id: asT<int?>(json['id']),
+        name: asT<String?>(json['name']),
+        explain: asT<String?>(json['explain']),
+        full: asT<String?>(json['full']),
+        price: asT<String?>(json['price']),
+        amount: asT<int?>(json['amount']),
+        residueNum: asT<int?>(json['residue_num']),
+        getNum: asT<int?>(json['get_num']),
+        startTime: asT<String?>(json['start_time']),
+        endTime: asT<String?>(json['end_time']),
+        createtime: asT<int?>(json['createtime']),
+      );
+
+  int? id;
+  String? name;
+  String? explain;
+  String? full;
+  String? price;
+  int? amount;
+  int? residueNum;
+  int? getNum;
+  String? startTime;
+  String? endTime;
+  int? createtime;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'id': id,
+        'name': name,
+        'explain': explain,
+        'full': full,
+        'price': price,
+        'amount': amount,
+        'residue_num': residueNum,
+        'get_num': getNum,
+        'start_time': startTime,
+        'end_time': endTime,
+        'createtime': createtime,
       };
 }
 

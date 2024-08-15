@@ -224,20 +224,15 @@ class FieldController extends GetxController {
       provincesData: provincesData,
       citiesData: citiesData,
     );
-    print(': ${result}');
     if (result != null) {
       searchModel.mergename =
           '${'中国'},${result.provinceName},${result.cityName},${result.areaName}';
       areaId = result.areaId!;
-      // _findController.getFindList();
       if (changeField) {
         getCategory(changeMenu: true);
       } else if (!changeField && changeCarts != null) {
         changeCarts();
       }
-
-      print('searchMOdal: ${searchModel.mergename}');
-
       update(['update_location']);
     }
   }

@@ -19,7 +19,8 @@ import '/app/providers/base_provider.dart';
 
 class FieldProvider extends BaseProvider {
   //static const String categoryWithChildren = "/product/category/list/children";
-  static const String categoryWithChildren = "/apizhibo/tiandi_list";
+  // static const String categoryWithChildren = "/apizhibo/tiandi_list";
+  static const String categoryWithChildren = "/apizhibo/farm_list";
   static const String collectUrl = "/apizhibo/collect_articles";
   static const String cancelCollectUrl = "/apizhibo/cancel_collect_articles";
   static const String fieldDetailUrl = "/api/html_tiandi_detail";

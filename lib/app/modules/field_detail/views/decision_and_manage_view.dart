@@ -98,6 +98,75 @@ class DecisionAndManageView extends GetView {
                   ).paddingOnly(left: 10.w, bottom: 10.h),
                 );
               }),
+            if (m.voucher != null)
+              Container(
+                width: Get.width,
+                height: 100.h,
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                margin: EdgeInsets.all(10.w),
+                decoration: BoxDecoration(
+                  color: Color(0xffF2F2F2),
+                  borderRadius: BorderRadius.circular(10.w),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '￥${m.voucher!.price}',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: kAppColor,
+                            ),
+                          ),
+                          Text(
+                            '满${m.voucher!.full}可用',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: kAppColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          '${m.voucher!.name}',
+                          style: TextStyle(fontSize: 14.sp),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          '${m.voucher!.startTime}-${m.voucher!.endTime}',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 4.w, horizontal: 8.w),
+                      decoration: BoxDecoration(
+                        color: kAppColor,
+                        borderRadius: BorderRadius.circular(20.w),
+                      ),
+                      child: Text('立即领取',
+                          style:
+                              TextStyle(color: KWhiteColor, fontSize: 13.sp)),
+                    )
+                  ],
+                ),
+              ),
             ...m.optionList!
                 .map((e) => BuildOptionItem(
                       onValueChange: (item) => c.onSelectOption(item, m),

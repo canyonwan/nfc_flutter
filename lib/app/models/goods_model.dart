@@ -113,8 +113,7 @@ class GoodsListDataModel {
       ifMessageShow: asT<int?>(json['if_message_show']),
       enjoy: json['enjoy'] == null
           ? null
-          : ShareItemModel.fromJson(
-          asT<Map<String, dynamic>>(json['enjoy'])!),
+          : ShareItemModel.fromJson(asT<Map<String, dynamic>>(json['enjoy'])!),
     );
   }
 
@@ -142,6 +141,7 @@ class GoodsItemModel {
     this.secondaryImages,
     this.salesVolume,
     this.ifSellOut,
+    this.ifTimeSell,
     this.id,
     this.goodsUnit,
     this.goodsRemark,
@@ -169,6 +169,7 @@ class GoodsItemModel {
       secondaryImages: secondaryImages,
       salesVolume: asT<int?>(json['sales_volume']),
       ifSellOut: asT<int?>(json['if_sell_out']),
+      ifTimeSell: asT<int?>(json['if_time_sell']),
       id: asT<int?>(json['id']),
       goodsUnit: asT<String?>(json['goods_unit']),
       goodsRemark: asT<String?>(json['goods_remark']),
@@ -184,6 +185,7 @@ class GoodsItemModel {
   final List<String>? secondaryImages;
   final int? salesVolume;
   final int? ifSellOut;
+  final int? ifTimeSell; // 是否在可售时间段 0 在1 不在
   final int? id;
   final String? goodsUnit;
   final String? goodsRemark;
@@ -203,6 +205,7 @@ class GoodsItemModel {
         'secondary_images': secondaryImages,
         'sales_volume': salesVolume,
         'if_sell_out': ifSellOut,
+        'if_time_sell': ifTimeSell,
         'id': id,
         'goods_unit': goodsUnit,
         'goods_remark': goodsRemark,
@@ -213,8 +216,8 @@ class GoodsItemModel {
         'evaluation_number': evaluationNumber,
         'commodity_category_id': commodityCategoryId,
       };
-
 }
+
 class ShareItemModel {
   ShareItemModel({
     this.title,
@@ -245,10 +248,10 @@ class ShareItemModel {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'title': title,
-    'image': image,
-    'id': id,
-    'enjoy_url': enjoyUrl,
-    'content': content,
-  };
+        'title': title,
+        'image': image,
+        'id': id,
+        'enjoy_url': enjoyUrl,
+        'content': content,
+      };
 }
