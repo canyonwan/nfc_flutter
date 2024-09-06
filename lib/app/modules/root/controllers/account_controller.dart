@@ -53,7 +53,6 @@ class AccountController extends GetxController
     }
   }
 
-
   Future<void> onLaunchInBrowser() async {
     var url = 'https://work.weixin.qq.com/kfid/kfc293acb0f76407da6';
     if (!await launchUrl(
@@ -82,7 +81,6 @@ class AccountController extends GetxController
       }
       // parseTime(nowUnixTime);
       timeRemaining.value = '支付时间剩余时间: ${constructTime(3600)}';
-      print(timeRemaining.value);
     });
   }
 
@@ -155,7 +153,6 @@ class AccountController extends GetxController
 
   Future<void> getMyQrCode() async {
     final res = await memberProvider.queryMyQrCode();
-    print('getMyQrCode: $res');
     if (res.code == 200) {
       qrCodeDataModel = res.data!;
       update();
@@ -165,6 +162,10 @@ class AccountController extends GetxController
   Future<void> onViewQRCode() async {
     await getMyQrCode();
     Get.to(() => MyQrcodeView(qrCodeDataModel));
+  }
+
+  void onViewBluetooth(){
+    Get.toNamed(Routes.BLUETOOTH_LIST);
   }
 
   @override

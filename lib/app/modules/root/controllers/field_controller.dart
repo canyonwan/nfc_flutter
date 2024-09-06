@@ -134,7 +134,6 @@ class FieldController extends GetxController {
     }
     if (await AppUtils.requestLocationPermission() == true) {
       location = await AmapLocation.instance.fetchLocation();
-      print('location: ${location}');
       searchModel.mergename =
           '${location.country ?? ''},${location.province ?? ''},${location.city ?? ''},${location.district}';
       update(['update_location']);

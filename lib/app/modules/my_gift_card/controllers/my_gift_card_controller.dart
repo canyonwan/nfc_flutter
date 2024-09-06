@@ -63,7 +63,6 @@ class MyGiftCardController extends GetxController
 
   void onSelectBottom(int value) {
     currentBottomType = value;
-    print('$currentBottomType');
     if (currentBottomType == 1) {
       tabs = [
         BadgeTab(text: '未使用'),
@@ -99,13 +98,10 @@ class MyGiftCardController extends GetxController
       if (res.data!.voucherDetail!.isNotEmpty) {
         if (index == 0) {
           unusedVouchersList = res.data!.voucherDetail!;
-          print('$index: ${unusedVouchersList.length}');
         } else if (index == 1) {
           alreadyUsedVouchersList = res.data!.voucherDetail!;
-          print('$index: ${alreadyUsedVouchersList.length}');
         } else if (index == 2) {
           expiredList = res.data!.voucherDetail!;
-          print('$index: ${expiredList.length}');
         }
         update();
       }
@@ -119,13 +115,10 @@ class MyGiftCardController extends GetxController
       if (res.data!.list!.isNotEmpty) {
         if (index == 0) {
           unusedGiftList = res.data!.list!;
-          print('未使用$index: $unusedGiftList');
         } else if (index == 1) {
           usedGiftList = res.data!.list!;
-          print('已使用$index: $usedGiftList');
         } else if (index == 2) {
           expiredGiftList = res.data!.list!;
-          print('已过期$index: $expiredGiftList');
         }
         update();
       }

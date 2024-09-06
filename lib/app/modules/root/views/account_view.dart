@@ -406,7 +406,7 @@ class AccountView extends GetView<AccountController> {
       actions: Row(
         children: [
           GestureDetector(
-            onTap: controller.onViewQRCode,
+            onTap: controller.onViewBluetooth,
             child: Icon(Icons.bluetooth_outlined),
           ).paddingOnly(right: 10),
           GestureDetector(

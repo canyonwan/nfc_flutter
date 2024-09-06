@@ -10,16 +10,14 @@ class NormalPlayerPage extends StatefulWidget {
 }
 
 class _NormalPlayerPageState extends State<NormalPlayerPage> {
-  final BetterVideoPlayerController controller  = BetterVideoPlayerController();
+  final BetterVideoPlayerController controller = BetterVideoPlayerController();
   late StreamSubscription playerEventSubscription;
 
   @override
   void initState() {
     super.initState();
 
-    playerEventSubscription = controller.playerEventStream.listen((event) {
-      print("wang $event");
-    });
+    playerEventSubscription = controller.playerEventStream.listen((event) {});
   }
 
   @override

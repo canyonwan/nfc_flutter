@@ -67,15 +67,13 @@ Future<void> initPlatformState() async {
     appKey: "7fd64fb12bd57e049bf35d32", //你自己应用的 AppKey
     channel: "theChannel",
     production: true,
-    debug: true,
+    debug: false,
   );
   jpush.applyPushAuthority(
       new NotificationSettingsIOS(sound: true, alert: true, badge: true));
 
   // Platform messages may fail, so we use a try/catch PlatformException.
-  jpush.getRegistrationID().then((rid) {
-    print("flutter get registration id : $rid");
-  });
+  jpush.getRegistrationID().then((rid) {});
 }
 
 Future<void> initWXLogin() async {

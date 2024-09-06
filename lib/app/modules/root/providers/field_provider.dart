@@ -181,7 +181,6 @@ class FieldProvider extends BaseProvider {
       'address_id': address_id,
       'address': address
     });
-    print('提交订单：${response.body}');
     return CreateFieldClaimRootModel.fromJson(response.body);
   }
 

@@ -47,7 +47,6 @@ class LoginWithView extends StatelessWidget {
                   showToast("没有安装微信，请安装微信后使用该功能");
                 }
                 showToast("微信登录");
-                print('微信登录：$data');
               });
             },
             child: Container(

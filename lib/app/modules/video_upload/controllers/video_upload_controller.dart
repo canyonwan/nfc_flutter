@@ -74,7 +74,6 @@ class VideoUploadController extends GetxController {
 
   // 获取标签列表
   Future<void> getLabelList() async {
-    print('articleId: ${Get.arguments['articleId']}');
     var res = await fieldProvider
         .queryLiveRecordLabelList(Get.arguments['articleId']);
     if (res.code == 200) {
@@ -113,10 +112,8 @@ class VideoUploadController extends GetxController {
     if (fileTemp != null) {
       // 去视频编辑
       var res = await Get.to(() => VideoEditorView(file: fileTemp!));
-      print('res: $res');
       params.videoImage = res.imageUrl;
       params.videoFile = res.fileUrl;
-      print('结果结果params: $params');
       // EasyLoading.show(status: '上传中');
       // var res = await fieldProvider.uploadVideo(fileTemp!);
       // if (res.code == 200) {
