@@ -22,35 +22,35 @@ PODS:
   - core_location_fluttify (0.0.1):
     - Flutter
     - foundation_fluttify
-  - DKImagePickerController/Core (4.3.4):
+  - DKImagePickerController/Core (4.3.9):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
-  - DKImagePickerController/ImageDataManager (4.3.4)
-  - DKImagePickerController/PhotoGallery (4.3.4):
+  - DKImagePickerController/ImageDataManager (4.3.9)
+  - DKImagePickerController/PhotoGallery (4.3.9):
     - DKImagePickerController/Core
     - DKPhotoGallery
-  - DKImagePickerController/Resource (4.3.4)
-  - DKPhotoGallery (0.0.17):
-    - DKPhotoGallery/Core (= 0.0.17)
-    - DKPhotoGallery/Model (= 0.0.17)
-    - DKPhotoGallery/Preview (= 0.0.17)
-    - DKPhotoGallery/Resource (= 0.0.17)
+  - DKImagePickerController/Resource (4.3.9)
+  - DKPhotoGallery (0.0.19):
+    - DKPhotoGallery/Core (= 0.0.19)
+    - DKPhotoGallery/Model (= 0.0.19)
+    - DKPhotoGallery/Preview (= 0.0.19)
+    - DKPhotoGallery/Resource (= 0.0.19)
     - SDWebImage
     - SwiftyGif
-  - DKPhotoGallery/Core (0.0.17):
+  - DKPhotoGallery/Core (0.0.19):
     - DKPhotoGallery/Model
     - DKPhotoGallery/Preview
     - SDWebImage
     - SwiftyGif
-  - DKPhotoGallery/Model (0.0.17):
+  - DKPhotoGallery/Model (0.0.19):
     - SDWebImage
     - SwiftyGif
-  - DKPhotoGallery/Preview (0.0.17):
+  - DKPhotoGallery/Preview (0.0.19):
     - DKPhotoGallery/Model
     - DKPhotoGallery/Resource
     - SDWebImage
     - SwiftyGif
-  - DKPhotoGallery/Resource (0.0.17):
+  - DKPhotoGallery/Resource (0.0.19):
     - SDWebImage
     - SwiftyGif
   - ffmpeg-kit-ios-https (6.0)
@@ -64,6 +64,8 @@ PODS:
     - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
+  - flutter_blue_plus (0.0.1):
+    - Flutter
   - flutter_inappwebview (0.0.1):
     - Flutter
     - flutter_inappwebview/Core (= 0.0.1)
@@ -76,9 +78,11 @@ PODS:
   - fluwx (0.0.1):
     - Flutter
     - "OpenWeChatSDK (~> 1.9.2+1)"
-  - FMDB (2.7.5):
-    - FMDB/standard (= 2.7.5)
-  - FMDB/standard (2.7.5)
+  - FMDB (2.7.12):
+    - FMDB/standard (= 2.7.12)
+  - FMDB/Core (2.7.12)
+  - FMDB/standard (2.7.12):
+    - FMDB/Core
   - foundation_fluttify (0.0.1):
     - Flutter
   - image_picker_ios (0.0.1):
@@ -104,11 +108,11 @@ PODS:
   - libwebp/sharpyuv (1.3.2)
   - libwebp/webp (1.3.2):
     - libwebp/sharpyuv
-  - Meiqia (3.9.5):
-    - Meiqia/MeiqiaSDK (= 3.9.5)
-    - Meiqia/MQChatViewController (= 3.9.5)
-  - Meiqia/MeiqiaSDK (3.9.5)
-  - Meiqia/MQChatViewController (3.9.5):
+  - Meiqia (3.9.17):
+    - Meiqia/MeiqiaSDK (= 3.9.17)
+    - Meiqia/MQChatViewController (= 3.9.17)
+  - Meiqia/MeiqiaSDK (3.9.17)
+  - Meiqia/MQChatViewController (3.9.17):
     - Meiqia/MeiqiaSDK
   - meiqia_sdk_flutter (0.0.1):
     - Flutter
@@ -122,16 +126,16 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.1.1):
     - Flutter
-  - Reachability (3.2)
-  - SDWebImage (5.18.3):
-    - SDWebImage/Core (= 5.18.3)
-  - SDWebImage/Core (5.18.3)
+  - Reachability (3.7.6)
+  - SDWebImage (5.19.7):
+    - SDWebImage/Core (= 5.19.7)
+  - SDWebImage/Core (5.19.7)
   - shared_preferences_ios (0.0.1):
     - Flutter
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
-  - SwiftyGif (5.4.4)
+  - SwiftyGif (5.4.5)
   - tobias (0.0.1):
     - Flutter
   - url_launcher_ios (0.0.1):
@@ -159,6 +163,7 @@ DEPENDENCIES:
   - ffmpeg_kit_flutter (from `.symlinks/plugins/ffmpeg_kit_flutter/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
+  - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - fluwx (from `.symlinks/plugins/fluwx/ios`)
@@ -219,6 +224,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
+  flutter_blue_plus:
+    :path: ".symlinks/plugins/flutter_blue_plus/ios"
   flutter_inappwebview:
     :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_keyboard_visibility:
@@ -270,16 +277,17 @@ SPEC CHECKSUMS:
   better_video_player: a201d38370c115406e5387da62458991ad6787b5
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   core_location_fluttify: 9466a411ea7d22c6349c7e6a767ae4623f01eb1d
-  DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
-  DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
+  DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
+  DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   ffmpeg-kit-ios-https: f9c838aa5400a6c5ba12324c6b798f52197ba354
   ffmpeg_kit_flutter: 386b05b25c8130b5c4a1ca70c1bda89862537377
   file_picker: 817ab1d8cd2da9d2da412a417162deee3500fc95
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   flutter_inappwebview: acd4fc0f012cefd09015000c241137d82f01ba62
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   fluwx: 79c66b6d795ab8208262ada215d9e60388cfe492
-  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  FMDB: 728731dd336af3936ce00f91d9d8495f5718a0e6
   foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   JCore: 4c9febdfdb1a5675ab361bc1f06c0905391d7b23
@@ -287,18 +295,18 @@ SPEC CHECKSUMS:
   jpush_flutter: 3badd7fb60be478508730b46a701430be4d13c48
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
-  Meiqia: 170bf83fc6de103532458ec1787da452ff53c8c5
+  Meiqia: 047d9e502ad1cac96cafec03762761cb37824caa
   meiqia_sdk_flutter: d68856e7cf66b0ca6873dfae1ee409870b8029e4
   motion_sensors: 03f55b7c637a7e365a0b5f9697a449f9059d5d91
   OpenWeChatSDK: ea48e9db20645f78128db9091893910280b8e4b1
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SDWebImage: 96e0c18ef14010b7485210e92fac888587ebb958
+  Reachability: fd0ecd23705e2599e4cceeb943222ae02296cbc6
+  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
+  SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   tobias: 2aded9b83e3663b907360a800d8e3c13284f25c5
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
