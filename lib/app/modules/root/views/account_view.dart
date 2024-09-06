@@ -406,6 +406,10 @@ class AccountView extends GetView<AccountController> {
       actions: Row(
         children: [
           GestureDetector(
+            onTap: controller.onViewQRCode,
+            child: Icon(Icons.bluetooth_outlined),
+          ).paddingOnly(right: 10),
+          GestureDetector(
             onTap: () => Get.toNamed(Routes.MESSAGE_CENTER),
             child: Badge(
               showBadge: controller.info.ifMessageShow == 1 &&
