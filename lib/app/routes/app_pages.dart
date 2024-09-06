@@ -12,6 +12,8 @@ import '../modules/appraise_order/bindings/appraise_order_binding.dart';
 import '../modules/appraise_order/views/appraise_order_view.dart';
 import '../modules/bind_tel/bindings/bind_tel_binding.dart';
 import '../modules/bind_tel/views/bind_tel_view.dart';
+import '../modules/bluetooth_list/bindings/bluetooth_list_binding.dart';
+import '../modules/bluetooth_list/views/bluetooth_list_view.dart';
 import '../modules/change_gender/bindings/change_gender_binding.dart';
 import '../modules/change_gender/views/change_gender_view.dart';
 import '../modules/change_member_avatar/bindings/change_member_avatar_binding.dart';
@@ -522,6 +524,11 @@ class AppPages {
       name: _Paths.FOODIE_ARTICLES,
       page: () => const FoodieArticlesView(),
       binding: FoodieArticlesBinding(),
+    ),
+    GetPage(
+      name: _Paths.BLUETOOTH_LIST,
+      page: () => const BluetoothListView(),
+      binding: BluetoothListBinding(),
     ),
   ];
 }

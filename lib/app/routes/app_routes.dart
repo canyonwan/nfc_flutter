@@ -84,6 +84,7 @@ abstract class Routes {
   static const IMAGE_TEXT_UPLOAD = _Paths.IMAGE_TEXT_UPLOAD;
   static const VIDEO_UPLOAD = _Paths.VIDEO_UPLOAD;
   static const FOODIE_ARTICLES = _Paths.FOODIE_ARTICLES;
+  static const BLUETOOTH_LIST = _Paths.BLUETOOTH_LIST;
 }
 
 abstract class _Paths {
@@ -166,4 +167,5 @@ abstract class _Paths {
   static const IMAGE_TEXT_UPLOAD = '/image-text-upload';
   static const VIDEO_UPLOAD = '/video-upload';
   static const FOODIE_ARTICLES = '/foodie-articles';
+  static const BLUETOOTH_LIST = '/bluetooth-list';
 }
