@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 // import 'package:amap_location_fluttify/amap_location_fluttify.dart';
@@ -6,6 +7,7 @@ import 'package:bruno/bruno.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluwx/fluwx.dart';
@@ -19,6 +21,7 @@ import 'package:meiqia_sdk_flutter/meiqia_sdk_flutter.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:tobias/tobias.dart' as tobias;
 
+import 'BluetoothAdapterStateObserver.dart';
 import 'app/routes/app_pages.dart';
 import 'application.dart';
 import 'lan/Message.dart';
@@ -42,6 +45,8 @@ Future<void> main() async {
     ));
     // SystemChrome.setEnabledSystemUIOverlays([]);
   }
+  FlutterBluePlus.setLogLevel(LogLevel.verbose, color: true);
+
   runApp(App());
 }
 
@@ -108,6 +113,10 @@ class App extends StatefulWidget {
 }
 
 class _State extends State<App> with WidgetsBindingObserver {
+  BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
+
+  late StreamSubscription<BluetoothAdapterState> _adapterStateStateSubscription;
+
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -140,6 +149,19 @@ class _State extends State<App> with WidgetsBindingObserver {
       ),
     );
     super.initState();
+    _adapterStateStateSubscription =
+        FlutterBluePlus.adapterState.listen((state) {
+      _adapterState = state;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _adapterStateStateSubscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -190,6 +212,7 @@ class _State extends State<App> with WidgetsBindingObserver {
                     ),
                   ),
                   builder: EasyLoading.init(),
+                  navigatorObservers: [BluetoothAdapterStateObserver()],
                 ),
               ),
             ));

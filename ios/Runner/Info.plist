@@ -103,5 +103,8 @@
 	<true/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	 <key>NSBluetoothAlwaysUsageDescription</key>
+   <string>我们需要使用您的蓝牙权限</string>
+
 </dict>
 </plist>

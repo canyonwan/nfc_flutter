@@ -1,9 +1,12 @@
+import 'dart:async';
+
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 
 class BluetoothListController extends GetxController {
-  //TODO: Implement BluetoothListController
+  BluetoothAdapterState adapterState = BluetoothAdapterState.unknown;
+  late StreamSubscription<BluetoothAdapterState> _adapterStateStateSubscription;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -12,12 +15,15 @@ class BluetoothListController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    _adapterStateStateSubscription =
+        FlutterBluePlus.adapterState.listen((state) {
+      adapterState = state;
+    });
   }
 
   @override
   void onClose() {
+    _adapterStateStateSubscription.cancel();
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
